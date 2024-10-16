@@ -1,0 +1,25 @@
+{
+    "users": [
+      {
+        "id": "1",
+        "nombre": "Juan",
+        "apellido": "Pérez",
+        "estado": "bloqueado",
+        "fechaCreacion": "2023-10-10"
+      },
+      {
+        "id": "cbb2",
+        "nombre": "santiago",
+        "apellido": "yanzon",
+        "estado": "nuevo",
+        "fechaCreacion": "2024-10-15"
+      },
+      {
+        "id": "d442",
+        "nombre": "afdaf",
+        "apellido": "124321",
+        "estado": "nuevo",
+        "fechaCreacion": "2024-10-16"
+      }
+    ]
+  }

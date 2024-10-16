@@ -1,0 +1,10 @@
+.app-container {
+    background: linear-gradient(10deg, #f0f4f7, #e8ebef);
+    min-height: 100vh;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
