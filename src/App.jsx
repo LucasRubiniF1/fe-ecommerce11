@@ -1,10 +1,11 @@
 import './index.css'
+import Navbar from './layouts/Navbar';
 
 function App() {
   return (
-    <div className="bg-blue text-white p-4">
-      <h1 className="text-4xl">Ecommerce APIs</h1>
-      <p className='text-'>Hola mundo aca una prueba</p>
+    <div className="text-black p-4">
+      <Navbar />
+      
     </div>
   );
 }
