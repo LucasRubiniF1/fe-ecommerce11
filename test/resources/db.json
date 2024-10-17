@@ -1,25 +1,258 @@
 {
-    "users": [
-      {
-        "id": "1",
-        "nombre": "Juan",
-        "apellido": "Pérez",
-        "estado": "bloqueado",
-        "fechaCreacion": "2023-10-10"
-      },
-      {
-        "id": "cbb2",
-        "nombre": "santiago",
-        "apellido": "yanzon",
-        "estado": "nuevo",
-        "fechaCreacion": "2024-10-15"
-      },
-      {
-        "id": "d442",
-        "nombre": "afdaf",
-        "apellido": "124321",
-        "estado": "nuevo",
-        "fechaCreacion": "2024-10-16"
-      }
+  "users": [
+    {
+      "user_id": 1,
+      "username": "juanperez",
+      "password": "juanperez_password",
+      "email": "juanperez@example.com",
+      "birth_date": "1985-01-15",
+      "firstname": "Juan",
+      "lastname": "Pérez",
+      "role": "customer"
+    },
+    {
+      "user_id": 2,
+      "username": "mariafernandez",
+      "password": "mariafernandez_password",
+      "email": "mariafernandez@example.com",
+      "birth_date": "1992-03-22",
+      "firstname": "María",
+      "lastname": "Fernández",
+      "role": "admin"
+    },
+    {
+      "user_id": 3,
+      "username": "pedrolopez",
+      "password": "pedrolopez_password",
+      "email": "pedrolopez@example.com",
+      "birth_date": "1988-07-30",
+      "firstname": "Pedro",
+      "lastname": "López",
+      "role": "customer"
+    },
+    {
+      "user_id": 4,
+      "username": "luisaortiz",
+      "password": "luisaortiz_password",
+      "email": "luisaortiz@example.com",
+      "birth_date": "1990-11-05",
+      "firstname": "Luisa",
+      "lastname": "Ortiz",
+      "role": "customer"
+    },
+    {
+      "user_id": 5,
+      "username": "josegarcia",
+      "password": "josegarcia_password",
+      "email": "josegarcia@example.com",
+      "birth_date": "1987-09-12",
+      "firstname": "José",
+      "lastname": "García",
+      "role": "admin"
+    },
+    {
+      "user_id": 6,
+      "username": "anaquezada",
+      "password": "anaquezada_password",
+      "email": "anaquezada@example.com",
+      "birth_date": "1995-02-18",
+      "firstname": "Ana",
+      "lastname": "Quezada",
+      "role": "customer"
+    },
+    {
+      "user_id": 7,
+      "username": "franciscogomez",
+      "password": "franciscogomez_password",
+      "email": "franciscogomez@example.com",
+      "birth_date": "1989-12-25",
+      "firstname": "Francisco",
+      "lastname": "Gómez",
+      "role": "admin"
+    },
+    {
+      "user_id": 8,
+      "username": "sofiareyes",
+      "password": "sofiareyes_password",
+      "email": "sofiareyes@example.com",
+      "birth_date": "1994-04-27",
+      "firstname": "Sofía",
+      "lastname": "Reyes",
+      "role": "customer"
+    },
+    {
+      "user_id": 9,
+      "username": "carlosmedina",
+      "password": "carlosmedina_password",
+      "email": "carlosmedina@example.com",
+      "birth_date": "1991-06-08",
+      "firstname": "Carlos",
+      "lastname": "Medina",
+      "role": "customer"
+    },
+    {
+      "user_id": 10,
+      "username": "veronicaflores",
+      "password": "veronicaflores_password",
+      "email": "veronicaflores@example.com",
+      "birth_date": "1986-08-16",
+      "firstname": "Verónica",
+      "lastname": "Flores",
+      "role": "admin"
+    },
+    {
+      "user_id": 11,
+      "username": "manuelmorales",
+      "password": "manuelmorales_password",
+      "email": "manuelmorales@example.com",
+      "birth_date": "1982-10-10",
+      "firstname": "Manuel",
+      "lastname": "Morales",
+      "role": "customer"
+    },
+    {
+      "user_id": 12,
+      "username": "camilagutierrez",
+      "password": "camilagutierrez_password",
+      "email": "camilagutierrez@example.com",
+      "birth_date": "1993-05-03",
+      "firstname": "Camila",
+      "lastname": "Gutiérrez",
+      "role": "customer"
+    },
+    {
+      "user_id": 13,
+      "username": "alejandrocastro",
+      "password": "alejandrocastro_password",
+      "email": "alejandrocastro@example.com",
+      "birth_date": "1984-07-14",
+      "firstname": "Alejandro",
+      "lastname": "Castro",
+      "role": "admin"
+    },
+    {
+      "user_id": 14,
+      "username": "patriciajimenez",
+      "password": "patriciajimenez_password",
+      "email": "patriciajimenez@example.com",
+      "birth_date": "1989-12-01",
+      "firstname": "Patricia",
+      "lastname": "Jiménez",
+      "role": "customer"
+    },
+    {
+      "user_id": 15,
+      "username": "nicolashernandez",
+      "password": "nicolashernandez_password",
+      "email": "nicolashernandez@example.com",
+      "birth_date": "1990-02-20",
+      "firstname": "Nicolás",
+      "lastname": "Hernández",
+      "role": "customer"
+    }
+  ],
+  "products": [
+    {
+      "product_id": 1,
+      "name": "Laptop HP",
+      "description": "Laptop HP de 15 pulgadas con 16GB RAM",
+      "images": null,
+      "price": 799.99,
+      "stock": 10,
+      "category": "Electrónica",
+      "is_featured": true
+    },
+    {
+      "product_id": 2,
+      "name": "Teléfono Samsung",
+      "description": "Teléfono Samsung Galaxy S21",
+      "images": null,
+      "price": 999.99,
+      "stock": 15,
+      "category": "Electrónica",
+      "is_featured": true
+    },
+    {
+      "product_id": 3,
+      "name": "Smartwatch Garmin",
+      "description": "Smartwatch Garmin Fenix 6",
+      "images": null,
+      "price": 299.99,
+      "stock": 20,
+      "category": "Electrónica",
+      "is_featured": true
+    },
+    {
+      "product_id": 4,
+      "name": "Auriculares Bose",
+      "description": "Auriculares Bose QC35 II",
+      "images": null,
+      "price": 349.99,
+      "stock": 25,
+      "category": "Electrónica",
+      "is_featured": false
+    },
+    {
+      "product_id": 5,
+      "name": "Cámara Canon",
+      "description": "Cámara Canon EOS 80D",
+      "images": null,
+      "price": 1199.99,
+      "stock": 8,
+      "category": "Electrónica",
+      "is_featured": false
+    },
+    {
+      "product_id": 6,
+      "name": "Televisor LG",
+      "description": "Televisor LG 55 pulgadas 4K",
+      "images": null,
+      "price": 649.99,
+      "stock": 12,
+      "category": "Electrónica",
+      "is_featured": true
+    },
+    {
+      "product_id": 7,
+      "name": "Tablet Apple",
+      "description": "Tablet Apple iPad Pro 11",
+      "images": null,
+      "price": 799.99,
+      "stock": 18,
+      "category": "Electrónica",
+      "is_featured": true
+    },
+    {
+      "product_id": 8,
+      "name": "Impresora HP",
+      "description": "Impresora HP OfficeJet Pro 9015",
+      "images": null,
+      "price": 199.99,
+      "stock": 14,
+      "category": "Electrónica",
+      "is_featured": false
+    },
+    {
+      "product_id": 9,
+      "name": "Teclado Logitech",
+      "description": "Teclado Logitech MX Keys",
+      "images": null,
+      "price": 129.99,
+      "stock": 30,
+      "category": "Electrónica",
+      "is_featured": false
+    },
+    {
+      "product_id": 10,
+      "name": "Ratón Razer",
+      "description": "Ratón Razer DeathAdder V2",
+      "images": null,
+      "price": 89.99,
+      "stock": 22,
+      "category": "Electrónica",
+      "is_featured": false
+    }
     ]
   }
+
+
