@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 
 const ProductSearch = () => {
@@ -7,11 +6,17 @@ const ProductSearch = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('Fetching products...');  // Añadir log para saber cuándo empieza a cargar
-    axios.get('http://localhost:3001/products')
+    console.log('Fetching products from local JSON file...');
+    fetch('/data/products.json')  // Ruta al archivo JSON en tu proyecto
       .then(response => {
-        console.log('Products fetched:', response.data);  // Añadir log para verificar los datos
-        setProducts(response.data);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Products fetched:', data);  // Verificar los datos en la consola
+        setProducts(data);
         setLoading(false);
       })
       .catch(error => {
@@ -25,7 +30,7 @@ const ProductSearch = () => {
   }
 
   if (!products.length) {
-    return <p>No products available</p>;  // Mostrar si no hay productos
+    return <p>No products available</p>;
   }
 
   return (
@@ -33,7 +38,7 @@ const ProductSearch = () => {
       <h1>Search Products</h1>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {products.map(product => (
-          <ProductCard key={product.product_id} product={product} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

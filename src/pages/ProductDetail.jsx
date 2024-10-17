@@ -2,24 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const ProductDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams();  // Obtener el id del producto desde la URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/products/${id}`);
-        const data = await response.json();
-        setProduct(data);
+    console.log(`Fetching product with id: ${id}`);
+    fetch('/data/products.json')  // Cargar el archivo JSON local
+      .then(response => response.json())
+      .then(data => {
+        const foundProduct = data.find(p => p.id === id);  // Buscar el producto por id
+        setProduct(foundProduct);
         setLoading(false);
-      } catch (error) {
+      })
+      .catch(error => {
         console.error('Error fetching product:', error);
         setLoading(false);
-      }
-    };
-
-    fetchProduct();
+      });
   }, [id]);
 
   if (loading) {
@@ -32,7 +31,7 @@ const ProductDetail = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <img src={product.image} alt={product.name} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
+      <img src={product.images || 'https://via.placeholder.com/300'} alt={product.name} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <strong>${product.price}</strong>

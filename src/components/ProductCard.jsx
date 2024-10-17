@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div style={{ border: '1px solid #ddd', padding: '20px', margin: '10px' }}>
-      <Link to={`/product/${product.product_id}`}>
+      <Link to={`/product/${product.id}`}>  {/* Usar id para el enlace */}
         <img src={productImage} alt={product.name} style={{ width: '100%', height: '150px', objectFit: 'cover' }} />
         <h3>{product.name}</h3>
         <p>{product.description}</p>

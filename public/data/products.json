@@ -1,0 +1,112 @@
+[
+  {
+    "product_id": 1,
+    "name": "Laptop HP",
+    "description": "Laptop HP de 15 pulgadas con 16GB RAM",
+    "images": "https://www.unidiversidad.com.ar/cache/pc_1000_1100.jpg",
+    "price": 799.99,
+    "stock": 10,
+    "category": "Electrónica",
+    "is_featured": true,
+    "id": "7506"
+  },
+  {
+    "product_id": 2,
+    "name": "Teléfono Samsung",
+    "description": "Teléfono Samsung Galaxy S21",
+    "images": null,
+    "price": 999.99,
+    "stock": 15,
+    "category": "Electrónica",
+    "is_featured": true,
+    "id": "a16b"
+  },
+  {
+    "product_id": 3,
+    "name": "Smartwatch Garmin",
+    "description": "Smartwatch Garmin Fenix 6",
+    "images": null,
+    "price": 299.99,
+    "stock": 20,
+    "category": "Electrónica",
+    "is_featured": true,
+    "id": "4459"
+  },
+  {
+    "product_id": 4,
+    "name": "Auriculares Bose",
+    "description": "Auriculares Bose QC35 II",
+    "images": null,
+    "price": 349.99,
+    "stock": 25,
+    "category": "Electrónica",
+    "is_featured": false,
+    "id": "9035"
+  },
+  {
+    "product_id": 5,
+    "name": "Cámara Canon",
+    "description": "Cámara Canon EOS 80D",
+    "images": null,
+    "price": 1199.99,
+    "stock": 8,
+    "category": "Electrónica",
+    "is_featured": false,
+    "id": "b0f5"
+  },
+  {
+    "product_id": 6,
+    "name": "Televisor LG",
+    "description": "Televisor LG 55 pulgadas 4K",
+    "images": null,
+    "price": 649.99,
+    "stock": 12,
+    "category": "Electrónica",
+    "is_featured": true,
+    "id": "281e"
+  },
+  {
+    "product_id": 7,
+    "name": "Tablet Apple",
+    "description": "Tablet Apple iPad Pro 11",
+    "images": null,
+    "price": 799.99,
+    "stock": 18,
+    "category": "Electrónica",
+    "is_featured": true,
+    "id": "1581"
+  },
+  {
+    "product_id": 8,
+    "name": "Impresora HP",
+    "description": "Impresora HP OfficeJet Pro 9015",
+    "images": null,
+    "price": 199.99,
+    "stock": 14,
+    "category": "Electrónica",
+    "is_featured": false,
+    "id": "7682"
+  },
+  {
+    "product_id": 9,
+    "name": "Teclado Logitech",
+    "description": "Teclado Logitech MX Keys",
+    "images": null,
+    "price": 129.99,
+    "stock": 30,
+    "category": "Electrónica",
+    "is_featured": false,
+    "id": "4228"
+  },
+  {
+    "product_id": 10,
+    "name": "Ratón Razer",
+    "description": "Ratón Razer DeathAdder V2",
+    "images": null,
+    "price": 89.99,
+    "stock": 22,
+    "category": "Electrónica",
+    "is_featured": false,
+    "id": "6e86"
+  }
+]
