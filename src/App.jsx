@@ -1,12 +1,29 @@
-import './index.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
+import ProductSearch from './pages/ProductSearch';
+import ProductDetail from './pages/ProductDetail';
 
-function App() {
+const App = () => {
   return (
-    <div className="bg-blue text-white p-4">
-      <h1 className="text-4xl">Ecommerce APIs</h1>
-      <p className='text-'>Hola mundo aca una prueba</p>
-    </div>
+    <Router>
+      <div className="app-container">
+        <Navbar />
+        <div className="main-content">
+          <Sidebar />
+          <div className="page-content">
+            <Routes>
+              <Route path="/" element={<ProductSearch />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+            </Routes>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    </Router>
   );
-}
+};
 
-export default App
+export default App;
