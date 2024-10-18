@@ -1,12 +1,14 @@
-import './index.css'
+import "./index.css";
+import Header from "./header"; // Asegúrate de que la ruta sea correcta.
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   return (
-    <div className="bg-blue text-white p-4">
-      <h1 className="text-4xl">Ecommerce APIs</h1>
-      <p className='text-'>Hola mundo aca una prueba</p>
+    <div>
+      {/* Coloca aquí el Header */}
+      <Header />
     </div>
   );
 }
 
-export default App
+export default App;

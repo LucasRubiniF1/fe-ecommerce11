@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Tray Table",
+      "color": "Black",
+      "price": 19.0,
+      "quantity": 2,
+      "image": "tray_table_black.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Tray Table",
+      "color": "Red",
+      "price": 19.0,
+      "quantity": 2,
+      "image": "tray_table_red.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Table Lamp",
+      "color": "Gold",
+      "price": 39.0,
+      "quantity": 1,
+      "image": "table_lamp_gold.jpg"
+    }
+  ]
+}

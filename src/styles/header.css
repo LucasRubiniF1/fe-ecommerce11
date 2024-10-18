@@ -1,0 +1,61 @@
+.header {
+  background-color: #f8f9fa; /* Fondo claro */
+  padding: 15px 40px; /* Espacio alrededor del header */
+  display: flex; /* Usamos flexbox para alinear elementos */
+  justify-content: space-between; /* Espaciar el logo, nav y los íconos */
+  align-items: center; /* Alinear verticalmente los elementos */
+}
+
+.logo h1 {
+  font-family: "Poppins", sans-serif; /* Fuente estilizada */
+  font-weight: bold;
+  color: #000; /* Color del texto */
+  margin: 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px; /* Espaciado entre los elementos del menú */
+}
+
+.nav-links li {
+  display: inline-block;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 5px 10px;
+}
+
+.nav-links a:hover {
+  color: #007bff; /* Color al hacer hover */
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icons a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.cart-count {
+  background-color: #000;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  position: relative;
+  top: -10px;
+  right: -10px;
+}
