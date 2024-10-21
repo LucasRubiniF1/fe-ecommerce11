@@ -1,4 +1,5 @@
-import React from 'react';
+//import React from 'react';
+import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -8,9 +9,13 @@ import ProductDetail from './pages/ProductDetail';
 
 const App = () => {
   return (
+    
+<>
+    <Navbar />    
+
     <Router>
-      <div className="app-container">
-        <Navbar />
+
+      <div className="app-container">  
         <div className="main-content">
           <Sidebar />
           <div className="page-content">
@@ -22,7 +27,8 @@ const App = () => {
         </div>
         <Footer />
       </div>
-    </Router>
+    </Router> 
+    </>
   );
 };
 
