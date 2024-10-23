@@ -1,11 +1,21 @@
+import LoginForm from './components/LoginForm';
 import './index.css'
+import LoginPage from './Page/LoginPage';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import HomePage from './Page/HomePage'; 
+import RegisterPage from './Page/RegisterPage'; 
+
 
 function App() {
   return (
-    <div className="bg-blue text-white p-4">
-      <h1 className="text-4xl">Ecommerce APIs</h1>
-      <p className='text-'>Hola mundo aca una prueba</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </Router>
   );
 }
 
