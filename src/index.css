@@ -1,7 +1,18 @@
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Estilos por defecto */
+
+html {
+  font-family: 'Poppins', sans-serif; 
 }
+
+body {
+  margin: 0; 
+}
+
 
 .app-container {
   display: flex;
@@ -31,4 +42,5 @@ ul li {
 ul li a {
   text-decoration: none;
   color: #007bff;
-}
+} 
+
