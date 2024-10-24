@@ -1,19 +1,56 @@
-import CartItem from '../components/CartItem'
-import CartSummary from '../components/CartSummary'
+import CartItem from '../components/CartItem';
+import CartSummary from '../components/CartSummary';
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 const Cart = () => {
-
-  const { userId } = useParams();
+  const { userId } = useParams(); // Obtiene el userId desde la URL
   const [cart, setCart] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Estado para mostrar loading
 
   useEffect(() => {
-    fetch(`/api/cart/${userId}`)
+    // Hacemos fetch al archivo db.json en la carpeta public
+    fetch('/db.json')
       .then((res) => res.json())
-      .then((data) => setCart(data))
-      .catch((err) => console.error('Error cargando el carrito:', err));
+      .then((data) => {
+        console.log('Datos del JSON:', data); // Verifica si los datos se están cargando bien
+
+        // Buscamos el usuario que coincide con el userId
+        const user = data.users.find(user => user.user_id === parseInt(userId, 10)); // Convierte userId a número
+        
+        if (user) {
+          console.log('Usuario encontrado:', user);
+          
+          if (user.cart && user.cart.items.length > 0) {
+            const cartItems = user.cart.items.map(cartItem => {
+              // Buscar el producto en la lista de productos por product_id
+              const product = data.products.find(p => p.product_id === cartItem.product_id);
+              return {
+                ...product,
+                quantity: cartItem.quantity
+              };
+            });
+
+            // Guardamos los productos del carrito en el estado
+            setCart(cartItems);
+          } else {
+            console.warn('El carrito del usuario está vacío.');
+            setCart([]); // Si no hay carrito, vaciamos el estado
+          }
+        } else {
+          console.error('Usuario no encontrado');
+        }
+        setIsLoading(false); // Finaliza el loading
+      })
+      .catch((err) => {
+        console.error('Error cargando el carrito:', err);
+        setIsLoading(false);
+      });
   }, [userId]);
+
+  if (isLoading) {
+    return <p>Loading...</p>; // Mostrar loading mientras cargamos los datos
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -29,13 +66,14 @@ const Cart = () => {
           {/* Si hay productos los mostramos */}
           {cart.length > 0 ? (
             cart.map((product) => (
-              <CartItem key={product.id} product={product} />
+              <CartItem key={product.product_id} product={product} />
             ))
           ) : (
-            <p>Loading products...</p>
+            <p>No products in the cart.</p> // Mensaje si el carrito está vacío
           )}
         </div>
 
+        {/* Resumen del carrito */}
         <CartSummary products={cart} />
       </div>
     </div>
