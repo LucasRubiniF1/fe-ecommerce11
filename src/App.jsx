@@ -18,7 +18,7 @@ const App = () => {
 
       <div className="app-container">  
         <div className="main-content">
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div className="page-content">
             <Routes>
               <Route path="/" element={<ProductSearch />} />

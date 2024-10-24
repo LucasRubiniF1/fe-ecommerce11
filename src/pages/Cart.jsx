@@ -23,7 +23,6 @@ const Cart = () => {
         <div className="w-full md:w-3/4">
           <div className="mb-4 flex justify-between">
             <h2 className="text-xl font-semibold">Shopping cart</h2>
-            <p>Checkout details</p>
             <p>Order complete</p>
           </div>
           <div className="border-b border-gray-300 mb-4"></div>
