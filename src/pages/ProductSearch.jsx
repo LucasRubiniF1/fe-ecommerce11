@@ -1,9 +1,10 @@
 import React from 'react';
 import ProductCard from '../components/ProductCard';
 import useFetch from '../hooks/useFetch';
-import { API_URL } from '../utils/Utilis';
+import { API_URL } from "../utils";
 
-const ProductSearch = () => {
+
+function ProductSearch() {
   const { data: products, loading, error } = useFetch(`${API_URL}/data/products.json`);
 
   if (loading) {
@@ -25,6 +26,6 @@ const ProductSearch = () => {
       <Link to="/product/create">Create New Product</Link>
     </div>
   );
-};
+}
 
 export default ProductSearch;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
 import useFetch from '../hooks/useFetch';
-import { API_URL } from '../utils/Utilis';
+import { API_URL } from "../utils";
 import axios from 'axios';
 
 const ProductEdit = () => {

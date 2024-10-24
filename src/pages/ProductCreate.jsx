@@ -2,7 +2,7 @@ import React from 'react';
 import ProductForm from '../components/ProductForm';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { API_URL } from '../utils/Utilis';
+import { API_URL } from "../utils";
 
 const ProductCreate = () => {
   const navigate = useNavigate();

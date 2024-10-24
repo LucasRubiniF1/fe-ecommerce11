@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
-import { API_URL } from '../utils/Utilis';
+import { API_URL } from "../utils";
 import ErrorAlert from '../components/ErrorAlert';
 
 const ProductDetail = () => {
