@@ -3,6 +3,8 @@ import React, { useState } from "react";
 const CartSummary = ({ products }) => {
   const [shippingOption, setShippingOption] = useState("free");
   const shippingCost = shippingOption === "express" ? 15.0 : 0.0;
+  
+  
   const subtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
   const total = (subtotal + shippingCost).toFixed(2);
 

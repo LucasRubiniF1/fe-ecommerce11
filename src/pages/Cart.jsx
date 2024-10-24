@@ -10,13 +10,13 @@ const Cart = () => {
 
   useEffect(() => {
     // Hacemos fetch al archivo db.json en la carpeta public
-    fetch('/db.json')
+    fetch('/data/db.json')
       .then((res) => res.json())
       .then((data) => {
         console.log('Datos del JSON:', data); // Verifica si los datos se están cargando bien
 
         // Buscamos el usuario que coincide con el userId
-        const user = data.users.find(user => user.user_id === parseInt(userId, 10)); // Convierte userId a número
+        const user = data.users.find(user => user.user_id === parseInt(userId, 10));
         
         if (user) {
           console.log('Usuario encontrado:', user);
@@ -54,8 +54,11 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto p-6">
+
       <h1 className="text-3xl font-bold text-center mb-6">Cart</h1>
-      <div className="flex flex-col md:flex-row gap-6">
+
+      <div className="flex flex-col md:flex-row gap-16">
+
         <div className="w-full md:w-3/4">
           <div className="mb-4 flex justify-between">
             <h2 className="text-xl font-semibold">Shopping cart</h2>
@@ -75,6 +78,7 @@ const Cart = () => {
 
         {/* Resumen del carrito */}
         <CartSummary products={cart} />
+        {console.log(cart.reduce((acc, product) => acc + product.price * product.quantity, 0))}
       </div>
     </div>
   );
