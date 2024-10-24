@@ -2,7 +2,6 @@
 import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import ProductSearch from './pages/ProductSearch';
 import ProductDetail from './pages/ProductDetail';
@@ -23,7 +22,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<ProductSearch />} />
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={ <Cart/> }/>
+              <Route path="/cart/:id" element={ <Cart/> }/>
             </Routes>
           </div>
         </div>

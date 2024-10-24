@@ -1,20 +1,19 @@
 import CartItem from '../components/CartItem'
 import CartSummary from '../components/CartSummary'
 import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 
 const Cart = () => {
-  const [products, setProducts] = useState([]);
+
+  const { userId } = useParams();
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    fetch('/data/products.json') // Cambia esta ruta al archivo JSON real
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-      })
-      .catch((error) => {
-        console.error("Error al cargar los productos:", error);
-      });
-  }, []);
+    fetch(`/api/cart/${userId}`)
+      .then((res) => res.json())
+      .then((data) => setCart(data))
+      .catch((err) => console.error('Error cargando el carrito:', err));
+  }, [userId]);
 
   return (
     <div className="container mx-auto p-6">
@@ -28,8 +27,8 @@ const Cart = () => {
           <div className="border-b border-gray-300 mb-4"></div>
 
           {/* Si hay productos los mostramos */}
-          {products.length > 0 ? (
-            products.map((product) => (
+          {cart.length > 0 ? (
+            cart.map((product) => (
               <CartItem key={product.id} product={product} />
             ))
           ) : (
@@ -37,7 +36,7 @@ const Cart = () => {
           )}
         </div>
 
-        <CartSummary products={products} />
+        <CartSummary products={cart} />
       </div>
     </div>
   );
