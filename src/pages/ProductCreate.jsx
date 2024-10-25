@@ -1,54 +1,113 @@
 import React, { useState } from 'react';
-import ProductForm from '../components/ProductForm';
-import { useNavigate } from 'react-router-dom';
+import { Button, Container, Form, Alert, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { API_URL } from "../utils";
-import { Alert, Button, Container, Row, Col } from 'react-bootstrap'; // Importamos componentes de Bootstrap
+import { useNavigate } from 'react-router-dom';
 
 const ProductCreate = () => {
-  const [showSuccess, setShowSuccess] = useState(false); // Estado para mostrar éxito
-  const [showError, setShowError] = useState(false);     // Estado para mostrar error
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    price: '',
+    description: '',
+    images: ''
+  });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (formData) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await axios.post(`${API_URL}/data/products`, formData); // Enviar datos del producto
-      setShowSuccess(true);  // Mostrar alerta de éxito
-      setTimeout(() => navigate('/'), 2000); // Redirigir después de 2 segundos
+      // Asegúrate de que la URL sea la correcta para tu servidor JSON
+      await axios.post(`http://localhost:3000/public/data/products`, formData);
+      setSuccess(true);
+      navigate('/'); // Redirige a la página de productos
     } catch (error) {
-      setShowError(true);    // Mostrar alerta de error
-      console.error('Error creating product:', error);
+      setError('Error creating product');
     }
   };
 
   return (
-    <Container style={{ padding: '20px' }}>
-      <Row className="justify-content-md-center">
-        <Col xs={12} md={8}>
-          <h1 className="text-center mb-4">Create New Product</h1>
+    <Container className="my-5" style={{ maxWidth: '600px', fontFamily: 'Arial, sans-serif' }}>
+      <h1 style={{ color: '#1428A0', textAlign: 'center', marginBottom: '30px' }}>Create New Product</h1>
 
-          {/* Alerta de éxito */}
-          {showSuccess && (
-            <Alert variant="success" onClose={() => setShowSuccess(false)} dismissible>
-              Product created successfully! Redirecting...
-            </Alert>
-          )}
+      {error && <Alert variant="danger">{error}</Alert>}
+      {success && <Alert variant="success">Product created successfully!</Alert>}
 
-          {/* Alerta de error */}
-          {showError && (
-            <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-              There was an error creating the product. Please try again.
-            </Alert>
-          )}
+      <Form onSubmit={handleSubmit} style={{ padding: '20px', background: '#f5f5f5', borderRadius: '10px' }}>
+        <Form.Group className="mb-3" controlId="formName">
+          <Form.Label>Product Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Enter product name"
+            required
+          />
+        </Form.Group>
 
-          {/* Formulario para crear producto */}
-          <ProductForm onSubmit={handleSubmit} />
+        <Form.Group className="mb-3" controlId="formPrice">
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            placeholder="Enter product price"
+            required
+          />
+        </Form.Group>
 
-          <div className="text-center mt-4">
-            <Button variant="secondary" onClick={() => navigate('/')}>Go Back</Button>
-          </div>
-        </Col>
-      </Row>
+        <Form.Group className="mb-3" controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter product description"
+            rows={3}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formImage">
+          <Form.Label>Image URL</Form.Label>
+          <Form.Control
+            type="text"
+            name="images"
+            value={formData.images}
+            onChange={handleChange}
+            placeholder="Enter image URL"
+            required
+          />
+        </Form.Group>
+
+        <Row>
+          <Col className="text-center">
+            <Button
+              variant="primary"
+              type="submit"
+              style={{
+                backgroundColor: '#1428A0',
+                borderColor: '#1428A0',
+                borderRadius: '50px',
+                padding: '10px 30px',
+                fontSize: '16px',
+              }}
+            >
+              Create Product
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 };
