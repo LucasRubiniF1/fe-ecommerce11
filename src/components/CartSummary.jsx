@@ -1,16 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const CartSummary = ({ products }) => {
+  const navigate = useNavigate();
   const [shippingOption, setShippingOption] = useState("free");
   const shippingCost = shippingOption === "express" ? 15.0 : 0.0;
 
-  // Calcular el subtotal sumando el precio de cada producto por su cantidad
-  const subtotal = products.reduce((acc, product) => {
-    return acc + product.price * product.quantity; // Asegúrate de que cada producto tenga su propiedad 'quantity'
-  }, 0);
-  
-  // Calcular el total incluyendo el costo de envío
+  const subtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
   const total = (subtotal + shippingCost).toFixed(2);
+
+  const handleCheckout = () => {
+    navigate("/checkout"); // Reemplaza "/checkout" con la URL deseada
+  };
 
   return (
     <div className="w-full md:w-1/4 p-6 bg-gray-100 rounded-lg">
@@ -54,7 +55,10 @@ const CartSummary = ({ products }) => {
         </div>
       </div>
 
-      <button className="w-full mt-6 bg-black text-white py-2 rounded">
+      <button
+        className="w-full mt-6 bg-black text-white py-2 rounded"
+        onClick={handleCheckout}
+      >
         Checkout
       </button>
     </div>
@@ -62,3 +66,4 @@ const CartSummary = ({ products }) => {
 };
 
 export default CartSummary;
+
