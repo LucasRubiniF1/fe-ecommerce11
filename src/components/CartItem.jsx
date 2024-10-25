@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const CartItem = ({ product }) => {
-  const [quantity, setQuantity] = useState(product.quantity); // Inicializamos la cantidad
+const CartItem = ({ product, updateQuantity }) => {
+  const [quantity, setQuantity] = useState(product.quantity);
+
+  useEffect(() => {
+    // Notificamos al componente padre cuando la cantidad cambia
+    updateQuantity(product.product_id, quantity);
+  }, [quantity]); // Se ejecuta cada vez que 'quantity' cambia
 
   const increment = () => setQuantity(quantity + 1);
   const decrement = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
+    if (quantity > 0) setQuantity(quantity - 1);
   };
 
   return (

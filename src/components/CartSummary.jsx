@@ -3,14 +3,18 @@ import React, { useState } from "react";
 const CartSummary = ({ products }) => {
   const [shippingOption, setShippingOption] = useState("free");
   const shippingCost = shippingOption === "express" ? 15.0 : 0.0;
+
+  // Calcular el subtotal sumando el precio de cada producto por su cantidad
+  const subtotal = products.reduce((acc, product) => {
+    return acc + product.price * product.quantity; // Asegúrate de que cada producto tenga su propiedad 'quantity'
+  }, 0);
   
-  
-  const subtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+  // Calcular el total incluyendo el costo de envío
   const total = (subtotal + shippingCost).toFixed(2);
 
   return (
     <div className="w-full md:w-1/4 p-6 bg-gray-100 rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Cart summary</h2>
+      <h2 className="text-xl font-semibold mb-4">Cart Summary</h2>
 
       <div className="mb-4">
         <label className="flex items-center">
