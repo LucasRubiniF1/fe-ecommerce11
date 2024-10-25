@@ -1,10 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import Footer from './components/Footer';
-import ProductSearch from './pages/ProductSearch';
-import ProductDetail from './pages/ProductDetail';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import ProductSearch from "./pages/ProductSearch";
+import ProductDetail from "./pages/ProductDetail";
+import Account from "./pages/Account";
 
 const App = () => {
   return (
@@ -12,11 +12,11 @@ const App = () => {
       <div className="app-container">
         <Navbar />
         <div className="main-content">
-          <Sidebar />
           <div className="page-content">
             <Routes>
               <Route path="/" element={<ProductSearch />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/" element={<ProductDetail />} />
+              <Route path="/account" element={<Account />} />
             </Routes>
           </div>
         </div>
@@ -25,5 +25,4 @@ const App = () => {
     </Router>
   );
 };
-
 export default App;
