@@ -2,6 +2,8 @@ import React from 'react';
 import ProductCard from '../components/ProductCard';
 import useFetch from '../hooks/useFetch';
 import { API_URL } from "../utils";
+import { Link } from 'react-router-dom';
+
 
 
 function ProductSearch() {
