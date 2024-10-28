@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onLogin, error, onRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,7 +16,7 @@ const LoginForm = ({ onLogin }) => {
         onSubmit={handleSubmit}
       >
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
-          Welcome!
+          Iniciar sesión en E-Techno
         </h2>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
@@ -41,11 +41,12 @@ const LoginForm = ({ onLogin }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {error && <p className="mt-2 bg-red-500 text-red p-2 rounded">{error}</p>}
         </div>
         <div className="mb-6">
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white font-bold py-3 rounded-md hover:bg-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+            className="w-full border border-indigo-600 text-indigo-600 font-bold py-3 rounded-md hover:bg-indigo-600 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
           >
             Log in
           </button>
@@ -53,6 +54,7 @@ const LoginForm = ({ onLogin }) => {
         <div className="text-center">
           <button
             type="button"
+            onClick={onRegister} 
             className="w-full border border-indigo-600 text-indigo-600 font-bold py-3 rounded-md hover:bg-indigo-600 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
           >
             Register

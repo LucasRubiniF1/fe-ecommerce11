@@ -6,9 +6,11 @@ import axios from 'axios';
 
 const LoginPage = () => {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/v1/auth/login')
+    axios.get('http://localhost:5000/users')
       .then(response => setUsers(response.data)) 
       .catch(error => console.log(error));
   }, []);
@@ -16,17 +18,23 @@ const LoginPage = () => {
   const handleLogin = ({ email, password }) => {
     const user = users.find(user => user.email === email && user.password === password);
     if (user) {
-      console.log("Login successful");
+      navigate('/home '); 
     } else {
-      console.log("User not found, redirecting to register");
+      setError('Incorrect username or password');
     }
   };
+
+  const handleRegister = () => {
+    navigate('/register'); 
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="max-w-md w-full space-y-8">
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>
-        <LoginForm onLogin={handleLogin} />
+        {/*<h2 className="text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>*/}
+        <LoginForm onLogin={handleLogin} error={error} onRegister={handleRegister}/>
+        
       </div>
     </div>
   );
