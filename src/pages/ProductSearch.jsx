@@ -1,36 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ProductCard from '../components/ProductCard';
+import useFetch from '../hooks/useFetch';
+import { API_URL } from "../utils";
+import { Link } from 'react-router-dom';
 
-const ProductSearch = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    console.log('Fetching products from local JSON file...');
-    fetch('/data/products.json')  // Ruta al archivo JSON en tu proyecto
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Products fetched:', data);  // Verificar los datos en la consola
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching products:', error);
-        setLoading(false);
-      });
-  }, []);
+
+function ProductSearch() {
+  const { data: products, loading, error } = useFetch(`${API_URL}/data/products.json`);
 
   if (loading) {
     return <p>Loading products...</p>;
   }
 
-  if (!products.length) {
-    return <p>No products available</p>;
+  if (error) {
+    return <p>Error fetching products: {error.message}</p>;
   }
 
   return (
@@ -41,8 +25,9 @@ const ProductSearch = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      <Link to="/product/create">Create New Product</Link>
     </div>
   );
-};
+}
 
 export default ProductSearch;
