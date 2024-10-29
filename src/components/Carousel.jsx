@@ -1,9 +1,11 @@
 // Carousel.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //HACER EN EL JSON VARIAS IMAGENES POR PRODUCTO Y ESTRUCTURARLO MEJOR
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
+  const navigate = useNavigate();
 
   const nextPage = () => {
     if (startIndex + itemsPerPage < products.length) {
@@ -15,6 +17,10 @@ const Carousel = ({ products, titulo }) => {
     if (startIndex - itemsPerPage >= 0) {
       setStartIndex(startIndex - itemsPerPage);
     }
+  };
+
+  const handleClick = (product) => {
+    navigate(`/product/${product.product_id}`, { state: product });
   };
 
   return (
@@ -34,6 +40,7 @@ const Carousel = ({ products, titulo }) => {
               <div 
                 key={product.product_id} 
                 className="border rounded-lg p-4 shadow-lg transition-transform duration-300 transform hover:scale-105"
+                onClick={() => handleClick(product)}
               >
                 <img
                   src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}

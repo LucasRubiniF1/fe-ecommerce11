@@ -1,40 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const ProductDetail = () => {
-  const { id } = useParams();  // Obtener el id del producto desde la URL
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    console.log(`Fetching product with id: ${id}`);
-    fetch('/data/products.json')  // Cargar el archivo JSON local
-      .then(response => response.json())
-      .then(data => {
-        const foundProduct = data.find(p => p.id === id);  // Buscar el producto por id
-        setProduct(foundProduct);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching product:', error);
-        setLoading(false);
-      });
-  }, [id]);
-
-  if (loading) {
-    return <p>Loading product...</p>;
-  }
-
-  if (!product) {
-    return <p>Product not found</p>;
-  }
+  const location = useLocation();
+  const product = location.state;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <img src={product.images || 'https://via.placeholder.com/300'} alt={product.name} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <strong>${product.price}</strong>
+    <div className="p-6">
+      <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
+      <img
+        src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
+        alt={product.name}
+        className="w-full h-80 object-contain mb-6"
+      />
+      <p className="text-lg">{product.description}</p>
+      <p className="text-2xl font-bold text-green-500 my-4">${product.price}</p>
+      <p className="text-gray-500">Stock: {product.stock}</p>
     </div>
   );
 };
