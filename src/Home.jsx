@@ -2,16 +2,19 @@ import { useState, useEffect } from 'react';
 import './index.css';
 import Navbar from './components/Navbar';
 import Carousel from './components/Carousel';
+import Footer from './components/Footer';
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [productsCel, setProductsCel] = useState([]);
+  const [productsTel, setProductsTel] = useState([]);
 
   useEffect(() => {
     // Fetch de todos los productos
     fetch('/data/products.json')
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.filter(product => product.category === "Electrónica"));
+        setProductsCel(data.filter(product => product.category === "Celular"));
+        setProductsTel(data.filter(product => product.category === "Televisor"));
       })
       .catch((error) => console.error('Error al traer los productos:', error));
   }, []);
@@ -22,13 +25,16 @@ const Home = () => {
     <Navbar />    
     <div className="w-full h-[87vh]">
         <img
-          src="/galaxy.jpg"
+          src="/samsung.jpg"
           alt="Imagen destacada"
           className="w-full h-full object-cover"
         />
     </div>
 
-    {products.length > 0 && <Carousel products={products} />}
+    {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
+    {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
+
+    <Footer/>
       </>
   );
 };
