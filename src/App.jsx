@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import Account from "./pages/Account";
+import EditAccount from "./pages/editAccount";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
               <Route path="/" element={<ProductSearch />} />
               <Route path="/" element={<ProductDetail />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/edit-account" element={<EditAccount />} />
             </Routes>
           </div>
         </div>
