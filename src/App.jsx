@@ -9,6 +9,7 @@ import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
+import EditAccount from "./pages/editAccount";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
               <Route path="/product/edit/:id" element={<ProductEdit />} />
               <Route path="/product/create" element={<ProductCreate />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/edit-account" element={<EditAccount />} />
             </Routes>
           </div>
         </div>

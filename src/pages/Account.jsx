@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Importa Axios
 import "../styles/account.css";
+import EditButton from "../components/EditButton";
 
 const Account = () => {
   const [userData, setUserData] = useState(null);
@@ -64,7 +65,7 @@ const Account = () => {
         <div className="addresses">
           <div className="address-card">
             <h3>
-              Información personal <span>Edit</span>
+              Información personal <EditButton to="/edit-account" />
             </h3>
             <p>
               Nombre y apellido: {userData.firstname} {userData.lastname}
