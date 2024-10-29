@@ -1,43 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { FaUser, FaShoppingCart, FaSearch, FaHeart } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
-    <nav
-      style={{
-        backgroundColor: "#343a40",
-        padding: "10px 20px",
-        color: "#fff",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <h1 style={{ margin: 0 }}>My eCommerce</h1>
-      <ul
-        style={{ listStyle: "none", display: "flex", gap: "20px", margin: 0 }}
-      >
-        <li>
-          <Link to="/" style={{ color: "#fff", textDecoration: "none" }}>
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/shop" style={{ color: "#fff", textDecoration: "none" }}>
-            Shop
-          </Link>
-        </li>
-        <li>
-          <Link to="/contact" style={{ color: "#fff", textDecoration: "none" }}>
-            Contact Us
-          </Link>
-        </li>
-        <li>
-          <Link to="/account" style={{ color: "#fff", textDecoration: "none" }}>
-            My Account
-          </Link>
-        </li>
+    <nav className="flex items-center justify-between p-4 bg-white">
+      {/* Logo */}
+      <h1 className="text-2xl font-bold text-black">3legant</h1>
+
+      {/* Enlaces de navegación */}
+      <ul className="flex gap-6">
+        <li className="text-black hover:text-gray-600 cursor-pointer">Home</li>
+        <li className="text-black hover:text-gray-600 cursor-pointer">Shop</li>
+        <li className="text-black hover:text-gray-600 cursor-pointer">Product</li>
+        <li className="text-black hover:text-gray-600 cursor-pointer">Contact Us</li>
       </ul>
+
+      {/* Íconos del usuario */}
+      <ul className="flex gap-6 items-center">
+      <li className="text-black hover:text-gray-600 cursor-pointer">
+        <FaSearch size={20} />
+      </li>
+      <li className="text-black hover:text-gray-600 cursor-pointer">
+        <FaUser size={20} />
+      </li>
+      <div className="relative">
+        <li className="text-black hover:text-gray-600 cursor-pointer">
+          <FaShoppingCart size={20} />
+        </li>
+        <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          3
+        </span>
+      </div>
+      <div className="relative">
+        <li className="text-black hover:text-gray-600 cursor-pointer">
+          <FaHeart size={20} />
+        </li>
+        <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          3
+        </span>
+      </div>
+    </ul>
     </nav>
   );
 };
