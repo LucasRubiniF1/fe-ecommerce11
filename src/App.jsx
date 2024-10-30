@@ -12,8 +12,8 @@ import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage'; 
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage'; 
 
 
 const App = () => {
