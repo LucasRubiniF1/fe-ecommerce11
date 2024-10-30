@@ -1,15 +1,16 @@
+import { useState } from 'react';
 import { FaUser, FaShoppingCart, FaSearch, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Asegúrate de haber importado useNavigate
 
-const Navbar = () => {
-  const navigate = useNavigate(); // Inicializa useNavigate aquí
+const Navbar = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleUserClick = () => {
-    try {
-      navigate("/account"); // Redirige a la página de My Account
-    } catch (error) {
-      console.error("Error navigating to /account:", error);
-    }
+  const handleSearchInput = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchClick = () => {
+    onSearch(searchTerm);
   };
 
   return (
@@ -28,6 +29,23 @@ const Navbar = () => {
           Contact Us
         </li>
       </ul>
+
+      {/* Barra de búsqueda */}
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          placeholder="Buscar productos"
+          value={searchTerm}
+          onChange={handleSearchInput}
+          className="border p-2 rounded-lg text-black"
+        />
+        <button
+          onClick={handleSearchClick}
+          className="p-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+        >
+          <FaSearch size={20} />
+        </button>
+      </div>
 
       {/* Íconos del usuario */}
       <ul className="flex gap-6 items-center">

@@ -1,32 +1,23 @@
-import React from 'react';
-import ProductCard from '../components/ProductCard';
-import useFetch from '../hooks/useFetch';
-import { API_URL } from "../utils";
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import Cards from '../components/Cards';
+import Navbar from '../components/Navbar';
 
-
-
-function ProductSearch() {
-  const { data: products, loading, error } = useFetch(`${API_URL}/data/products.json`);
-
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
-  if (error) {
-    return <p>Error fetching products: {error.message}</p>;
-  }
-
-  return (
-    <div style={{ padding: '20px' }}>
-      <h1>Search Products</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+const ProductSearch = () => {
+  const location = useLocation();
+  const { filteredProducts } = location.state || { filteredProducts: [] };
+  return(
+    <>
+      <Navbar /> 
+      <div>
+          <h2 className="text-2xl font-bold mb-4">Resultados de búsqueda</h2>
+          {filteredProducts.length > 0 ? (
+            <Cards products={filteredProducts} />
+          ) : (
+            <p>No se encontraron productos.</p>
+          )}
       </div>
-      <Link to="/product/create">Create New Product</Link>
-    </div>
+  </>
   );
 }
 
