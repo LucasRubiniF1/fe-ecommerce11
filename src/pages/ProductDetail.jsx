@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-=======
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import { API_URL } from "../utils";
 import ErrorAlert from '../components/ErrorAlert';
->>>>>>> main
 
 const ProductDetail = () => {
   const { id } = useParams();

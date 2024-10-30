@@ -1,4 +1,3 @@
-import React from 'react';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -7,7 +6,6 @@ import ProductSearch from './pages/ProductSearch';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
-import Sidebar from './components/Sidebar';
 import ProductCreate from './pages/ProductCreate';
 import ProductEdit from './pages/ProductEdit';
 
@@ -19,7 +17,6 @@ const App = () => {
       <Router>
         <div className="app-container">
           <div className="main-content">
-            <Sidebar />
             <div className="page-content">
               <Routes>
                 <Route path="/" element={<ProductSearch />} />
