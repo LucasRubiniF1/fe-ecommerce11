@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -7,14 +5,13 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import ProductSearch from "./pages/ProductSearch";
-import ProductDetail from "./pages/ProductDetail";
+import ProductDetail from "./pages/ProductDetail"; // Asegúrate de que esta línea no se repita
 import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage'; 
 import RegisterPage from './pages/RegisterPage'; 
-
 
 const App = () => {
   return (
@@ -38,22 +35,6 @@ const App = () => {
         </div>
         <Footer />
       </div>
-=======
-import React, { useState, useEffect } from 'react';
-import './index.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home';
-import ProductDetail from './pages/ProductDetail'
-
-const App = () => {
-  return (
-    
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-      </Routes>
->>>>>>> Home
     </Router>
   );
 };
