@@ -5,22 +5,21 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import ProductSearch from "./pages/ProductSearch";
-import ProductDetail from "./pages/ProductDetail"; // Asegúrate de que esta línea no se repita
+import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
-import LoginPage from './pages/LoginPage'; 
-import RegisterPage from './pages/RegisterPage'; 
-import Home from './pages/Home'; 
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <div className="app-container">
-        
         <div className="main-content">
-          
           <div className="page-content">
             <Routes>
               <Route path="/productSearch" element={<ProductSearch />} />
@@ -35,8 +34,9 @@ const App = () => {
             </Routes>
           </div>
         </div>
-        
       </div>
+
+      <Footer />
     </Router>
   );
 };

@@ -5,8 +5,8 @@ import EditButton from "../components/EditButton";
 
 const Account = () => {
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true); // Para mostrar el estado de carga
-  const [error, setError] = useState(null); // Para manejar errores
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const userId = 1; // Simulamos un usuario logueado
 
@@ -33,12 +33,10 @@ const Account = () => {
     fetchUserData();
   }, [userId]);
 
-  // Si está en estado de carga, mostramos un mensaje
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  // Si hay un error, lo mostramos
   if (error) {
     return <p>{error}</p>;
   }
