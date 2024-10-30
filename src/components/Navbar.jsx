@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { FaUser, FaShoppingCart, FaSearch, FaHeart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Asegúrate de haber importado useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const Navbar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  const handleUserClick = () => {
+    console.log("User clicked!");
+  };
 
   const handleSearchInput = (event) => {
     setSearchTerm(event.target.value);
