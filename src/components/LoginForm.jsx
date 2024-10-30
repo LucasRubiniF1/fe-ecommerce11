@@ -16,7 +16,7 @@ const LoginForm = ({ onLogin, error, onRegister }) => {
         onSubmit={handleSubmit}
       >
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
-          Iniciar sesión en E-Techno
+          Iniciar sesión
         </h2>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>

@@ -96,22 +96,6 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
         />
       </div>
 
-      {/* Campo para seleccionar el rol */}
-      <div className="mb-4">
-        <label htmlFor="role" className="block text-sm font-medium text-gray-700">Rol</label>
-        <select
-          id="role"
-          name="role"
-          className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md"
-          value={formData.role}
-          onChange={handleChange}
-        >
-          <option value="User">User</option>
-          <option value="Admin">Admin</option>
-        </select>
-        {error && <div className="bg-red-500 text-red p-3 rounded mb-4">{error}</div>}
-      </div>
-
       {/* Botón de envío */}
       <div className="mb-6">
         <button
