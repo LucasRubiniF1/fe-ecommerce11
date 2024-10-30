@@ -1,3 +1,4 @@
+
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -9,7 +10,10 @@ import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
-import EditAccount from "./pages/editAccount";
+import EditAccount from "./pages/EditAccount";
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage'; 
+
 
 const App = () => {
   return (
@@ -26,6 +30,8 @@ const App = () => {
               <Route path="/product/create" element={<ProductCreate />} />
               <Route path="/account" element={<Account />} />
               <Route path="/edit-account" element={<EditAccount />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
             </Routes>
           </div>
         </div>
