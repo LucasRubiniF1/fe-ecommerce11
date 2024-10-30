@@ -8,7 +8,7 @@ const ProductSearch = () => {
   const { filteredProducts } = location.state || { filteredProducts: [] };
   return(
     <>
-      <Navbar /> 
+      
       <div>
           <h2 className="text-2xl font-bold mb-4">Resultados de búsqueda</h2>
           {filteredProducts.length > 0 ? (
