@@ -1,11 +1,17 @@
 // Carousel.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+
 //HACER EN EL JSON VARIAS IMAGENES POR PRODUCTO Y ESTRUCTURARLO MEJOR
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
   const navigate = useNavigate();
+  const [isFavorite, setIsFavorite] = useState(false);
+
 
   const nextPage = () => {
     if (startIndex + itemsPerPage < products.length) {
@@ -18,6 +24,12 @@ const Carousel = ({ products, titulo }) => {
       setStartIndex(startIndex - itemsPerPage);
     }
   };
+
+  
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
 
   const handleClick = (product) => {
     navigate(`/product/${product.product_id}`, { state: product });
@@ -35,8 +47,11 @@ const Carousel = ({ products, titulo }) => {
           ←
         </button>
 
+        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.slice(startIndex, startIndex + itemsPerPage).map((product) => (
+              
               <div 
                 key={product.product_id} 
                 className="border rounded-lg p-4 shadow-lg transition-transform duration-300 transform hover:scale-105"
@@ -52,6 +67,8 @@ const Carousel = ({ products, titulo }) => {
                 <p className="text-green-500 font-bold mt-2">${product.price}</p>
                 <p className="text-gray-500">Stock: {product.stock}</p>
               </div>
+
+              
             ))}
           </div>
 
