@@ -1,49 +1,42 @@
 import React, { useState } from "react";
+import "../styles/editMyAccount.css";
 
 const EditAccount = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    // Otros campos que el usuario pueda editar
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simular acción de edición aquí
-    console.log("Datos enviados: ", formData);
+  const handleSaveChanges = () => {
+    console.log("Cambios guardados:", { username, email });
   };
 
   return (
     <div className="edit-account-container">
-      <h1>Edita tu cuenta</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Guardar cambios</button>
-      </form>
+      <h2>Edita tu cuenta</h2>
+      <div className="form-group">
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Ejemplo: Juan Cruz"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Ejemplo: example@correo.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
+      <button className="btn-save" onClick={handleSaveChanges}>
+        Guardar cambios
+      </button>
     </div>
   );
 };
