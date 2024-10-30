@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProductGrid from '../components/ProductGrid';
-import products from '/public/products.json';
+import products from '/public/data/products.json';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
