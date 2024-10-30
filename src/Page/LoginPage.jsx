@@ -18,7 +18,11 @@ const LoginPage = () => {
   const handleLogin = ({ email, password }) => {
     const user = users.find(user => user.email === email && user.password === password);
     if (user) {
-      navigate('/home '); 
+      if (user.role === 'ADMIN') {
+        navigate('/editor');  // Redirige al editor si es admin
+      } else {
+        navigate('/home');    // Redirige al home si es user
+      }
     } else {
       setError('Incorrect username or password');
     }
