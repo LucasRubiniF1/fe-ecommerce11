@@ -16,10 +16,6 @@ const Home = () => {
       .then((data) => {
         setProductsCel(data.filter(product => product.category === "Celular"));
         setProductsTel(data.filter(product => product.category === "Televisor"));
-
-        console.log('Productos Celulares:', data.filter(product => product.category === "Celular"));
-        console.log('Productos Televisores:', data.filter(product => product.category === "Televisor"));
-
       })
       .catch((error) => console.error('Error al traer los productos:', error));
   }, []);

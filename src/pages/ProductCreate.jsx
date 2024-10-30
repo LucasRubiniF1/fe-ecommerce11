@@ -1,19 +1,40 @@
-import React, { useState } from 'react';
-import { Button, Container, Form, Alert, Row, Col } from 'react-bootstrap';
+// src/components/CreateProduct.jsx
+import React, { useState, useEffect } from 'react';
+import { Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from "../utils";
 import { useNavigate } from 'react-router-dom';
+import ProductForm from '../components/ProductForm';
 
 const ProductCreate = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    product_id: null,
     name: '',
     price: '',
     description: '',
-    image: ''
+    images: '',
+    stock: '',
+    category: '',
+    isFeatured: false,
   });
+
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    // Obtener la lista de productos para determinar el último ID
+    axios.get('http://localhost:5000/products')
+      .then(response => {
+        const products = response.data;
+        const lastId = products.length > 0 ? Math.max(...products.map(product => product.product_id)) : 0;
+        setFormData(prev => ({ ...prev, product_id: lastId + 1 })); // Asigna el próximo ID disponible
+      })
+      .catch(error => {
+        console.error("Error al obtener productos:", error);
+        setError('No se pudo cargar la lista de productos.');
+      });
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -24,8 +45,11 @@ const ProductCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null); // Resetear error al intentar registrar
+    setSuccess(false);
+
     try {
-      await axios.post(`${API_URL}/data/products`, formData);
+      await axios.post('http://localhost:5000/products', formData);
       setSuccess(true);
       navigate('/');
     } catch (error) {
@@ -34,81 +58,15 @@ const ProductCreate = () => {
   };
 
   return (
-    <Container className="my-5" style={{ maxWidth: '600px', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ color: '#1428A0', textAlign: 'center', marginBottom: '30px' }}>Create New Product</h1>
-
+    <div>
       {error && <Alert variant="danger">{error}</Alert>}
       {success && <Alert variant="success">Product created successfully!</Alert>}
-
-      <Form onSubmit={handleSubmit} style={{ padding: '20px', background: '#f5f5f5', borderRadius: '10px' }}>
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Product Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter product name"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formPrice">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            placeholder="Enter product price"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Enter product description"
-            rows={3}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formImage">
-          <Form.Label>Image URL</Form.Label>
-          <Form.Control
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            placeholder="Enter image URL"
-            required
-          />
-        </Form.Group>
-
-        <Row>
-          <Col className="text-center">
-            <Button
-              variant="primary"
-              type="submit"
-              style={{
-                backgroundColor: '#1428A0',
-                borderColor: '#1428A0',
-                borderRadius: '50px',
-                padding: '10px 30px',
-                fontSize: '16px',
-              }}
-            >
-              Create Product
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+      <ProductForm
+        formData={formData}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+    </div>
   );
 };
 

@@ -1,61 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// src/components/ProductForm.jsx
+import React from 'react';
+import { Button, Form, Row, Col, Container } from 'react-bootstrap';
 
-const ProductForm = ({ product, onSubmit }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    category: '',
-    isFeatured: false,
-  });
-
-  useEffect(() => {
-    if (product) {
-      setFormData({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        stock: product.stock,
-        category: product.category,
-        isFeatured: product.is_featured,
-      });
-    }
-  }, [product]);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
+const ProductForm = ({ formData, handleChange, handleSubmit }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Product Name" required />
-      <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
-      <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
-      <input type="number" name="stock" value={formData.stock} onChange={handleChange} placeholder="Stock" required />
-      <input type="text" name="category" value={formData.category} onChange={handleChange} placeholder="Category" required />
-      <label>
-        <input type="checkbox" name="isFeatured" checked={formData.isFeatured} onChange={handleChange} />
-        Featured
-      </label>
-      <button type="submit">Save Product</button>
-    </form>
-  );
-};
+    <Container className="my-5" style={{ maxWidth: '600px', fontFamily: 'Arial, sans-serif' }}>
+      <h1 style={{ color: '#1428A0', textAlign: 'center', marginBottom: '30px' }}>Create New Product</h1>
 
-ProductForm.propTypes = {
-  product: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
+      <Form onSubmit={handleSubmit} style={{ padding: '20px', background: '#f5f5f5', borderRadius: '10px' }}>
+        <Form.Group className="mb-3" controlId="formName">
+          <Form.Label>Product Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Enter product name"
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formPrice">
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            placeholder="Enter product price"
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formStock">
+          <Form.Label>Stock</Form.Label>
+          <Form.Control
+            type="number"
+            name="stock"
+            value={formData.stock}
+            onChange={handleChange}
+            placeholder="Enter product stock"
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formCategory">
+          <Form.Label>Category</Form.Label>
+          <Form.Select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select a category</option>
+            <option value="Celulares">Celulares</option>
+            <option value="Computadora">Computadoras</option>
+            <option value="Televisores">Televisores</option>
+            <option value="Audio y Video">Video y Audio</option>
+            <option value="Camaras y accesorios">Camaras y accesorios</option>
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter product description"
+            rows={3}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formImage">
+          <Form.Label>Image URL</Form.Label>
+          <Form.Control
+            type="text"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            placeholder="Enter image URL"
+            required
+          />
+        </Form.Group>
+
+        <Row>
+          <Col className="text-center">
+            <Button
+              variant="primary"
+              type="submit"
+              style={{
+                backgroundColor: '#1428A0',
+                borderColor: '#1428A0',
+                borderRadius: '50px',
+                padding: '10px 30px',
+                fontSize: '16px',
+              }}
+            >
+              Create Product
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    </Container>
+  );
 };
 
 export default ProductForm;
