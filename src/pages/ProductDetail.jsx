@@ -1,35 +1,21 @@
+import { useLocation } from 'react-router-dom';
 
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import useFetch from '../hooks/useFetch';
-import { API_URL } from "../utils";
-import ErrorAlert from '../components/ErrorAlert';
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const { data: products, loading, error } = useFetch(`${API_URL}/data/products.json`);
-
-  if (loading) {
-    return <p>Loading product...</p>;
-  }
-
-  if (error) {
-    return <ErrorAlert message={error.message} />;
-  }
-
-  const foundProduct = products ? products.find(product => product.id === parseInt(id)) : null;
-
-  if (!foundProduct) {
-    return <p>Product not found</p>;
-  }
+  const location = useLocation();
+  const product = location.state;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <img src={foundProduct.images || 'https://via.placeholder.com/300'} alt={foundProduct.name} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
-      <h1>{foundProduct.name}</h1>
-      <p>{foundProduct.description}</p>
-      <strong>${foundProduct.price}</strong>
-      <Link to={`/product/edit/${foundProduct.id}`}>Edit Product</Link>
+    <div className="p-6">
+      <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
+      <img
+        src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
+        alt={product.name}
+        className="w-full h-80 object-contain mb-6"
+      />
+      <p className="text-lg">{product.description}</p>
+      <p className="text-2xl font-bold text-green-500 my-4">${product.price}</p>
+      <p className="text-gray-500">Stock: {product.stock}</p>
     </div>
   );
 };
