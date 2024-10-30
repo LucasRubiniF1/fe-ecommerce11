@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "postcss": "^8.4.47",
