@@ -17,7 +17,6 @@ import Home from "./pages/Home";
 const App = () => {
   return (
     <Router>
-      <Navbar />
       <div className="app-container">
         <div className="main-content">
           <div className="page-content">
@@ -35,8 +34,6 @@ const App = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </Router>
   );
 };
