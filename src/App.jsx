@@ -13,6 +13,7 @@ import EditAccount from "./pages/EditAccount";
 import LoginPage from './pages/LoginPage'; 
 import RegisterPage from './pages/RegisterPage'; 
 import Home from './pages/Home'; 
+import ProductPage from './pages/ProductPage';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="/edit-account" element={<EditAccount />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/products" element={<ProductPage />} />
               <Route path="/" element={<Home />} />
             </Routes>
           </div>
