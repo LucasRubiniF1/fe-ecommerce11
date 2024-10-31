@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BsCart, BsHeart } from 'react-icons/bs'; 
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/store.js";
 
 const Carousel = ({ products, titulo }) => {
@@ -58,15 +58,15 @@ const Carousel = ({ products, titulo }) => {
               <div className="flex gap-4 mt-4">
                 <button
                   onClick={() => addToCart(product)}
-                  className="bg-black text-white p-3 rounded-full hover:bg-gray-800 transition"
+                  className="text-black hover:text-gray-600 cursor-pointer"
                 >
-                  <BsCart size={24} /> {/* Icono del carrito */}
+                  <FaShoppingCart size={24} /> {/* Icono del carrito */}
                 </button>
                 <button
                   onClick={() => addToWishlist(product)}
-                  className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition"
+                  className="text-black hover:text-gray-600 cursor-pointer"
                 >
-                  <BsHeart size={24} /> {/* Icono de wishlist */}
+                  <FaHeart size={24} /> {/* Icono de wishlist */}
                 </button>
               </div>
             </div>
