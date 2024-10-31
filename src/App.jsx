@@ -1,9 +1,6 @@
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
@@ -13,6 +10,9 @@ import EditAccount from "./pages/EditAccount";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Home from "./pages/Home";
+import Cart from "./pages/Cart"
+import Checkout from "./pages/Checkout"
+import Wishlist from "./pages/Wishlist";
 
 const App = () => {
   return (
@@ -29,6 +29,9 @@ const App = () => {
               <Route path="/edit-account" element={<EditAccount />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/cart" element={ <Cart/> }/>
+              <Route path="/wishlist" element={ <Wishlist/> }/>
+              <Route path="/checkout/:userId" element={ <Checkout/> }/>
               <Route path="/" element={<Home />} />
             </Routes>
           </div>
