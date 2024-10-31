@@ -23,6 +23,12 @@ const useStore = create((set) => ({
       cart: state.cart.filter((item) => item.id !== productId),
     })),
 
+
+    removeFromWishlist: (productId) =>
+      set((state) => ({
+        wishlist: state.wishlist.filter((item) => item.id !== productId),
+      })),
+
   updateQuantity: (productId, quantity) =>
     set((state) => ({
       cart: state.cart.map((item) =>
