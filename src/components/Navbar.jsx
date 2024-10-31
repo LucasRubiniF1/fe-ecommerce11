@@ -28,6 +28,14 @@ const Navbar = ({ onSearch }) => {
     navigate("/");
   };
 
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
+
+  const handleWishlistClick = () => {
+    navigate("/wishlist");
+  };
+
   const handleDropdown = () => {
     setShowDropdown(!showDropdown); // Mostrar/ocultar el menú desplegable
   };
@@ -148,20 +156,23 @@ Products
           <FaUser size={20} />
         </li>
         <div className="relative">
-          <li className="text-black hover:text-gray-600 cursor-pointer">
+          <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleCartClick}>
             <FaShoppingCart size={20} />
           </li>
-          <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
+           {/* <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
             3
           </span>
+          */}
         </div>
         <div className="relative">
-          <li className="text-black hover:text-gray-600 cursor-pointer">
+          <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleWishlistClick}>
             <FaHeart size={20} />
           </li>
-          <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          
+           {/* <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
             3
           </span>
+          */}
         </div>
       </ul>
     </nav>

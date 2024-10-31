@@ -27,7 +27,7 @@ const Home = () => {
   return (
     
     <>
-        <Navbar />    
+        
         <div className="w-full h-[87vh]">
             <img
               src="/samsung.jpg"
@@ -39,7 +39,7 @@ const Home = () => {
         {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
         {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
     
-        <Footer/>
+        
           </>
       );
     };

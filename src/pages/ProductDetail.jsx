@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
+
 const ProductDetail = () => {
   const location = useLocation();
   const product = location.state;
