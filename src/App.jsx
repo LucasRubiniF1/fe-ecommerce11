@@ -21,6 +21,7 @@ const App = () => {
 <Router>
       {/* Aplica un contenedor máximo y centra el contenido */}
       <div className="flex flex-col min-h-screen">
+      
         <Navbar />    
 
         {/* Contenedor principal con padding y background */}
