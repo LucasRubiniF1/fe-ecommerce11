@@ -25,7 +25,7 @@ const App = () => {
         <Navbar />    
 
         {/* Contenedor principal con padding y background */}
-        <main className="flex-grow bg-gray-100 p-4">
+        <main className="bg-gray-100">
           <Routes>
             <Route path="/productSearch" element={<ProductSearch />} />
             <Route path="/product/:id" element={<ProductDetail />} />
@@ -40,9 +40,10 @@ const App = () => {
             <Route path="/checkout/:userId" element={<Checkout />} />
             <Route path="/" element={<Home />} />
           </Routes>
-        </main>
+ 
 
         <Footer />
+        </main>
       </div>
     </Router>
   );
