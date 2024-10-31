@@ -18,28 +18,30 @@ import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <Router>
-      <div className="app-container">
-        <div className="main-content">
-          <div className="page-content">
-          <Navbar />    
-            <Routes>
-              <Route path="/productSearch" element={<ProductSearch />} />
-              <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/product/edit/:id" element={<ProductEdit />} />
-              <Route path="/product/create" element={<ProductCreate />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/edit-account" element={<EditAccount />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/cart" element={ <Cart/> }/>
-              <Route path="/wishlist" element={ <Wishlist/> }/>
-              <Route path="/checkout/:userId" element={ <Checkout/> }/>
-              <Route path="/" element={<Home />} />
-            </Routes>
-            <Footer/>
-          </div>
-        </div>
+<Router>
+      {/* Aplica un contenedor máximo y centra el contenido */}
+      <div className="flex flex-col min-h-screen">
+        <Navbar />    
+
+        {/* Contenedor principal con padding y background */}
+        <main className="flex-grow bg-gray-100 p-4">
+          <Routes>
+            <Route path="/productSearch" element={<ProductSearch />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/product/edit/:id" element={<ProductEdit />} />
+            <Route path="/product/create" element={<ProductCreate />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/edit-account" element={<EditAccount />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/checkout/:userId" element={<Checkout />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
+
+        <Footer />
       </div>
     </Router>
   );
