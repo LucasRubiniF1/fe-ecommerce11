@@ -7,6 +7,8 @@ const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
   const navigate = useNavigate();
+  const [isFavorite, setIsFavorite] = useState(false);
+
 
   const { addToCart, addToWishlist } = useStore(); 
 
@@ -21,6 +23,12 @@ const Carousel = ({ products, titulo }) => {
       setStartIndex(startIndex - itemsPerPage);
     }
   };
+
+  
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
 
   const handleClick = (product) => {
     navigate(`/product/${product.product_id}`, { state: product });
@@ -37,6 +45,8 @@ const Carousel = ({ products, titulo }) => {
         >
           ←
         </button>
+
+        
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.slice(startIndex, startIndex + itemsPerPage).map((product) => (
