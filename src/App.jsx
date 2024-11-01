@@ -39,7 +39,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/product/edit/:id" element={<ProductEdit />} />
+          <Route path="/product/edit" element={<ProductEdit />} />
           <Route path="/product/create" element={<ProductCreate />} />
           <Route path="/account" element={<Account />} />
           <Route path="/edit-account" element={<EditAccount />} />
