@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaTrash, FaEdit } from 'react-icons/fa'; // Íconos para eliminar y editar
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'; // Importa íconos modernos
+import { Alert, Container } from 'react-bootstrap';
 import useFetch from '../hooks/useFetch';
 import { API_URL } from "../utils";
 import axios from 'axios';
@@ -10,28 +12,33 @@ const ProductEdit = () => {
   const { data: products, loading, error } = useFetch(`${API_URL}/data/products.json`);
   const [editableProducts, setEditableProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para la barra de búsqueda
-  
+  const [updateError, setUpdateError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
   // Filtrar productos únicamente por nombre
-  const filteredProducts = products.filter(product => 
+  const filteredProducts = products ? products.filter(product => 
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ) : [];
 
   const handleEditClick = (product) => {
-    setEditableProducts([...editableProducts, product.id]);
+    setEditableProducts([...editableProducts, product.product_id]);
   };
 
   const handleSave = async (product) => {
     try {
-      await axios.put(`${API_URL}/data/products/${product.id}`, product);
-      setEditableProducts(editableProducts.filter(id => id !== product.id));
+      await axios.put(`${API_URL}/data/products/${product.product_id}`, product);
+      setEditableProducts(editableProducts.filter(id => id !== product.product_id));
+      setSuccess(true);
+      setUpdateError(null); // Resetear error
     } catch (error) {
       console.error('Error saving product:', error);
+      setUpdateError('Error saving product');
     }
   };
 
   const handleInputChange = (e, product, field) => {
     product[field] = e.target.value;
-    setEditableProducts([...editableProducts]);
+    setEditableProducts([...editableProducts]); // Forzar la re-renderización
   };
 
   const handleDelete = async (id) => {
@@ -40,6 +47,7 @@ const ProductEdit = () => {
       navigate(0); 
     } catch (error) {
       console.error('Error deleting product:', error);
+      setUpdateError('Error deleting product');
     }
   };
 
@@ -47,8 +55,11 @@ const ProductEdit = () => {
   if (error) return <p>Error fetching products: {error.message}</p>;
 
   return (
-    <div style={{ padding: '20px' }}>
+    <Container style={{ padding: '20px' }}>
       <h1>Edit Products</h1>
+
+      {updateError && <Alert variant="danger">{updateError}</Alert>}
+      {success && <Alert variant="success">Product updated successfully!</Alert>}
 
       {/* Barra de búsqueda para filtrar por nombre */}
       <input
@@ -76,9 +87,9 @@ const ProductEdit = () => {
         </thead>
         <tbody>
           {filteredProducts.map((product) => (
-            <tr key={product.id}>
+            <tr key={product.product_id}>
               <td>
-                {editableProducts.includes(product.id) ? (
+                {editableProducts.includes(product.product_id) ? (
                   <input 
                     type="text"
                     value={product.name}
@@ -89,7 +100,7 @@ const ProductEdit = () => {
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.id) ? (
+                {editableProducts.includes(product.product_id) ? (
                   <input 
                     type="number"
                     value={product.price}
@@ -100,7 +111,7 @@ const ProductEdit = () => {
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.id) ? (
+                {editableProducts.includes(product.product_id) ? (
                   <input 
                     type="text"
                     value={product.description}
@@ -111,18 +122,26 @@ const ProductEdit = () => {
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.id) ? (
+                {editableProducts.includes(product.product_id) ? (
                   <button onClick={() => handleSave(product)}>Save</button>
                 ) : (
-                  <FaEdit onClick={() => handleEditClick(product)} style={{ cursor: 'pointer', marginRight: '10px' }} />
+                  <FontAwesomeIcon 
+                    icon={faEdit} 
+                    onClick={() => handleEditClick(product)} 
+                    style={{ cursor: 'pointer', marginRight: '10px' }} 
+                  />
                 )}
-                <FaTrash onClick={() => handleDelete(product.id)} style={{ cursor: 'pointer', color: 'red' }} />
+                <FontAwesomeIcon 
+                  icon={faTrashAlt} 
+                  onClick={() => handleDelete(product.product_id)} 
+                  style={{ cursor: 'pointer', color: 'red' }} 
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </Container>
   );
 };
 
