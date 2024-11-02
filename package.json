@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "json-server": "json-server --watch ./test/resources/db.json --port 3001",
+    "json-server": "json-server --watch ./public/data/db.json --port 5000",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -17,6 +17,7 @@
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "framer-motion": "^10.18.0",
     "postcss": "^8.4.47",
     "prop-types": "^15.8.1",
     "prototype": "^0.0.5",
@@ -25,8 +26,7 @@
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-router-dom": "^6.27.0",
-    "zustand": "^5.0.1",
-    "framer-motion": "^10.16.4"
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
