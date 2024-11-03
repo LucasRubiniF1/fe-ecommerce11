@@ -11,7 +11,7 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch de todos los productos
-    fetch('/data/products.json')
+    fetch(' /data/products.json')
       .then((response) => response.json())
       .then((data) => {
         setProductsCel(data.filter(product => product.category === "Celular"));
