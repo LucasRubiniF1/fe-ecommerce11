@@ -183,6 +183,15 @@
       "stock": "23",
       "category": "Computadoras",
       "isFeatured": false
+    },
+    {
+      "id": "f2f1",
+      "name": "Notebook Lenovo",
+      "description": "asd",
+      "price": "21312",
+      "stock": "32",
+      "category": "Computadoras",
+      "isFeatured": false
     }
   ],
   "orders": [

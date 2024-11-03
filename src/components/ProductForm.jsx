@@ -10,6 +10,7 @@ const ProductForm = ({ product, onSubmit }) => {
     stock: '',
     category: '',
     isFeatured: false,
+    image: '', // Agregado para almacenar la URL de la imagen
   });
   const [success, setSuccess] = useState(false);
 
@@ -22,6 +23,7 @@ const ProductForm = ({ product, onSubmit }) => {
         stock: product.stock || '',
         category: product.category || '',
         isFeatured: product.isFeatured || false,
+        image: product.image || '', // Asegurarse de que se cargue la URL de la imagen si existe
       });
     }
   }, [product]);
@@ -45,7 +47,7 @@ const ProductForm = ({ product, onSubmit }) => {
     <Container className="my-5 d-flex justify-content-center" style={{ maxWidth: '600px' }}>
       <Row className="w-100">
         <Col>
-          <h1 style={{ color: '#1428A0', textAlign: 'center', marginBottom: '30px' }}>Product Form</h1>
+          <h1 style={{ color: '#1428A0', textAlign: 'center', marginBottom: '30px' }}>Product Create</h1>
           
           {success && <Alert variant="success">Product saved successfully!</Alert>}
 
@@ -107,6 +109,18 @@ const ProductForm = ({ product, onSubmit }) => {
                 value={formData.category}
                 onChange={handleChange}
                 placeholder="Enter product category"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formImage" className="mb-3">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control
+                type="text"
+                name="image"
+                value={formData.image}
+                onChange={handleChange}
+                placeholder="Enter image URL"
                 required
               />
             </Form.Group>
