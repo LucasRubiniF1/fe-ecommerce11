@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
-import users from '../resources/users.json'; 
+import users from '/public/data/users.json'; 
 import axios from 'axios';
 
 const LoginPage = () => {
@@ -19,9 +19,9 @@ const LoginPage = () => {
     const user = users.find(user => user.email === email && user.password === password);
     if (user) {
       if (user.role === 'ADMIN') {
-        navigate('/editor');  // Redirige al editor si es admin
+        navigate('/HomeAdm');  // Redirige al editor si es admin
       } else {
-        navigate('/home');    // Redirige al home si es user
+        navigate('/');    // Redirige al home si es user
       }
     } else {
       setError('Incorrect username or password');
