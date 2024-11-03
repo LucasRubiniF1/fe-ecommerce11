@@ -62,7 +62,8 @@
           "wishlist_id": 1,
           "product_id": 3
         }
-      ]
+      ],
+      "id": "2b38"
     },
     {
       "user_id": 2,
@@ -89,7 +90,8 @@
           "wishlist_id": 2,
           "product_id": 4
         }
-      ]
+      ],
+      "id": "a201"
     }
   ],
   "products": [
@@ -101,7 +103,8 @@
       "price": 799.99,
       "stock": 10,
       "category": "Electronics",
-      "is_featured": true
+      "is_featured": true,
+      "id": "8f89"
     },
     {
       "product_id": 2,
@@ -111,7 +114,8 @@
       "price": 399.99,
       "stock": 15,
       "category": "Electronics",
-      "is_featured": false
+      "is_featured": false,
+      "id": "9497"
     },
     {
       "product_id": 3,
@@ -121,7 +125,8 @@
       "price": 299.99,
       "stock": 5,
       "category": "Wearables",
-      "is_featured": true
+      "is_featured": true,
+      "id": "e5b9"
     },
     {
       "product_id": 4,
@@ -131,7 +136,53 @@
       "price": 199.99,
       "stock": 8,
       "category": "Accessories",
-      "is_featured": false
+      "is_featured": false,
+      "id": "c0a2"
+    },
+    {
+      "id": "5f5e",
+      "name": "Notebook Lenovo",
+      "description": "asd",
+      "price": "123",
+      "stock": "2",
+      "category": "Electrodomestico",
+      "isFeatured": true
+    },
+    {
+      "id": "07d1",
+      "name": "Laptop Lenovo IdeaPad 3",
+      "description": "Laptop Lenovo IdeaPad 3 con procesador AMD Ryzen 5, 8GB de RAM y 256GB SS",
+      "price": "749.99",
+      "stock": "30",
+      "category": "Computadoras",
+      "isFeatured": false
+    },
+    {
+      "id": "f182",
+      "name": "Notebook Lenovo",
+      "description": "test",
+      "price": "123",
+      "stock": "12",
+      "category": "Computadoras",
+      "isFeatured": false
+    },
+    {
+      "id": "9f78",
+      "name": "Notebook Lenovo",
+      "description": "asd",
+      "price": "123123123",
+      "stock": "23",
+      "category": "Computadoras",
+      "isFeatured": false
+    },
+    {
+      "id": "996f",
+      "name": "Notebook Lenovo",
+      "description": "asd",
+      "price": "123123",
+      "stock": "23",
+      "category": "Computadoras",
+      "isFeatured": false
     }
   ],
   "orders": [
@@ -158,7 +209,8 @@
           "quantity": 2,
           "total_price": 799.98
         }
-      ]
+      ],
+      "id": "0055"
     }
   ],
   "transactions": [
@@ -168,29 +220,34 @@
       "transaction_date": "2023-10-01",
       "amount": 1599.97,
       "payment_method": "credit_card",
-      "status": "completed"
+      "status": "completed",
+      "id": "e4ef"
     }
   ],
   "wishlist": [
     {
       "wishlist_id": 1,
       "user_id": 1,
-      "product_id": 3
+      "product_id": 3,
+      "id": "235d"
     },
     {
       "wishlist_id": 2,
       "user_id": 2,
-      "product_id": 4
+      "product_id": 4,
+      "id": "dc4c"
     }
   ],
   "cart": [
     {
       "cart_id": 1,
-      "user_id": 1
+      "user_id": 1,
+      "id": "2de2"
     },
     {
       "cart_id": 2,
-      "user_id": 2
+      "user_id": 2,
+      "id": "4e2d"
     }
   ],
   "cartItem": [
@@ -198,19 +255,22 @@
       "cartItem_id": 1,
       "cart_id": 1,
       "product_id": 1,
-      "quantity": 1
+      "quantity": 1,
+      "id": "b8c5"
     },
     {
       "cartItem_id": 2,
       "cart_id": 1,
       "product_id": 2,
-      "quantity": 2
+      "quantity": 2,
+      "id": "3f62"
     },
     {
       "cartItem_id": 3,
       "cart_id": 2,
       "product_id": 3,
-      "quantity": 1
+      "quantity": 1,
+      "id": "d328"
     }
   ]
 }

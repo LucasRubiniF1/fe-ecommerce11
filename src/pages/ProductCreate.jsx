@@ -1,139 +1,75 @@
-import React, { useState } from 'react';
-import { Button, Container, Form, Alert, Row, Col } from 'react-bootstrap';
+// src/components/ProductCreate.jsx
+import React, { useState, useEffect } from 'react';
+import { Alert, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from "../utils";
-import { useNavigate } from 'react-router-dom';
+import ProductForm from '../components/ProductForm';
 
 const ProductCreate = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    product_id: null,
     name: '',
-    price: '',
     description: '',
-    image: '',
-    stock: '', // Añadir stock al estado
-    category: '' // Añadir categoría al estado
+    price: '',
+    stock: '',
+    category: '',
+    isFeatured: false,
   });
+
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  useEffect(() => {
+    // Obtener la lista de productos para determinar el último ID
+    axios.get(`${API_URL}/products`)
+      .then(response => {
+        const products = response.data;
+        const lastId = products.length > 0 ? Math.max(...products.map(product => product.product_id)) : 0;
+        setFormData(prev => ({ ...prev, product_id: lastId + 1 }));
+      })
+      .catch(error => {
+        console.error("Error al obtener productos:", error);
+        setError('No se pudo cargar la lista de productos.');
+      });
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (formData) => {
+    setError(null);
+    setSuccess(false);
+
     try {
-      await axios.post(`${API_URL}/data/products`, formData);
+      const response = await axios.post(`${API_URL}/products`, formData);
       setSuccess(true);
-      navigate('/');
+      console.log("Producto creado:", response.data); // Verifica el producto en la consola
+
+      // Restablecer el formulario después de un breve retraso
+      setTimeout(() => {
+        setSuccess(false);
+        setFormData({
+          product_id: formData.product_id + 1,
+          name: '',
+          description: '',
+          price: '',
+          stock: '',
+          category: '',
+          isFeatured: false,
+        });
+      }, 2000); // Puedes ajustar el tiempo según prefieras
+
     } catch (error) {
-      setError('Error creating product');
+      setError('Error al crear el producto');
+      console.error("Error creando producto:", error);
     }
   };
 
   return (
-    <Container className="my-5" style={{ maxWidth: '600px', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ color: '#1428A0', textAlign: 'center', marginBottom: '30px' }}>Create New Product</h1>
-
+    <Container style={{ maxWidth: '600px', marginTop: '20px' }}>
       {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">Product created successfully!</Alert>}
-
-      <Form onSubmit={handleSubmit} style={{ padding: '20px', background: '#f5f5f5', borderRadius: '10px' }}>
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Product Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter product name"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formPrice">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            placeholder="Enter product price"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Enter product description"
-            rows={3}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formImage">
-          <Form.Label>Image URL</Form.Label>
-          <Form.Control
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            placeholder="Enter image URL"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formStock">
-          <Form.Label>Stock</Form.Label>
-          <Form.Control
-            type="number"
-            name="stock"
-            value={formData.stock}
-            onChange={handleChange}
-            placeholder="Enter stock amount"
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formCategory">
-          <Form.Label>Category</Form.Label>
-          <Form.Control
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            placeholder="Enter product category"
-            required
-          />
-        </Form.Group>
-
-        <Row>
-          <Col className="text-center">
-            <Button
-              variant="primary"
-              type="submit"
-              style={{
-                backgroundColor: '#1428A0',
-                borderColor: '#1428A0',
-                borderRadius: '50px',
-                padding: '10px 30px',
-                fontSize: '16px',
-              }}
-            >
-              Create Product
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+      {success && <Alert variant="success">¡Producto creado exitosamente!</Alert>}
+      <ProductForm
+        product={formData}
+        onSubmit={handleSubmit}
+      />
     </Container>
   );
 };
