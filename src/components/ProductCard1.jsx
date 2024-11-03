@@ -60,10 +60,12 @@ const ProductCard1 = ({ product }) => {
                     Add to Cart
                   </button>
                   <button
-                    onClick={() => addToWishlist(product)}
-                    className="p-3 rounded-xl border border-gray-200 text-gray-600 hover:text-red-500 hover:border-red-500 transition-colors duration-300"
+                    onClick={() => {addToWishlist(product); toggleFavorite();}}
+                    
+                    className="p-3 rounded-xl border border-gray-200 text-gray-600 text-red-500 text-lg focus:outline-none "
                   >
-                    <FaHeart size={20} />
+                    <FontAwesomeIcon icon={isFavorite ? solidHeart : regularHeart} />
+                    
                   </button>
                 </div>
               </div>
