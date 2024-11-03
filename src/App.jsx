@@ -32,6 +32,10 @@ const AppContent = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+      
       {/* Selección de Navbar según la ruta */}
       {location.pathname === '/homeAdmin' ? <NavbarAdm /> : <Navbar />}
 
@@ -44,7 +48,6 @@ const AppContent = () => {
           <Route path="/product/create" element={<ProductCreate />} />
           <Route path="/account" element={<Account />} />
           <Route path="/edit-account" element={<EditAccount />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
