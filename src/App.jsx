@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar";
 import NavbarAdm from "./components/NavbarAdm";
 import Footer from "./components/Footer";
 import HomeAdm from "./pages/HomeAdm";
+import ProductPage from "./pages/ProductPage";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const AppContent = () => {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout/:userId" element={<Checkout />} />
           <Route path="/" element={<Home />} />
+          <Route path="/products" element={<ProductPage />} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
         </Routes>
       </main>
