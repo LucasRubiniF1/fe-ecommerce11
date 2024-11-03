@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import '../index.css';
-import Navbar from '../components/Navbar';
 import Carousel from '../components/Carousel';
-import Footer from '../components/Footer';
 import axios from 'axios';
+
 
 
 const Home = () => {
@@ -11,11 +10,13 @@ const Home = () => {
   const [productsTel, setProductsTel] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/products')
-      .then((response) => {
-        const data = response.data; // Extraer los datos directamente de response
+    fetch(' /data/products.json')
+      .then((response) => response.json())
+      .then((data) => {
         setProductsCel(data.filter(product => product.category === "Celular"));
         setProductsTel(data.filter(product => product.category === "Televisor"));
+
+
       })
       .catch((error) => {
         console.error('Error al traer los productos:', error);
@@ -25,7 +26,7 @@ const Home = () => {
   return (
     
     <>
-        <Navbar />    
+        
         <div className="w-full h-[87vh]">
             <img
               src="/samsung.jpg"
@@ -37,7 +38,7 @@ const Home = () => {
         {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
         {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
     
-        <Footer/>
+        
           </>
       );
     };

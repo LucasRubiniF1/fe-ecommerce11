@@ -1,0 +1,216 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "username": "john_doe",
+      "password": "hashed_password",
+      "email": "john.doe@example.com",
+      "birth_date": "1990-01-01",
+      "firstname": "John",
+      "lastname": "Doe",
+      "role": "customer",
+      "cart": {
+        "cart_id": 1,
+        "items": [
+          {
+            "cartItem_id": 1,
+            "product_id": 1,
+            "quantity": 1
+          },
+          {
+            "cartItem_id": 2,
+            "product_id": 2,
+            "quantity": 3
+          }
+        ]
+      },
+      "orders": [
+        {
+          "order_id": 1,
+          "order_date": "2023-10-01",
+          "status": "completed",
+          "total_amount": 1599.97,
+          "order_details": [
+            {
+              "order_detail_id": 1,
+              "product_id": 1,
+              "unit_price": 799.99,
+              "quantity": 1,
+              "total_price": 799.99
+            },
+            {
+              "order_detail_id": 2,
+              "product_id": 2,
+              "unit_price": 399.99,
+              "quantity": 2,
+              "total_price": 799.98
+            }
+          ],
+          "transactions": [
+            {
+              "transaction_id": 1,
+              "transaction_date": "2023-10-01",
+              "amount": 1599.97,
+              "payment_method": "credit_card",
+              "status": "completed"
+            }
+          ]
+        }
+      ],
+      "wishlist": [
+        {
+          "wishlist_id": 1,
+          "product_id": 3
+        }
+      ]
+    },
+    {
+      "user_id": 2,
+      "username": "jane_smith",
+      "password": "hashed_password",
+      "email": "jane.smith@example.com",
+      "birth_date": "1985-05-12",
+      "firstname": "Jane",
+      "lastname": "Smith",
+      "role": "customer",
+      "cart": {
+        "cart_id": 2,
+        "items": [
+          {
+            "cartItem_id": 3,
+            "product_id": 3,
+            "quantity": 1
+          }
+        ]
+      },
+      "orders": [],
+      "wishlist": [
+        {
+          "wishlist_id": 2,
+          "product_id": 4
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "product_id": 1,
+      "name": "Laptop HP",
+      "description": "Laptop HP 15' con 16GB de RAM",
+      "images": "https://mexx-img-2019.s3.amazonaws.com/Notebook-Hp-255-G9-Ryzen-3-3250U-8Gb-256Gb-15_47530_5.jpeg",
+      "price": 799.99,
+      "stock": 10,
+      "category": "Electronics",
+      "is_featured": true
+    },
+    {
+      "product_id": 2,
+      "name": "Teléfono Samsung Galaxy",
+      "description": "Teléfono Samsung Galaxy S21",
+      "images": "https://static.hendel.com/media/catalog/product/cache/0c3e9ac8430b5a3e77d1544ae1698a10/5/1/51037_4-min.jpg",
+      "price": 399.99,
+      "stock": 15,
+      "category": "Electronics",
+      "is_featured": false
+    },
+    {
+      "product_id": 3,
+      "name": "Smartwatch Garmin",
+      "description": "Smartwatch Garmin Fenix 6",
+      "images": "https://res.garmin.com/transform/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.0,f_auto,h_400,q_auto,w_400/c_pad,h_400,w_400/v1/Product_Images/en/products/010-02383-00/v/cf-xl-5a1beab7-1947-4a99-977f-5cbb6fbd488e?pgw=1",
+      "price": 299.99,
+      "stock": 5,
+      "category": "Wearables",
+      "is_featured": true
+    },
+    {
+      "product_id": 4,
+      "name": "Audífonos Bose",
+      "description": "Audífonos Bose con cancelación de ruido",
+      "images": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQtycqgRhAeefRvGcmAEemjMSwvvdrELCWxWlbnOqsjuVzSbtPKVMa3H1EyPn6a70teAr5-gG88tg4GP4MbKxt3ByVimr9jg0cmJl1dDQNR&usqp=CAE",
+      "price": 199.99,
+      "stock": 8,
+      "category": "Accessories",
+      "is_featured": false
+    }
+  ],
+  "orders": [
+    {
+      "order_id": 1,
+      "user_id": 1,
+      "order_date": "2023-10-01",
+      "status": "completed",
+      "total_amount": 1599.97,
+      "order_details": [
+        {
+          "order_detail_id": 1,
+          "order_id": 1,
+          "product_id": 1,
+          "unit_price": 799.99,
+          "quantity": 1,
+          "total_price": 799.99
+        },
+        {
+          "order_detail_id": 2,
+          "order_id": 1,
+          "product_id": 2,
+          "unit_price": 399.99,
+          "quantity": 2,
+          "total_price": 799.98
+        }
+      ]
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": 1,
+      "order_id": 1,
+      "transaction_date": "2023-10-01",
+      "amount": 1599.97,
+      "payment_method": "credit_card",
+      "status": "completed"
+    }
+  ],
+  "wishlist": [
+    {
+      "wishlist_id": 1,
+      "user_id": 1,
+      "product_id": 3
+    },
+    {
+      "wishlist_id": 2,
+      "user_id": 2,
+      "product_id": 4
+    }
+  ],
+  "cart": [
+    {
+      "cart_id": 1,
+      "user_id": 1
+    },
+    {
+      "cart_id": 2,
+      "user_id": 2
+    }
+  ],
+  "cartItem": [
+    {
+      "cartItem_id": 1,
+      "cart_id": 1,
+      "product_id": 1,
+      "quantity": 1
+    },
+    {
+      "cartItem_id": 2,
+      "cart_id": 1,
+      "product_id": 2,
+      "quantity": 2
+    },
+    {
+      "cartItem_id": 3,
+      "cart_id": 2,
+      "product_id": 3,
+      "quantity": 1
+    }
+  ]
+}

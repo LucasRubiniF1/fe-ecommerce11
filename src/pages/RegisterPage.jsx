@@ -76,7 +76,7 @@ const RegisterPage = () => {
 
   const handleCloseSuccess = () => {
     setSuccessMessage(false);
-    navigate('/'); // Redirigir a la página de inicio de sesión
+    navigate('/login'); // Redirigir a la página de inicio de sesión
   };
 
   return (
