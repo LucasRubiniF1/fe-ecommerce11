@@ -22,7 +22,7 @@ const ProductEdit = () => {
 
   const handleSave = async (product) => {
     try {
-      await axios.put(`${API_URL}/data/products/${product.product_id}`, product);
+      await axios.put('/data/products/${product.product_id}', product);
       setEditableProducts(editableProducts.filter(id => id !== product.product_id));
     } catch (error) {
       console.error('Error saving product:', error);
