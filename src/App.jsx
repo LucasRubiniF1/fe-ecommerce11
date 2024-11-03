@@ -53,7 +53,7 @@ const AppContent = () => {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout/:userId" element={<Checkout />} />
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductPage />} />
+          <Route path="/products/:category" element={<ProductPage />} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
         </Routes>
       </main>
