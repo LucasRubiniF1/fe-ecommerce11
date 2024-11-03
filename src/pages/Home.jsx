@@ -12,9 +12,9 @@ const Home = () => {
     axios.get('http://localhost:5000/products')
       .then((response) => {
         const data = response.data; // Extraer los datos directamente de response
-        
-        setProductsCel(data.products.filter(product => product.category === "Celular"));
-        setProductsTel(data.products.filter(product => product.category === "Televisor"));
+        console.log(data);
+        setProductsCel(data.filter(product => product.category === "Celular"));
+        setProductsTel(data.filter(product => product.category === "Televisor"));
       })
       .catch((error) => {
         console.error('Error al traer los productos:', error);
