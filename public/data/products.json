@@ -1,5 +1,4 @@
-{
-  "products": [
+ [
     {
       "product_id": 1,
       "name": "Laptop HP",
@@ -365,4 +364,3 @@
       "image": "https://multipoint.com.ar/Image/0/750_750-i57.jpg"
     }
   ]
-}

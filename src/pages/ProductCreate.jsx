@@ -5,6 +5,7 @@ import axios from 'axios';
 import { API_URL } from "../utils";
 import { useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
+import products from '/public/data/products.json'; 
 
 const ProductCreate = () => {
   const navigate = useNavigate();
@@ -23,18 +24,18 @@ const ProductCreate = () => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // Obtener la lista de productos para determinar el último ID
-    axios.get('http://localhost:5000/products')
+    axios.get(`${API_URL}/products`)
       .then(response => {
         const products = response.data;
         const lastId = products.length > 0 ? Math.max(...products.map(product => product.product_id)) : 0;
-        setFormData(prev => ({ ...prev, product_id: lastId + 1 })); // Asigna el próximo ID disponible
+        setFormData(prev => ({ ...prev, product_id: lastId + 1 }));
       })
       .catch(error => {
         console.error("Error al obtener productos:", error);
         setError('No se pudo cargar la lista de productos.');
       });
   }, []);
+  
 
   const handleChange = (e) => {
     setFormData({
@@ -49,7 +50,7 @@ const ProductCreate = () => {
     setSuccess(false);
 
     try {
-      await axios.post('http://localhost:5000/products', formData);
+      await axios.post(`${API_URL}/products`, formData);
       setSuccess(true);
       navigate('/');
     } catch (error) {
