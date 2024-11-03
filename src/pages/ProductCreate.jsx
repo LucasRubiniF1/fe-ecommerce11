@@ -10,7 +10,9 @@ const ProductCreate = () => {
     name: '',
     price: '',
     description: '',
-    image: ''
+    image: '',
+    stock: '', // Añadir stock al estado
+    category: '' // Añadir categoría al estado
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -86,6 +88,30 @@ const ProductCreate = () => {
             value={formData.image}
             onChange={handleChange}
             placeholder="Enter image URL"
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formStock">
+          <Form.Label>Stock</Form.Label>
+          <Form.Control
+            type="number"
+            name="stock"
+            value={formData.stock}
+            onChange={handleChange}
+            placeholder="Enter stock amount"
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formCategory">
+          <Form.Label>Category</Form.Label>
+          <Form.Control
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter product category"
             required
           />
         </Form.Group>
