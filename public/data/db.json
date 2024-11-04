@@ -8,7 +8,7 @@
       "birth_date": "1990-01-01",
       "firstname": "John",
       "lastname": "Doe",
-      "role": "customer",
+      "role": "USER",
       "cart": {
         "cart_id": 1,
         "items": [
@@ -73,7 +73,7 @@
       "birth_date": "1985-05-12",
       "firstname": "Jane",
       "lastname": "Smith",
-      "role": "customer",
+      "role": "USER",
       "cart": {
         "cart_id": 2,
         "items": [
@@ -92,6 +92,46 @@
         }
       ],
       "id": "fa44"
+    },
+    {
+      "id": 3,
+      "username": "mariafernandez@example.com",
+      "email": "mariafernandez@example.com",
+      "password": "mariafernandez_password",
+      "birth": "1992-03-22",
+      "firstname": "María",
+      "lastname": "Fernández",
+      "role": "ADMIN"
+    },
+    {
+      "id": 4,
+      "username": "pedrolopez@example.com",
+      "email": "pedrolopez@example.com",
+      "password": "pedrolopez_password",
+      "birth": "1988-07-30",
+      "firstname": "Pedro",
+      "lastname": "López",
+      "role": "USER"
+    },
+    {
+      "id": 5,
+      "username": "luisaortiz@example.com",
+      "email": "luisaortiz@example.com",
+      "password": "luisaortiz_password",
+      "birth": "1990-11-05",
+      "firstname": "Luisa",
+      "lastname": "Ortiz",
+      "role": "USER"
+    },
+    {
+      "id": 6,
+      "username": "josegarcia@example.com",
+      "email": "josegarcia@example.com",
+      "password": "josegarcia_password",
+      "birth": "1987-09-12",
+      "firstname": "José",
+      "lastname": "García",
+      "role": "ADMIN"
     }
   ],
   "products": [

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
-import users from '/public/data/users.json'; 
 import axios from 'axios';
+import { useAuth } from '../components/AuthProvider'; 
 
 const LoginPage = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   useEffect(() => {
     axios.get('http://localhost:5000/users')
@@ -21,6 +22,8 @@ const LoginPage = () => {
       if (user.role === 'ADMIN') {
         navigate('/HomeAdm');  // Redirige al editor si es admin
       } else {
+        const token = 'tokenEjemplo123'; // En una implementación real, obtendrás esto de una API
+        login(token, { name: user.name });
         navigate('/');    // Redirige al home si es user
       }
     } else {

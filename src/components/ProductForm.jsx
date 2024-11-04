@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button, Form, Row, Col, Container } from 'react-bootstrap';
 
+
 const ProductForm = ({ formData, handleChange, handleSubmit }) => {
   return (
     <Container className="my-5" style={{ maxWidth: '600px', fontFamily: 'Arial, sans-serif' }}>

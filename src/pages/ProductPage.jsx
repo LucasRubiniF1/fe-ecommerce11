@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import ProductGrid from '../components/ProductGrid';
 import productsData from '/public/data/products.json';
 
+
 const ProductPage = () => {
   const { category } = useParams(); // Captura el parámetro de categoría de la URL
 

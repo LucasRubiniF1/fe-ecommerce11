@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RegisterForm from '../components/registerForm';
-import users from '/public/data/users.json'; 
+
+
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    id: null,
+    user_id: null,
     username: '',
     email: '',
     password: '',
@@ -25,8 +26,8 @@ const RegisterPage = () => {
     axios.get('http://localhost:5000/users')
       .then(response => {
         const users = response.data;
-        const lastId = users.length > 0 ? Math.max(...users.map(user => user.id)) : 0;
-        setFormData(prev => ({ ...prev, id: lastId + 1 })); // Asigna el próximo ID disponible
+        const lastId = users.length > 0 ? Math.max(...users.map(user => user.user_id)) : 0;
+        setFormData(prev => ({ ...prev, user_id: lastId + 1 })); // Asigna el próximo ID disponible
       })
       .catch(error => {
         console.error("Error al obtener usuarios:", error);
@@ -81,9 +82,10 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    
     {successMessage && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-md w-100"> {/* Aumentar el ancho del cuadro */}
+          <div className="bg-white p-6 rounded shadow-md w-30"> {/* Aumentar el ancho del cuadro */}
             <h2 className="text-lg font-semibold text-gray-800 text-center">Usuario registrado exitosamente!</h2>
             <div className="flex justify-center mt-4"> {/* Centrar el botón */}
               <button
@@ -95,7 +97,9 @@ const RegisterPage = () => {
             </div>
           </div>
         </div>
+        
       )}
+      
       <RegisterForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} error={error} />
     </div>
   );

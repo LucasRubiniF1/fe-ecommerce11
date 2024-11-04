@@ -1,165 +1,178 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaTrash, FaEdit } from 'react-icons/fa'; // Íconos para eliminar y editar
-import useFetch from '../hooks/useFetch';
-import { API_URL } from "../utils";
+import React, { useState, useEffect } from 'react';
+import { Container, Table, Button, Form, Alert } from 'react-bootstrap';
+import { FaTrash, FaEdit, FaSave } from 'react-icons/fa';
 import axios from 'axios';
+import { API_URL } from "../utils";
 
 const ProductEdit = () => {
-  const navigate = useNavigate();
-  const { data: products, loading, error } = useFetch(`${API_URL}/data/products.json`);
-  const [editableProducts, setEditableProducts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para la barra de búsqueda
+  const [products, setProducts] = useState([]);
+  const [editableProductId, setEditableProductId] = useState(null);
+  const [editedProduct, setEditedProduct] = useState({});
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  // Verificar que products no sea null antes de aplicar filter
-  const filteredProducts = (products || []).filter(product => 
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    // Cargar los productos al montar el componente
+    axios.get(`${API_URL}/products`)
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+        setError("Error al cargar los productos.");
+      });
+  }, []);
 
   const handleEditClick = (product) => {
-    setEditableProducts([...editableProducts, product.product_id]);
+    setEditableProductId(product.product_id);
+    setEditedProduct(product); // Guarda el producto que se va a editar
   };
 
-  const handleSave = async (product) => {
+  const handleSaveClick = async () => {
+    console.log("Saving product with ID:", editedProduct.product_id); 
     try {
-      await axios.put('/data/products/${product.product_id}', product);
-      setEditableProducts(editableProducts.filter(id => id !== product.product_id));
+      await axios.put(`${API_URL}/products/${editedProduct.product_id}`, editedProduct);
+      setProducts(products.map(p => (p.product_id === editedProduct.product_id ? editedProduct : p)));
+      setEditableProductId(null);
+      setSuccess("Producto actualizado exitosamente.");
     } catch (error) {
-      console.error('Error saving product:', error);
+      console.error("Error saving product:", error);
+      setError("Error al guardar los cambios.");
     }
   };
 
-  const handleInputChange = (e, product, field) => {
-    product[field] = e.target.value;
-    setEditableProducts([...editableProducts]);
-  };
-
-  const handleDelete = async (id) => {
+  const handleDeleteClick = async (productId) => {
     try {
-      await axios.delete(`${API_URL}/data/products/${id}`);
-      navigate(0); 
+      await axios.delete(`${API_URL}/products/${productId}`);
+      setProducts(products.filter(p => p.product_id !== productId));
+      setSuccess("Producto eliminado exitosamente.");
     } catch (error) {
-      console.error('Error deleting product:', error);
+      console.error("Error deleting product:", error);
+      setError("Error al eliminar el producto.");
     }
   };
 
-  if (loading) return <p>Loading products...</p>;
-  if (error) return <p>Error fetching products: {error.message}</p>;
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const val = type === 'checkbox' ? checked : value;
+    setEditedProduct(prev => ({ ...prev, [name]: val }));
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Edit Products</h1>
+    <Container style={{ marginTop: '20px' }}>
+      <h1>Manage Products</h1>
 
-      {/* Barra de búsqueda para filtrar por nombre */}
-      <input
-        type="text"
-        placeholder="Search by product name..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{
-          padding: '8px',
-          marginBottom: '20px',
-          width: '100%',
-          borderRadius: '4px',
-          border: '1px solid #ccc'
-        }}
-      />
+      {error && <Alert variant="danger">{error}</Alert>}
+      {success && <Alert variant="success">{success}</Alert>}
 
-      <table className="table table-striped">
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Name</th>
-            <th>Price</th>
             <th>Description</th>
-            <th>Images</th>
+            <th>Price</th>
+            <th>Stock</th>
             <th>Category</th>
-            <th>Stock</th> {/* Nueva columna para Stock */}
+            <th>Featured</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {filteredProducts.map((product) => (
+          {products.map((product) => (
             <tr key={product.product_id}>
+              <td>{product.product_id}</td>
               <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <input 
+                {editableProductId === product.product_id ? (
+                  <Form.Control
                     type="text"
-                    value={product.name}
-                    onChange={(e) => handleInputChange(e, product, 'name')}
+                    name="name"
+                    value={editedProduct.name}
+                    onChange={handleInputChange}
                   />
                 ) : (
                   product.name
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <input 
-                    type="number"
-                    value={product.price}
-                    onChange={(e) => handleInputChange(e, product, 'price')}
-                  />
-                ) : (
-                  product.price
-                )}
-              </td>
-              <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <input 
-                    type="text"
-                    value={product.description}
-                    onChange={(e) => handleInputChange(e, product, 'description')}
+                {editableProductId === product.product_id ? (
+                  <Form.Control
+                    as="textarea"
+                    name="description"
+                    value={editedProduct.description}
+                    onChange={handleInputChange}
                   />
                 ) : (
                   product.description
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <input 
-                    type="text"
-                    value={product.images}
-                    onChange={(e) => handleInputChange(e, product, 'images')}
-                    placeholder="Image URL"
+                {editableProductId === product.product_id ? (
+                  <Form.Control
+                    type="number"
+                    name="price"
+                    value={editedProduct.price}
+                    onChange={handleInputChange}
                   />
                 ) : (
-                  <img src={product.images} alt={product.name} style={{ width: '50px' }} />
+                  `$${product.price}`
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <input 
-                    type="text"
-                    value={product.category}
-                    onChange={(e) => handleInputChange(e, product, 'category')}
-                  />
-                ) : (
-                  product.category
-                )}
-              </td>
-              <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <input 
-                    type="number" // Campo para editar stock
-                    value={product.stock}
-                    onChange={(e) => handleInputChange(e, product, 'stock')}
+                {editableProductId === product.product_id ? (
+                  <Form.Control
+                    type="number"
+                    name="stock"
+                    value={editedProduct.stock}
+                    onChange={handleInputChange}
                   />
                 ) : (
                   product.stock
                 )}
               </td>
               <td>
-                {editableProducts.includes(product.product_id) ? (
-                  <button onClick={() => handleSave(product)}>Save</button>
+                {editableProductId === product.product_id ? (
+                  <Form.Control
+                    type="text"
+                    name="category"
+                    value={editedProduct.category}
+                    onChange={handleInputChange}
+                  />
                 ) : (
-                  <FaEdit onClick={() => handleEditClick(product)} style={{ cursor: 'pointer', marginRight: '10px' }} />
+                  product.category
                 )}
-                <FaTrash onClick={() => handleDelete(product.product_id)} style={{ cursor: 'pointer', color: 'red' }} />
+              </td>
+              <td>
+                {editableProductId === product.product_id ? (
+                  <Form.Check
+                    type="checkbox"
+                    name="isFeatured"
+                    checked={editedProduct.isFeatured}
+                    onChange={handleInputChange}
+                  />
+                ) : (
+                  product.isFeatured ? 'Yes' : 'No'
+                )}
+              </td>
+              <td>
+                {editableProductId === product.product_id ? (
+                  <Button variant="success" onClick={handleSaveClick}>
+                    <FaSave /> Save
+                  </Button>
+                ) : (
+                  <Button variant="warning" onClick={() => handleEditClick(product)}>
+                    <FaEdit /> Edit
+                  </Button>
+                )}
+                <Button variant="danger" onClick={() => handleDeleteClick(product.product_id)} style={{ marginLeft: '10px' }}>
+                  <FaTrash /> Delete
+                </Button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
-    </div>
+      </Table>
+    </Container>
   );
 };
 

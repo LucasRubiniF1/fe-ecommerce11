@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 
 const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
   return (
@@ -95,6 +96,7 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           required
         />
       </div>
+      {error && <Alert variant="danger">{error}</Alert>}
 
       {/* Botón de envío */}
       <div className="mb-6">
@@ -105,6 +107,7 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           Registrar
         </button>
       </div>
+      
     </form>
   );
 };

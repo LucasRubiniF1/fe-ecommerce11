@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { FaUser, FaShoppingCart, FaSearch, FaHeart } from "react-icons/fa";
+import { FaUser, FaShoppingCart, FaSearch, FaHeart, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; 
-import PanelCategories from './PanelCategories'
+import PanelCategories from './PanelCategories';
+import { useAuth } from './AuthProvider'; 
 
 const Navbar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearchBar, setShowSearchBar] = useState(false);
   const navigate = useNavigate();
+  const {user, logout } = useAuth(); // Obtén el usuario y la función de logout desde el contexto
 
   const toggleSearchBar = () => {
     setShowSearchBar(!showSearchBar);
@@ -20,8 +22,9 @@ const Navbar = ({ onSearch }) => {
     onSearch(searchTerm);
   };
 
-  const handleUserClick = () => {
-    navigate("/login");
+  const handleLogoutClick = () => {
+    logout(); // Llama a la función de logout
+    navigate("/"); // Redirige a la página de home después de cerrar sesión
   };
 
   const goToHome = () => {
@@ -44,11 +47,8 @@ const Navbar = ({ onSearch }) => {
       {/* Enlaces de navegación */}
       <ul className="flex gap-6">
         <li className="text-black hover:text-gray-600 cursor-pointer" onClick={goToHome}>Home</li>
-        {/*<li className="text-black hover:text-gray-600 cursor-pointer">Shop</li>*/}
-
-       {/* Menú desplegable para Productos */}
-      <PanelCategories/>
-
+        {/* Menú desplegable para Productos */}
+        <PanelCategories />
         <li className="text-black hover:text-gray-600 cursor-pointer">Contact Us</li>
       </ul>
 
@@ -76,28 +76,33 @@ const Navbar = ({ onSearch }) => {
         <li className="text-black hover:text-gray-600 cursor-pointer" onClick={toggleSearchBar}>
           <FaSearch size={20} />
         </li>
-        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleUserClick}>
-          <FaUser size={20} />
-        </li>
+        
+        {user ? (
+          <>
+            {/* Mostrar el nombre del usuario si esta logueado */}
+            <li className="text-black hover:text-gray-600 cursor-pointer">{user.name}</li>
+            
+          </>
+        ) : (
+          <li className="text-black hover:text-gray-600 cursor-pointer" onClick={() => navigate("/login")}>
+            <FaUser size={20} />
+          </li>
+        )}
         <div className="relative">
           <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleCartClick}>
             <FaShoppingCart size={20} />
           </li>
-           {/* <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            3
-          </span>
-          */}
         </div>
         <div className="relative">
           <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleWishlistClick}>
             <FaHeart size={20} />
           </li>
-          
-           {/* <span className="absolute -top-4 -right-2 bg-red-500 text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            3
-          </span>
-          */}
         </div>
+        <div className="relative">
+          <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleLogoutClick}>
+              <FaSignOutAlt size={20} />
+          </li>
+          </div>
       </ul>
     </nav>
   );

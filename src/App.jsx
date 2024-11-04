@@ -18,12 +18,15 @@ import NavbarAdm from "./components/NavbarAdm";
 import Footer from "./components/Footer";
 import HomeAdm from "./pages/HomeAdm";
 import ProductPage from "./pages/ProductPage";
+import { AuthProvider } from './components/AuthProvider';
 
 const App = () => {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </AuthProvider>
   );
 };
 
@@ -44,6 +47,7 @@ const AppContent = () => {
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/product/edit" element={<ProductEdit />} />
+          <Route path="/product/edit/:id" element={<ProductEdit />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/product/create" element={<ProductCreate />} />
           <Route path="/account" element={<Account />} />
