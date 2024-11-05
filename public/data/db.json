@@ -563,6 +563,105 @@
       "user_id": 2,
       "product_id": 4,
       "id": "c67c"
+    },
+    {
+      "id": "g16e",
+      "product_id": 15,
+      "name": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM",
+      "description": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM 512 GB violeta 12 GB RAM",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_605893-MLA76451651310_052024-F.webp",
+      "price": 604,
+      "stock": 16,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "g16e",
+      "product_id": 15,
+      "name": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM",
+      "description": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM 512 GB violeta 12 GB RAM",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_605893-MLA76451651310_052024-F.webp",
+      "price": 604,
+      "stock": 16,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "e14c",
+      "product_id": 13,
+      "name": "Teléfono Motorola Moto G42",
+      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
+      "price": 249.99,
+      "stock": 12,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "e14c",
+      "product_id": 13,
+      "name": "Teléfono Motorola Moto G42",
+      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
+      "price": 249.99,
+      "stock": 12,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "e14c",
+      "product_id": 13,
+      "name": "Teléfono Motorola Moto G42",
+      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
+      "price": 249.99,
+      "stock": 12,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "a16b",
+      "product_id": 2,
+      "name": "Teléfono Samsung",
+      "description": "Teléfono Samsung Galaxy S21",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
+      "price": 999.99,
+      "stock": 15,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "a16b",
+      "product_id": 2,
+      "name": "Teléfono Samsung",
+      "description": "Teléfono Samsung Galaxy S21",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
+      "price": 999.99,
+      "stock": 15,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "a16b",
+      "product_id": 2,
+      "name": "Teléfono Samsung",
+      "description": "Teléfono Samsung Galaxy S21",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
+      "price": 999.99,
+      "stock": 15,
+      "category": "Celular",
+      "is_featured": true
+    },
+    {
+      "id": "e14c",
+      "product_id": 13,
+      "name": "Teléfono Motorola Moto G42",
+      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
+      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
+      "price": 249.99,
+      "stock": 12,
+      "category": "Celular",
+      "is_featured": true
     }
   ],
   "cart": [
