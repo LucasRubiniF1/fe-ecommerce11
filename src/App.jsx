@@ -37,7 +37,9 @@ const AppContent = () => {
       </Routes>
       
       {/* Selección de Navbar según la ruta */}
-      {location.pathname === '/homeAdmin' ? <NavbarAdm /> : <Navbar />}
+      {location.pathname === '/homeAdmin' || location.pathname ==='/product/create'
+      || location.pathname ==='/product/edit' || location.pathname ==='/account'
+      ? <NavbarAdm /> : <Navbar />}
 
       {/* Contenedor principal */}
       <main className="bg-gray-100 flex-grow">

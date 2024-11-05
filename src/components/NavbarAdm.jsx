@@ -15,8 +15,8 @@ const NavbarAdm = () => {
       setShowDropdown(!showDropdown); 
       };
   return (
-    <nav className="flex items-center justify-between p-4 bg-white relative">
-      <h1 className="text-2xl font-bold text-black">3legant</h1>
+    <nav className="flex items-center justify-between p-2 bg-white relative">
+      <h1 className="text-3xl font-bold text-slate-500">3legant</h1>
 
       <ul className="flex gap-6">
         <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/')}>

@@ -63,21 +63,21 @@ const Navbar = ({ onSearch }) => {
         <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleSearchClick}>
           <FaSearch size={20} />
         </li>
-        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleUserClick}>
-          <FaUser size={20} />
-        </li>
+        <div className="relative">
+          <li className="text-black hover:text-rose-600 cursor-pointer" onClick={handleWishlistClick}>
+            <FaHeart size={20} />
+          </li>
+          
+        </div>
         <div className="relative">
           <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleCartClick}>
             <FaShoppingCart size={20} />
           </li>
         
         </div>
-        <div className="relative">
-          <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleWishlistClick}>
-            <FaHeart size={20} />
-          </li>
-          
-        </div>
+        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleUserClick}>
+          <FaUser size={20} />
+        </li>
       </ul>
     </nav>
   );
