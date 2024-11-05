@@ -1,43 +1,87 @@
-import React, { useState } from "react";
-import "../styles/editMyAccount.css";
+import React, { useState, useEffect } from "react";
+import { Container, Form, Button, Alert } from "react-bootstrap";
+import axios from "axios";
+import { API_URL } from "../utils"; // Define la URL base para tus peticiones en utils.js o usa directamente la URL aquí
 
 const EditAccount = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const userId = 1; // Cambia esto según el ID del usuario actual
+  const [userData, setUserData] = useState({});
+  const [editedUserData, setEditedUserData] = useState({});
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  const handleSaveChanges = () => {
-    console.log("Cambios guardados:", { username, email });
+  // Cargar los datos del usuario al montar el componente
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/users/${userId}`)
+      .then((response) => {
+        console.log("Datos del usuario:", response.data); // Verifica que estás obteniendo datos
+        setUserData(response.data);
+        setEditedUserData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        setError("Error al cargar los datos del usuario.");
+      });
+  }, [userId]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedUserData({ ...editedUserData, [name]: value });
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      await axios.put(`${API_URL}/users/${userId}`, editedUserData);
+      setUserData(editedUserData);
+      setSuccess("Datos de usuario actualizados exitosamente.");
+      setTimeout(() => setSuccess(null), 3000);
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      setError("Error al guardar los cambios.");
+      setTimeout(() => setError(null), 3000);
+    }
   };
 
   return (
-    <div className="edit-account-container">
+    <Container style={{ marginTop: "20px" }}>
       <h2>Edita tu cuenta</h2>
-      <div className="form-group">
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Ejemplo: Juan Cruz"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
 
-      <div className="form-group">
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="Ejemplo: example@correo.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
+      {error && <Alert variant="danger">{error}</Alert>}
+      {success && <Alert variant="success">{success}</Alert>}
 
-      <button className="btn-save" onClick={handleSaveChanges}>
-        Guardar cambios
-      </button>
-    </div>
+      <Form>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            value={editedUserData.username || ""}
+            onChange={handleInputChange}
+            placeholder="Ejemplo: JuanCruz"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formEmail" style={{ marginTop: "10px" }}>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={editedUserData.email || ""}
+            onChange={handleInputChange}
+            placeholder="Ejemplo: example@correo.com"
+          />
+        </Form.Group>
+
+        <Button
+          variant="primary"
+          onClick={handleSaveChanges}
+          style={{ marginTop: "20px" }}
+        >
+          Guardar cambios
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

@@ -1,9 +1,9 @@
 {
   "users": [
     {
-      "id": 1,
-      "username": "juanperez",
-      "email": "juanperez@example.com",
+      "id": "1",
+      "username": "pepe",
+      "email": "pepe@gmail.com",
       "password": "juanperez_password",
       "birth": "1985-01-15",
       "firstname": "Juan",
@@ -11,7 +11,7 @@
       "role": "USER"
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "mariafernandez@example.com",
       "email": "mariafernandez@example.com",
       "password": "mariafernandez_password",
@@ -21,7 +21,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "pedrolopez@example.com",
       "email": "pedrolopez@example.com",
       "password": "pedrolopez_password",
@@ -31,7 +31,7 @@
       "role": "USER"
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "luisaortiz@example.com",
       "email": "luisaortiz@example.com",
       "password": "luisaortiz_password",
@@ -41,7 +41,7 @@
       "role": "USER"
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "josegarcia@example.com",
       "email": "josegarcia@example.com",
       "password": "josegarcia_password",
@@ -51,7 +51,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 6,
+      "id": "6",
       "username": "anaquezada@example.com",
       "email": "anaquezada@example.com",
       "password": "anaquezada_password",
@@ -61,7 +61,7 @@
       "role": "USER"
     },
     {
-      "id": 7,
+      "id": "7",
       "username": "franciscogomez@example.com",
       "email": "franciscogomez@example.com",
       "password": "franciscogomez_password",
@@ -71,7 +71,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 8,
+      "id": "8",
       "username": "sofiareyes@example.com",
       "email": "sofiareyes@example.com",
       "password": "sofiareyes_password",
@@ -81,7 +81,7 @@
       "role": "USER"
     },
     {
-      "id": 9,
+      "id": "9",
       "username": "carlosmedina@example.com",
       "email": "carlosmedina@example.com",
       "password": "carlosmedina_password",
@@ -91,7 +91,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 10,
+      "id": "10",
       "username": "veronicaflores@example.com",
       "email": "veronicaflores@example.com",
       "password": "veronicaflores_password",
@@ -101,7 +101,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 11,
+      "id": "11",
       "username": "manuelmorales@example.com",
       "email": "manuelmorales@example.com",
       "password": "manuelmorales_password",
@@ -111,7 +111,7 @@
       "role": "USER"
     },
     {
-      "id": 12,
+      "id": "12",
       "username": "camilagutierrez@example.com",
       "email": "camilagutierrez@example.com",
       "password": "camilagutierrez_password",
@@ -121,7 +121,7 @@
       "role": "USER"
     },
     {
-      "id": 13,
+      "id": "13",
       "username": "alejandrocastro@example.com",
       "email": "alejandrocastro@example.com",
       "password": "alejandrocastro_password",
@@ -131,7 +131,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 14,
+      "id": "14",
       "username": "patriciajimenez@example.com",
       "email": "patriciajimenez@example.com",
       "password": "patriciajimenez_password",
@@ -141,7 +141,7 @@
       "role": "USER"
     },
     {
-      "id": 15,
+      "id": "15",
       "username": "nicolashernandez@example.com",
       "email": "nicolashernandez@example.com",
       "password": "nicolashernandez_password",
@@ -151,7 +151,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 16,
+      "id": "16",
       "username": "ja@example1.com",
       "email": "ja@example1.com",
       "password": "$2a$10$6pe.cN98cwNvz7MlrEcoX.FTabKbJ2kh8a99bQt/vZHY6qLWcnAkS",
@@ -161,7 +161,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 17,
+      "id": "17",
       "username": "shirly",
       "email": "shirly@gmail.com",
       "password": "$2a$10$YIQagdeT2VSgxUs6FqZNDulzrzh7bFFllaqEKxOZLz/zyi66KcFEu",
@@ -171,7 +171,7 @@
       "role": "USER"
     },
     {
-      "id": 22,
+      "id": "22",
       "username": "mati",
       "email": "mati@example.com",
       "password": "$2a$10$dM5p5qO6WANE01zWfGL0M.fSs/JWzK391yq/VxQRxLz1nOtYviRxC",
@@ -181,7 +181,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 23,
+      "id": "23",
       "username": "ailensafadie",
       "email": "ailensafadie@gmail.com",
       "password": "ailensafadie",
@@ -191,7 +191,7 @@
       "role": "USER"
     },
     {
-      "id": 24,
+      "id": "24",
       "username": "davidchirazi",
       "email": "davidchirazi@gmail.com",
       "password": "davidchirazi",
@@ -201,7 +201,7 @@
       "role": "USER"
     },
     {
-      "id": 25,
+      "id": "25",
       "username": "holacomo",
       "email": "holacomo@gmail.com",
       "password": "shosaasbsahb",
