@@ -4,13 +4,14 @@ import ShippingForm from './ShippingForm';
 import PaymentForm from './PaymentForm';
 import OrderSummary from './OrderSummary';
 import OrderConfirmation from './OrderConfirmation';
-import { useCart } from '../../context/CartContext';
+
+import useStore from '../hooks/store';
 
 export default function CheckoutModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
   const [shippingData, setShippingData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
-  const { cart, getCartTotal, clearCart } = useCart();
+  const { cart, getCartTotal, clearCart } = useStore();
 
   const handleShippingSubmit = (data) => {
     setShippingData(data);
