@@ -21,6 +21,14 @@ const useStore = create(
         return { cart: [...state.cart, { ...product, quantity: 1 }] };
       }),
 
+      updateQuantity: (itemId, newQuantity) => {
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.id === itemId ? { ...item, quantity: newQuantity } : item
+          ),
+        }));
+      },
+
       removeFromCart: (productId) =>
         set((state) => ({
           cart: state.cart.filter((item) => item.id !== productId),
