@@ -1,16 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/editMyAccount.css"; // Importa los estilos que desees
 
 const API_URL = "http://localhost:5000"; // Reemplaza con tu URL si es diferente
 
 const EditAccount = () => {
-  const [username, setUsername] = useState("pruebaCambio");
-  const [email, setEmail] = useState("prueba@example.com");
-  const [password, setPassword] = useState("******");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [editingField, setEditingField] = useState(null); // Campo que se está editando
+  const [userId, setUserId] = useState(null);
 
-  const userId = 1; // Ajusta el ID del usuario según sea necesario
+  useEffect(() => {
+    // Obtener los datos del usuario logueado desde localStorage
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+      const user = JSON.parse(loggedInUser);
+      setUsername(user.username);
+      setEmail(user.email);
+      setPassword(user.password); // Si no manejas contraseñas, omite esto
+      setUserId(user.id); // Asegúrate de que el ID esté presente en los datos del usuario
+    } else {
+      alert("Usuario no autenticado");
+      // Puedes redirigir al login si es necesario
+    }
+  }, []);
 
   const handleSaveChanges = async () => {
     const updatedUserData = {
@@ -19,10 +33,23 @@ const EditAccount = () => {
       password,
     };
 
+    if (!userId) {
+      console.error("No se encontró el ID del usuario");
+      alert("Error al guardar los cambios. Intente de nuevo.");
+      return;
+    }
+
     try {
       console.log("Intentando guardar cambios...");
-      await axios.put(`${API_URL}/users/${userId}`, updatedUserData);
-      console.log("Cambios guardados exitosamente");
+      const response = await axios.put(
+        `${API_URL}/users/${userId}`,
+        updatedUserData
+      );
+      console.log("Cambios guardados exitosamente:", response.data);
+
+      // Actualizar el usuario en localStorage
+      localStorage.setItem("loggedInUser", JSON.stringify(response.data));
+
       alert("Cambios guardados correctamente");
       setEditingField(null); // Finaliza la edición
     } catch (error) {
