@@ -1,14 +1,10 @@
 {
   "users": [
     {
-      "id": "1",
-      "username": "pepe",
-      "email": "pepe@gmail.com",
-      "password": "juanperez_password",
-      "birth": "1985-01-15",
-      "firstname": "Juan",
-      "lastname": "Pérez",
-      "role": "USER"
+      "username": "pruebaCambio",
+      "email": "prueba@example.com",
+      "password": "******",
+      "id": "1"
     },
     {
       "id": "2",

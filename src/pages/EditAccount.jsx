@@ -1,87 +1,80 @@
-import React, { useState, useEffect } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import React, { useState } from "react";
 import axios from "axios";
-import { API_URL } from "../utils"; // Define la URL base para tus peticiones en utils.js o usa directamente la URL aquí
+import "../styles/editMyAccount.css"; // Importa los estilos que desees
+
+const API_URL = "http://localhost:5000"; // Reemplaza con tu URL si es diferente
 
 const EditAccount = () => {
-  const userId = 1; // Cambia esto según el ID del usuario actual
-  const [userData, setUserData] = useState({});
-  const [editedUserData, setEditedUserData] = useState({});
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [username, setUsername] = useState("pruebaCambio");
+  const [email, setEmail] = useState("prueba@example.com");
+  const [password, setPassword] = useState("******");
+  const [editingField, setEditingField] = useState(null); // Campo que se está editando
 
-  // Cargar los datos del usuario al montar el componente
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/users/${userId}`)
-      .then((response) => {
-        console.log("Datos del usuario:", response.data); // Verifica que estás obteniendo datos
-        setUserData(response.data);
-        setEditedUserData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-        setError("Error al cargar los datos del usuario.");
-      });
-  }, [userId]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedUserData({ ...editedUserData, [name]: value });
-  };
+  const userId = 1; // Ajusta el ID del usuario según sea necesario
 
   const handleSaveChanges = async () => {
+    const updatedUserData = {
+      username,
+      email,
+      password,
+    };
+
     try {
-      await axios.put(`${API_URL}/users/${userId}`, editedUserData);
-      setUserData(editedUserData);
-      setSuccess("Datos de usuario actualizados exitosamente.");
-      setTimeout(() => setSuccess(null), 3000);
+      console.log("Intentando guardar cambios...");
+      await axios.put(`${API_URL}/users/${userId}`, updatedUserData);
+      console.log("Cambios guardados exitosamente");
+      alert("Cambios guardados correctamente");
+      setEditingField(null); // Finaliza la edición
     } catch (error) {
-      console.error("Error updating user data:", error);
-      setError("Error al guardar los cambios.");
-      setTimeout(() => setError(null), 3000);
+      console.error("Error al guardar los cambios:", error);
+      alert("Error al guardar los cambios");
     }
   };
 
+  const handleEditClick = (field) => {
+    setEditingField(field);
+  };
+
   return (
-    <Container style={{ marginTop: "20px" }}>
+    <div className="edit-account-container">
       <h2>Edita tu cuenta</h2>
+      <div className="form-group">
+        <label>Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          disabled={editingField !== "username"}
+        />
+        <button onClick={() => handleEditClick("username")}>Editar</button>
+      </div>
 
-      {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">{success}</Alert>}
+      <div className="form-group">
+        <label>Email:</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={editingField !== "email"}
+        />
+        <button onClick={() => handleEditClick("email")}>Editar</button>
+      </div>
 
-      <Form>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-            value={editedUserData.username || ""}
-            onChange={handleInputChange}
-            placeholder="Ejemplo: JuanCruz"
-          />
-        </Form.Group>
+      <div className="form-group">
+        <label>Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={editingField !== "password"}
+        />
+        <button onClick={() => handleEditClick("password")}>Editar</button>
+      </div>
 
-        <Form.Group controlId="formEmail" style={{ marginTop: "10px" }}>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            value={editedUserData.email || ""}
-            onChange={handleInputChange}
-            placeholder="Ejemplo: example@correo.com"
-          />
-        </Form.Group>
-
-        <Button
-          variant="primary"
-          onClick={handleSaveChanges}
-          style={{ marginTop: "20px" }}
-        >
-          Guardar cambios
-        </Button>
-      </Form>
-    </Container>
+      <button className="btn-save" onClick={handleSaveChanges}>
+        Guardar cambios
+      </button>
+    </div>
   );
 };
 
