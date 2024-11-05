@@ -98,7 +98,7 @@ const Carousel = ({ products, titulo }) => {
                       isInWishlist ? 'text-black border-black' : 'text-gray-600 border-gray-200'
                     } hover:text-red-500 hover:border-red-500 transition-colors duration-300`}
                   >
-                    <FaHeart size={20} />
+                    <FaHeart size={20}  className={isInWishlist ? 'text-red' : 'text-gray-600'}  />
                   </button>
                 </div>
               </div>
