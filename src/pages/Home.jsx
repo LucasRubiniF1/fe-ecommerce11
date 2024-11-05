@@ -7,6 +7,7 @@ import axios from 'axios';
 const Home = () => {
   const [productsCel, setProductsCel] = useState([]);
   const [productsTel, setProductsTel] = useState([]);
+  const [productsDest, setProductsDest] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:5000/products')
@@ -15,6 +16,7 @@ const Home = () => {
         console.log(data);
         setProductsCel(data.filter(product => product.category === "Celular"));
         setProductsTel(data.filter(product => product.category === "Televisor"));
+        setProductsDest(data.filter(product => product.is_featured === true));
       })
       .catch((error) => {
         console.error('Error al traer los productos:', error);
@@ -32,7 +34,7 @@ const Home = () => {
               className="w-full h-full object-cover"
             />
         </div>
-    
+        {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
         {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
         {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
     

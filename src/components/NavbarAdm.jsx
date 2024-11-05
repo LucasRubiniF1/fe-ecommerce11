@@ -1,12 +1,20 @@
 import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from './AuthProvider'; 
 
 const NavbarAdm = () => {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const {user, logout } = useAuth();
+
+
   const handleNavigateToCreate = () => {
     navigate("/product/create");
+  };
+  const handleLogoutClick = () => {
+    logout(); // Llama a la función de logout
+    navigate("/"); // Redirige a la página de home después de cerrar sesión
   };
   const handleNavigateToEdit = () => {
     navigate("/product/edit");
@@ -48,9 +56,18 @@ const NavbarAdm = () => {
           Account
         </li>
       </ul>
-      <div className="flex items-center">
-        <FaUser size={24} className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/account')} />
-      </div>
+      {user ? (
+          <div className="relative">
+            {/* Mostrar el nombre del usuario si esta logueado */}
+            <li className="font-semibold text-black hover:text-gray-600 cursor-pointer">Hola {user.name}!</li>
+            
+          </div>
+        ) : (
+          <li className="text-black hover:text-gray-600 cursor-pointer" onClick={() => navigate("/login")}>
+            <FaUser size={20} />
+          </li>
+        )}
+      
     </nav>
   );
 };

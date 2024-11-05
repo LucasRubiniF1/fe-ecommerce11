@@ -81,7 +81,7 @@ const Navbar = ({ onSearch }) => {
         {user ? (
           <div className="relative">
             {/* Mostrar el nombre del usuario si esta logueado */}
-            <li className="text-black hover:text-gray-600 cursor-pointer">Hola {user.name}</li>
+            <li className="font-semibold text-black hover:text-gray-600 cursor-pointer">Hola {user.name}!</li>
             
           </div>
         ) : (

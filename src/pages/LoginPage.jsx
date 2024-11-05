@@ -20,6 +20,8 @@ const LoginPage = () => {
     const user = users.find(user => user.email === email && user.password === password);
     if (user) {
       if (user.role === 'ADMIN') {
+        const token = 'tokenEjempde admin'; 
+        login(token, { name: user.firstname });
         navigate('/HomeAdm');  // Redirige al editor si es admin
       } else {
         const token = 'tokenEjemplo123'; // En una implementación real, obtendrás esto de una API

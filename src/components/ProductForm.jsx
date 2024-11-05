@@ -54,11 +54,12 @@ const ProductForm = ({ formData, handleChange, handleSubmit }) => {
             required
           >
             <option value="">Select a category</option>
-            <option value="Celulares">Celulares</option>
-            <option value="Computadora">Computadoras</option>
-            <option value="Televisores">Televisores</option>
-            <option value="Audio y Video">Video y Audio</option>
-            <option value="Camaras y accesorios">Camaras y accesorios</option>
+            <option value="Celulares">Celular</option>
+            <option value="Computadora">Notbook</option>
+            <option value="Televisores">Televisor</option>
+            <option value="Audio y Video">Audio y Video</option>
+            <option value="Camaras y accesorios">Camara</option>
+            <option value="Camaras y accesorios">VideoJuegos</option>
           </Form.Select>
         </Form.Group>
 
