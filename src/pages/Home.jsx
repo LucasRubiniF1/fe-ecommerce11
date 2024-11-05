@@ -9,7 +9,7 @@ const Home = () => {
   const [productsTel, setProductsTel] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/products')
+    axios.get('public/data/products.json')
       .then((response) => {
         const data = response.data; // Extraer los datos directamente de response
         setProductsCel(data.filter(product => product.category === "Celular"));

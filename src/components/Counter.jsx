@@ -1,4 +1,4 @@
-import { useState } from 'react';
+useCartimport { useState } from 'react';
 
 const Counter = () => {
     const [count, setCount] = useState(0);
