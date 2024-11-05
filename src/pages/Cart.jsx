@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useStore from "../hooks/store.js";
-import { FaTrash, FaMinus, FaPlus, FaArrowLeft } from "react-icons/fa";
+import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import CheckoutModal from '../components/CheckoutModal.jsx';
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity } = useStore();
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
@@ -121,7 +123,10 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <button className="w-full mt-6 bg-black text-white py-4 rounded-xl font-medium hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                <button 
+                  onClick={() => setIsCheckoutOpen(true)}
+                  className="w-full mt-6 bg-black text-white py-4 rounded-xl font-medium hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                >
                   Checkout
                 </button>
               </div>
@@ -129,6 +134,11 @@ const Cart = () => {
           </div>
         )}
       </div>
+
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+      />
     </div>
   );
 };
