@@ -1,20 +1,16 @@
-// src/components/CreateProduct.jsx
+// src/components/ProductCreate.jsx
 import React, { useState, useEffect } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { API_URL } from "../utils";
-import { useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
-import products from '/public/data/products.json'; 
 
 const ProductCreate = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     product_id: null,
     name: '',
-    price: '',
     description: '',
-    images: '',
+    price: '',
     stock: '',
     category: '',
     isFeatured: false,
@@ -24,6 +20,7 @@ const ProductCreate = () => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    // Obtener la lista de productos para determinar el último ID
     axios.get(`${API_URL}/products`)
       .then(response => {
         const products = response.data;
@@ -35,39 +32,45 @@ const ProductCreate = () => {
         setError('No se pudo cargar la lista de productos.');
       });
   }, []);
-  
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null); // Resetear error al intentar registrar
+  const handleSubmit = async (formData) => {
+    setError(null);
     setSuccess(false);
 
     try {
-      await axios.post(`${API_URL}/products`, formData);
+      const response = await axios.post(`${API_URL}/products`, formData);
       setSuccess(true);
-      navigate('/');
+      console.log("Producto creado:", response.data); // Verifica el producto en la consola
+
+      // Restablecer el formulario después de un breve retraso
+      setTimeout(() => {
+        setSuccess(false);
+        setFormData({
+          product_id: formData.product_id + 1,
+          name: '',
+          description: '',
+          price: '',
+          stock: '',
+          category: '',
+          isFeatured: false,
+        });
+      }, 2000); // Puedes ajustar el tiempo según prefieras
+
     } catch (error) {
-      setError('Error creating product');
+      setError('Error al crear el producto');
+      console.error("Error creando producto:", error);
     }
   };
 
   return (
-    <div>
+    <Container style={{ maxWidth: '600px', marginTop: '20px' }}>
       {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">Product created successfully!</Alert>}
+      {success && <Alert variant="success">¡Producto creado exitosamente!</Alert>}
       <ProductForm
-        formData={formData}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        product={formData}
+        onSubmit={handleSubmit}
       />
-    </div>
+    </Container>
   );
 };
 
