@@ -1,3 +1,4 @@
+// src/pages/ProductEdit.jsx
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Form, Alert } from 'react-bootstrap';
 import { FaTrash, FaEdit, FaSave } from 'react-icons/fa';
@@ -12,7 +13,7 @@ const ProductEdit = () => {
   const [success, setSuccess] = useState(null);
 
   useEffect(() => {
-    // Cargar los productos al montar el componente
+    // Cargar todos los productos al montar el componente
     axios.get(`${API_URL}/products`)
       .then(response => {
         setProducts(response.data);
@@ -34,9 +35,11 @@ const ProductEdit = () => {
       setProducts(products.map(p => p.product_id === editedProduct.product_id ? editedProduct : p));
       setEditableProductId(null);
       setSuccess("Producto actualizado exitosamente.");
+      setTimeout(() => setSuccess(null), 3000); // Ocultar mensaje de éxito
     } catch (error) {
       console.error("Error saving product:", error);
       setError("Error al guardar los cambios.");
+      setTimeout(() => setError(null), 3000); // Ocultar mensaje de error
     }
   };
 
@@ -45,9 +48,11 @@ const ProductEdit = () => {
       await axios.delete(`${API_URL}/products/${productId}`);
       setProducts(products.filter(p => p.product_id !== productId));
       setSuccess("Producto eliminado exitosamente.");
+      setTimeout(() => setSuccess(null), 3000); // Ocultar mensaje de éxito
     } catch (error) {
       console.error("Error deleting product:", error);
       setError("Error al eliminar el producto.");
+      setTimeout(() => setError(null), 3000); // Ocultar mensaje de error
     }
   };
 

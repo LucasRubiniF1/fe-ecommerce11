@@ -192,6 +192,16 @@
       "stock": "32",
       "category": "Computadoras",
       "isFeatured": false
+    },
+    {
+      "id": "93b1",
+      "name": "note",
+      "description": "test",
+      "price": "5",
+      "stock": "4",
+      "category": "Computadoras",
+      "isFeatured": false,
+      "image": "https://arrichetta.com.ar/wp-content/uploads/2021/06/Lenovo-Thinkbook-Ci5-8gb-256SSD-W10P-20RV0032AR-3.jpg"
     }
   ],
   "orders": [
