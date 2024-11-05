@@ -39,6 +39,7 @@ const Navbar = ({ onSearch }) => {
     navigate("/wishlist");
   };
 
+
   return (
     <nav className="flex items-center justify-between p-4 bg-white relative">
       {/* Logo */}
@@ -78,11 +79,11 @@ const Navbar = ({ onSearch }) => {
         </li>
         
         {user ? (
-          <>
+          <div className="relative">
             {/* Mostrar el nombre del usuario si esta logueado */}
-            <li className="text-black hover:text-gray-600 cursor-pointer">{user.name}</li>
+            <li className="text-black hover:text-gray-600 cursor-pointer">Hola {user.name}</li>
             
-          </>
+          </div>
         ) : (
           <li className="text-black hover:text-gray-600 cursor-pointer" onClick={() => navigate("/login")}>
             <FaUser size={20} />

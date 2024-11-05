@@ -23,8 +23,10 @@ const LoginPage = () => {
         navigate('/HomeAdm');  // Redirige al editor si es admin
       } else {
         const token = 'tokenEjemplo123'; // En una implementación real, obtendrás esto de una API
-        login(token, { name: user.name });
+        login(token, { name: user.firstname });
         navigate('/');    // Redirige al home si es user
+        console.log(token);
+        console.log(user.firstname);
       }
     } else {
       setError('Incorrect username or password');

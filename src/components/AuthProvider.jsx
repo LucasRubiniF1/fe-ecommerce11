@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       // Opcionalmente, podrías hacer una solicitud para obtener el usuario por el token
       setUser({ name: "Nombre de Usuario", token }); // Ajusta según el nombre real del usuario
+      console.log(token);
     }
   }, []);
 
