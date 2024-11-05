@@ -1,87 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import React, { useState } from "react";
+import "../styles/editMyAccount.css";
+import SuccessAlertModal from "../components/SuccessAlertModal"; // Importa el componente
 import axios from "axios";
-import { API_URL } from "../utils"; // Define la URL base para tus peticiones en utils.js o usa directamente la URL aquí
+import { API_URL } from "../utils"; // Cambia esto según tu configuración
 
 const EditAccount = () => {
-  const userId = 1; // Cambia esto según el ID del usuario actual
-  const [userData, setUserData] = useState({});
-  const [editedUserData, setEditedUserData] = useState({});
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
-
-  // Cargar los datos del usuario al montar el componente
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/users/${userId}`)
-      .then((response) => {
-        console.log("Datos del usuario:", response.data); // Verifica que estás obteniendo datos
-        setUserData(response.data);
-        setEditedUserData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-        setError("Error al cargar los datos del usuario.");
-      });
-  }, [userId]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedUserData({ ...editedUserData, [name]: value });
-  };
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const handleSaveChanges = async () => {
     try {
-      await axios.put(`${API_URL}/users/${userId}`, editedUserData);
-      setUserData(editedUserData);
-      setSuccess("Datos de usuario actualizados exitosamente.");
-      setTimeout(() => setSuccess(null), 3000);
+      const updatedData = { username, email };
+      await axios.put(`${API_URL}/users/1`, updatedData); // Ajusta la URL y el ID según sea necesario
+
+      setShowModal(true); // Muestra el modal al guardar los cambios
+
+      console.log("Cambios guardados:", { username, email });
     } catch (error) {
-      console.error("Error updating user data:", error);
-      setError("Error al guardar los cambios.");
-      setTimeout(() => setError(null), 3000);
+      console.error("Error al guardar los cambios:", error);
     }
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <Container style={{ marginTop: "20px" }}>
+    <div className="edit-account-container">
       <h2>Edita tu cuenta</h2>
+      <SuccessAlertModal show={showModal} onClose={handleCloseModal} />
 
-      {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">{success}</Alert>}
+      <div className="form-group">
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Ejemplo: Juan Cruz"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="form-control"
+        />
+      </div>
 
-      <Form>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-            value={editedUserData.username || ""}
-            onChange={handleInputChange}
-            placeholder="Ejemplo: JuanCruz"
-          />
-        </Form.Group>
+      <div className="form-group">
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Ejemplo: example@correo.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="form-control"
+        />
+      </div>
 
-        <Form.Group controlId="formEmail" style={{ marginTop: "10px" }}>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            value={editedUserData.email || ""}
-            onChange={handleInputChange}
-            placeholder="Ejemplo: example@correo.com"
-          />
-        </Form.Group>
-
-        <Button
-          variant="primary"
-          onClick={handleSaveChanges}
-          style={{ marginTop: "20px" }}
-        >
-          Guardar cambios
-        </Button>
-      </Form>
-    </Container>
+      <button className="btn btn-primary mt-3" onClick={handleSaveChanges}>
+        Guardar cambios
+      </button>
+    </div>
   );
 };
 
