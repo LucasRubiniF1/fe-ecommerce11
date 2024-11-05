@@ -10,9 +10,16 @@ const ProductPage = () => {
   const filteredProducts = productsData.products.filter((product) => product.category === category);
 
   return (
-    <div className="flex">
-      <Cards products={filteredProducts} />
-    </div>
+    <>
+      
+      <div>
+          {filteredProducts.length > 0 ? (
+            <Cards products={filteredProducts} />
+          ) : (
+            <p className="text-gray-500 text-lg font-semibold text-center mt-6">No se encontraron productos.</p>
+          )}
+      </div>
+  </>
   );
 };
 
