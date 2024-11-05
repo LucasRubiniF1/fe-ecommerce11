@@ -2,8 +2,11 @@ import { FaArrowLeft } from 'react-icons/fa';
 import useStore from '../hooks/store';
 
 export default function OrderSummary({ shipping, payment, onConfirm, onBack }) {
-  const { cart, getCartTotal } = useCart();
-  const total = getCartTotal();
+
+  const { cart } = useStore();
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+
 
   return (
     <div>
