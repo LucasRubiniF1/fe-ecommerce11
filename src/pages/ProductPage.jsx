@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ProductGrid from '../components/ProductGrid';
 import productsData from '/public/data/products.json';
+import Cards from '../components/Cards'
 
 const ProductPage = () => {
   const { category } = useParams(); // Captura el parámetro de categoría de la URL
@@ -11,7 +11,7 @@ const ProductPage = () => {
 
   return (
     <div className="flex">
-      <ProductGrid products={filteredProducts} />
+      <Cards products={filteredProducts} />
     </div>
   );
 };
