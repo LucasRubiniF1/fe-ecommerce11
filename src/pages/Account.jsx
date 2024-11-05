@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Importa Axios
+import axios from "axios";
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
 
@@ -8,30 +8,32 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const userId = 1; // Simulamos un usuario logueado
-
+  // Obtén el usuario logueado desde localStorage
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/users`, {
-          params: { user_id: userId },
-        });
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+      const user = JSON.parse(loggedInUser);
+      fetchUserData(user.id); // Usa el ID del usuario almacenado en localStorage
+    } else {
+      setError("Usuario no autenticado");
+      setLoading(false);
+    }
+  }, []);
 
-        // Axios ya convierte la respuesta en JSON automáticamente
-        if (response.data.length > 0) {
-          setUserData(response.data[0]);
-        } else {
-          setError("Usuario no encontrado");
-        }
-      } catch (error) {
-        setError("Error al obtener los datos del usuario");
-      } finally {
-        setLoading(false); // Quitamos el estado de carga
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/users/${userId}`);
+      if (response.data) {
+        setUserData(response.data);
+      } else {
+        setError("Usuario no encontrado");
       }
-    };
-
-    fetchUserData();
-  }, [userId]);
+    } catch (error) {
+      setError("Error al obtener los datos del usuario");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -45,7 +47,7 @@ const Account = () => {
     <div className="account-container">
       <div className="account-sidebar">
         <img
-          src="./img/usuario1.avif" // Coloca aquí el enlace a la imagen de perfil
+          src="./img/usuario1.avif"
           alt="Profile"
           className="profile-image"
         />
@@ -68,16 +70,16 @@ const Account = () => {
             <p>
               Nombre y apellido: {userData.firstname} {userData.lastname}
             </p>
-            <p>Nombre de usuario: {userData.firstname}</p>
+            <p>Nombre de usuario: {userData.username}</p>
             <p>Email: {userData.email}</p>
           </div>
           <div className="account-card">
             <h3>
               Información de envio <span>Edit</span>
             </h3>
-            <p>Direccion de envio: XXXXXX</p>
-            <p>Localidad: XXXXXX</p>
-            <p>Codigo postal: XXXXX</p>
+            <p>Direccion de envio: {userData.address}</p>
+            <p>Localidad: {userData.city}</p>
+            <p>Codigo postal: {userData.postalCode}</p>
           </div>
         </div>
       </div>
