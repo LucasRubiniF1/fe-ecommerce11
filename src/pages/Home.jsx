@@ -23,12 +23,12 @@ const Home = () => {
   return (
     
     <>
-           
-        <div className="w-full h-[87vh]">
+        
+        <div className="w-full h-[89vh]">
             <img
-              src="/samsung.jpg"
+              src="/masSamsungs.jpg"
               alt="Imagen destacada"
-              className="w-full h-full object-cover"
+              className="w-full h-full"
             />
         </div>
     

@@ -64,6 +64,7 @@ const Carousel = ({ products, titulo }) => {
                   <p className="text-xs font-medium text-gray-600">Stock: {product.stock}</p>
                 </div>
 
+
                 {/* Contenedor de imagen con efecto hover */}
                 <div className="relative mb-6 rounded-xl bg-gray-50 p-4 transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer"
                 onClick={() => handleClick(product)}>
