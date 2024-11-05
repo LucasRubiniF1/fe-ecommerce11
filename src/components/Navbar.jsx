@@ -39,7 +39,7 @@ const Navbar = ({ onSearch }) => {
   return (
     <nav className="flex items-center justify-between p-2 bg-white relative">
       {/* Logo */}
-      <h1 className="text-2xl font-bold text-black" onClick={goToHome}>3legant</h1>
+      <h1 className="text-3xl font-bold text-slate-500" onClick={goToHome}>3legant</h1>
 
       {/* Enlaces de navegación */}
       <ul className="flex gap-6">
