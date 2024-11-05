@@ -1,51 +1,76 @@
 .edit-account-container {
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 20px;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
+  padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  max-width: 600px;
 }
 
 .edit-account-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .form-group input {
-  width: 100%;
-  padding: 10px;
+  flex-grow: 1;
+  margin-left: 15px;
+  padding: 8px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #eee;
-  box-sizing: border-box;
+  font-size: 14px;
 }
 
-.form-group input::placeholder {
-  color: #888;
+.form-group button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.form-group button:hover {
+  text-decoration: underline;
 }
 
 .btn-save {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  background-color: #28a745; /* Verde de aceptación */
+  color: #ffffff; /* Texto blanco */
+  padding: 12px 25px; /* Espaciado interno */
+  border: none; /* Sin bordes */
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  font-weight: 600; /* Peso de fuente */
+  cursor: pointer; /* Indicador de clic */
+  display: block; /* Bloque */
+  margin-top: 20px; /* Espacio superior */
+  text-align: center; /* Centrado */
+  transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
 .btn-save:hover {
-  background-color: #0056b3;
+  background-color: #218838; /* Verde más oscuro al hacer hover */
+}
+
+.btn-save:hover {
+  background-color: #218838;
+}
+
+.editable-input {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
 }
