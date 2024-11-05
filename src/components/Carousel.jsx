@@ -39,7 +39,7 @@ const Carousel = ({ products, titulo }) => {
 
   return (
     <div className="p-8">
-      <h2 className="text-3xl font-bold mb-6">{titulo}</h2>
+      <h2 className="text-3xl font-bold text-lime-900 mb-6">{titulo}</h2>
       <div className="flex items-center">
         <button
           onClick={prevPage}
@@ -98,7 +98,7 @@ const Carousel = ({ products, titulo }) => {
                       isInWishlist ? 'text-black border-black' : 'text-gray-600 border-gray-200'
                     } hover:text-red-500 hover:border-red-500 transition-colors duration-300`}
                   >
-                    <FaHeart size={20} />
+                    <FaHeart size={20}  className={isInWishlist ? 'text-rose-600' : 'text-gray-600'}  />
                   </button>
                 </div>
               </div>
