@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/store.js";
-import { useAuth } from "../components/AuthProvider"; // Ajusta el path a tu AuthContext
+import { useAuth } from "../components/AuthProvider"; 
 
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const { addToCart, addToWishlist } = useStore(); 
-  const { isAuthenticated } = useAuth(); // Obtiene el estado de autenticación
+  
+  const { user, isAuthenticated } = useAuth(); 
+  const userId = user ? user.id : null;
+  const { addToCart, addToWishlist } = useStore();
+  console.log(userId);
 
   const nextPage = () => {
     if (startIndex + itemsPerPage < products.length) {
@@ -36,19 +38,19 @@ const Carousel = ({ products, titulo }) => {
   const handleAddToCart = (product) => {
     if (!isAuthenticated) {
       console.warn("Debe iniciar sesión para agregar al carrito.");
-      navigate('/login'); // Redirige al login
+      navigate('/login'); 
       return;
     }
-    addToCart(product);
+    addToCart(product, userId); 
   };
 
   const handleAddToWishlist = (product) => {
     if (!isAuthenticated) {
       console.warn("Debe iniciar sesión para agregar a la wishlist.");
-      navigate('/login'); // Redirige al login
+      navigate('/login'); 
       return;
     }
-    addToWishlist(product);
+    addToWishlist(product, userId); 
   };
 
   return (

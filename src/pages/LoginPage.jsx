@@ -21,12 +21,12 @@ const LoginPage = () => {
     if (user) {
       if (user.role === 'ADMIN') {
         const token = 'tokenEjempde admin'; 
-        login(token, { name: user.firstname });
-        navigate('/HomeAdm');  // Redirige al editor si es admin
+        login(token, { name: user.firstname, id: user.id});
+        navigate('/HomeAdm');  
       } else {
-        const token = 'tokenEjemplo123'; // En una implementación real, obtendrás esto de una API
-        login(token, { name: user.firstname });
-        navigate('/');    // Redirige al home si es user
+        const token = 'tokenEjemplo123'; 
+        login(token, { name: user.firstname, id: user.id });
+        navigate('/');    
         console.log(token);
         console.log(user.firstname);
       }

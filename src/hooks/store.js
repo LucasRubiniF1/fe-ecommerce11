@@ -2,31 +2,29 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 const useStore = create((set) => ({
-  cart: [],
-  wishlist: [],
+  
 
-  // Cargar el carrito y wishlist desde el servidor al iniciar
-  loadCart: async () => {
+  loadCart: async (userId) => {
     try {
-      const response = await axios.get('http://localhost:5000/cart');
+      const response = await axios.get(`http://localhost:5000/cart/${userId}`);
       set({ cart: response.data });
     } catch (error) {
       console.error("Error al cargar el carrito:", error);
     }
   },
 
-  loadWishlist: async () => {
+  loadWishlist: async (userId) => {
     try {
-      const response = await axios.get('http://localhost:5000/wishlist');
+      const response = await axios.get(`http://localhost:5000/wishlist/${userId}`);
       set({ wishlist: response.data });
     } catch (error) {
       console.error("Error al cargar la wishlist:", error);
     }
   },
 
-  addToCart: async (product) => {
+  addToCart: async (product, userId) => {
     try {
-      const response = await axios.post('http://localhost:5000/cart', product);
+      await axios.post(`http://localhost:5000/cart/${userId}`, product);
       set((state) => ({
         cart: state.cart.find(item => item.id === product.id)
           ? state.cart.map(item => 
@@ -41,9 +39,9 @@ const useStore = create((set) => ({
     }
   },
 
-  removeFromCart: async (productId) => {
+  removeFromCart: async (productId, userId) => {
     try {
-      await axios.delete(`http://localhost:5000/cart/${productId}`);
+      await axios.delete(`http://localhost:5000/cart/${userId}/${productId}`);
       set((state) => ({
         cart: state.cart.filter((item) => item.id !== productId),
       }));
@@ -52,15 +50,14 @@ const useStore = create((set) => ({
     }
   },
 
-  addToWishlist: async (product) => {
-    // Verificar si el producto ya está en la wishlist
+  addToWishlist: async (product, userId) => {
     const { wishlist } = useStore.getState();
     if (wishlist.some(item => item.id === product.id)) {
       console.warn("Este producto ya está en la wishlist.");
       return;
     }
     try {
-      const response = await axios.post('http://localhost:5000/wishlist', product);
+      await axios.post(`http://localhost:5000/wishlist/${userId}`, product);
       set((state) => ({
         wishlist: [...state.wishlist, product],
       }));
@@ -69,9 +66,9 @@ const useStore = create((set) => ({
     }
   },
 
-  removeFromWishlist: async (productId) => {
+  removeFromWishlist: async (productId, userId) => {
     try {
-      await axios.delete(`http://localhost:5000/wishlist/${productId}`);
+      await axios.delete(`http://localhost:5000/wishlist/${userId}/${productId}`);
       set((state) => ({
         wishlist: state.wishlist.filter((item) => item.id !== productId),
       }));
@@ -80,9 +77,9 @@ const useStore = create((set) => ({
     }
   },
 
-  updateQuantity: async (productId, quantity) => {
+  updateQuantity: async (productId, quantity, userId) => {
     try {
-      await axios.put(`http://localhost:5000/cart/${productId}`, { quantity });
+      await axios.put(`http://localhost:5000/cart/${userId}/${productId}`, { quantity });
       set((state) => ({
         cart: state.cart.map((item) =>
           item.id === productId ? { ...item, quantity } : item
@@ -93,20 +90,17 @@ const useStore = create((set) => ({
     }
   },
 
-  moveFromWishlistToCart: async (product) => {
+  moveFromWishlistToCart: async (product, userId) => {
     try {
-      // Remove from wishlist
-      await axios.delete(`http://localhost:5000/wishlist/${product.id}`);
+      await axios.delete(`http://localhost:5000/wishlist/${userId}/${product.id}`);
       
-      // Add to cart
-      const existsInCart = await axios.get(`http://localhost:5000/cart/${product.id}`);
+      const existsInCart = await axios.get(`http://localhost:5000/cart/${userId}/${product.id}`);
       if (existsInCart.data) {
-        await axios.put(`http://localhost:5000/cart/${product.id}`, { quantity: existsInCart.data.quantity + 1 });
+        await axios.put(`http://localhost:5000/cart/${userId}/${product.id}`, { quantity: existsInCart.data.quantity + 1 });
       } else {
-        await axios.post(`http://localhost:5000/cart`, { ...product, quantity: 1 });
+        await axios.post(`http://localhost:5000/cart/${userId}`, { ...product, quantity: 1 });
       }
 
-      // Update the store
       set((state) => {
         const wishlist = state.wishlist.filter((item) => item.id !== product.id);
         const cart = state.cart.find((item) => item.id === product.id)
@@ -125,4 +119,5 @@ const useStore = create((set) => ({
 }));
 
 export default useStore;
+
 

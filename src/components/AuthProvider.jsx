@@ -1,4 +1,3 @@
-// AuthProvider.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -6,21 +5,34 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    setIsAuthenticated(!!token);
     if (token) {
-      // Opcionalmente, podrías hacer una solicitud para obtener el usuario por el token
-      setUser({ name: "Nombre de Usuario", token }); // Ajusta según el nombre real del usuario
-      console.log(token);
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/api/user', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const userData = await response.json();
+          setUser(userData);  // Aquí defines al usuario con sus datos reales
+          setIsAuthenticated(true);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setIsAuthenticated(false);
+        }
+      };
+
+      fetchUserData();
     }
   }, []);
 
   const login = (token, userData) => {
     localStorage.setItem('authToken', token);
     setIsAuthenticated(true);
-    setUser(userData); // userData es un objeto con la información del usuario, como el nombre
+    setUser(userData); // userData es un objeto con la información del usuario, como el id y el nombre
   };
 
   const logout = () => {
@@ -37,8 +49,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-
-
-
-

@@ -674,6 +674,28 @@
       "cart_id": 2,
       "user_id": 2,
       "id": "be95"
+    },
+    {
+      "id": "o24m",
+      "product_id": 23,
+      "name": "Televisor Sony X900H",
+      "description": "Televisor Sony X900H de 65 pulgadas con 4K",
+      "images": null,
+      "price": 1099.99,
+      "stock": 12,
+      "category": "Televisor",
+      "is_featured": false
+    },
+    {
+      "id": "o24m",
+      "product_id": 23,
+      "name": "Televisor Sony X900H",
+      "description": "Televisor Sony X900H de 65 pulgadas con 4K",
+      "images": null,
+      "price": 1099.99,
+      "stock": 12,
+      "category": "Televisor",
+      "is_featured": false
     }
   ],
   "cartItem": [
