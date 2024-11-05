@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Cards from '../components/Cards';
-import Navbar from '../components/Navbar';
+import axios from 'axios';
 
 const ProductSearch = () => {
   const location = useLocation();
-  const { filteredProducts } = location.state || { filteredProducts: [] };
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  
+  // Extrae el término de búsqueda de los parámetros de URL
+  const searchTerm = new URLSearchParams(location.search).get("query");
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/products')
+      .then((response) => {
+        const data = response.data; // Extraer los datos de la respuesta
+
+        // Filtra los productos por el término de búsqueda en la descripción
+        const filtered = data.filter(product =>
+          product.description.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        setFilteredProducts(filtered);
+      })
+      .catch((error) => {
+        console.error('Error al traer los productos:', error);
+      });
+  }, [searchTerm]);
   return(
     <>
       
       <div>
-          <h2 className="text-2xl font-bold mb-4">Resultados de búsqueda</h2>
           {filteredProducts.length > 0 ? (
             <Cards products={filteredProducts} />
           ) : (
-            <p>No se encontraron productos.</p>
+            <p className="text-gray-500 text-lg font-semibold text-center mt-6">No se encontraron productos.</p>
           )}
       </div>
   </>

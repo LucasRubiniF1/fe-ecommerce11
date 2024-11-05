@@ -40,7 +40,7 @@ const AppContent = () => {
       {location.pathname === '/homeAdmin' ? <NavbarAdm /> : <Navbar />}
 
       {/* Contenedor principal */}
-      <main className="bg-gray-100">
+      <main className="bg-gray-100 flex-grow">
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
