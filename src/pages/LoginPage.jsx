@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import users from "../resources/users.json";
 import axios from "axios";
+import { useAuth } from '../context/AuthContext'; 
 
 const LoginPage = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   useEffect(() => {
     axios
@@ -24,9 +26,13 @@ const LoginPage = () => {
       localStorage.setItem("loggedInUser", JSON.stringify(user));
 
       if (user.role === "ADMIN") {
-        navigate("/editor"); // Redirige al editor si es admin
-      } else {
-        navigate("/home"); // Redirige al home si es user
+        login(token, { name: user.firstname, id: user.id});
+        navigate('/HomeAdm');  
+      } else { 
+        login(token, { name: user.firstname, id: user.id });
+        navigate('/');    
+        console.log(token);
+        console.log(user.firstname);
       }
     } else {
       setError("Incorrect username or password");
@@ -51,4 +57,8 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+
+
+
+      
+
