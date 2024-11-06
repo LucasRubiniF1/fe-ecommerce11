@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/UseStore.js";
+import { useAuth } from "../components/AuthProvider"; 
 
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
   const navigate = useNavigate();
-
-  // Store methods and state
+  const { user, isAuthenticated } = useAuth(); 
+  const userId = user ? user.id : null;
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
+  console.log(userId);
+
 
   // Pagination controls
   const nextPage = () => {
