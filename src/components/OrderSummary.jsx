@@ -1,5 +1,5 @@
 import { FaArrowLeft } from 'react-icons/fa';
-import useStore from '../hooks/store';
+import useStore from '../hooks/UseStore';
 
 export default function OrderSummary({ shipping, payment, onConfirm, onBack }) {
 

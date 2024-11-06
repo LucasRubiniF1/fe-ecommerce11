@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useStore from "../hooks/store.js";
+import useStore from "../hooks/UseStore.js";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import CheckoutModal from '../components/CheckoutModal.jsx';

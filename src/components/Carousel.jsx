@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
-import useStore from "../hooks/store.js";
+import useStore from "../hooks/UseStore.js";
 
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import useStore from "../hooks/store.js";
+import useStore from "../hooks/UseStore.js";
 const Cards = ({products}) => {
   const navigate = useNavigate();
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();

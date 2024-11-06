@@ -5,7 +5,7 @@ import PaymentForm from './PaymentForm';
 import OrderSummary from './OrderSummary';
 import OrderConfirmation from './OrderConfirmation';
 
-import useStore from '../hooks/store';
+import useStore from '../hooks/UseStore';
 
 export default function CheckoutModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
