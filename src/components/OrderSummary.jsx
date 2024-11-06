@@ -1,75 +1,49 @@
 import { FaArrowLeft } from 'react-icons/fa';
 import useStore from '../hooks/UseStore';
 
-export default function OrderSummary({ shipping, payment, onConfirm, onBack }) {
-
+export default function OrderSummary({ shippingData, paymentData, onConfirm, onBack }) {
   const { cart } = useStore();
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-
-
   return (
-    <div>
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6"
-      >
-        <FaArrowLeft /> Back to Payment
-      </button>
+    <div className="text-gray-800">
+      <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+      
+      {/* Información de Envío */}
+      <div className="mb-4">
+        <h3 className="font-semibold text-lg">Shipping Information</h3>
+        <p>{shippingData.name}</p>
+        <p>{shippingData.address}</p>
+        <p>{shippingData.city}, {shippingData.state} {shippingData.zip}</p>
+      </div>
 
-      <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+      {/* Método de Pago */}
+      <div className="mb-4">
+        <h3 className="font-semibold text-lg">Payment Method</h3>
+        <p>{paymentData.paymentMethod}</p>
+      </div>
 
-      <div className="space-y-6">
-        {/* Items */}
-        <div className="space-y-4">
-          <h3 className="font-medium text-gray-900">Items</h3>
-          {cart.map((item) => (
-            <div key={item.product_id} className="flex justify-between">
-              <span className="text-gray-600">
-                {item.name} x {item.quantity}
-              </span>
-              <span className="font-medium">
-                ${(item.price * item.quantity).toFixed(2)}
-              </span>
-            </div>
-          ))}
-        </div>
+      {/* Total del Carrito */}
+      <div className="mb-4">
+        <h3 className="font-semibold text-lg">Total</h3>
+        <p>${total.toFixed(2)}</p>
+      </div>
 
-        {/* Shipping */}
-        <div className="border-t pt-4">
-          <h3 className="font-medium text-gray-900 mb-2">Shipping Address</h3>
-          <div className="text-gray-600">
-            <p>{shipping.fullName}</p>
-            <p>{shipping.address}</p>
-            <p>{shipping.city}, {shipping.state} {shipping.zipCode}</p>
-            <p>{shipping.phone}</p>
-          </div>
-        </div>
-
-        {/* Payment */}
-        <div className="border-t pt-4">
-          <h3 className="font-medium text-gray-900 mb-2">Payment Method</h3>
-          <div className="text-gray-600">
-            <p>Card ending in {payment.cardNumber.slice(-4)}</p>
-            <p>{payment.cardHolder}</p>
-          </div>
-        </div>
-
-        {/* Total */}
-        <div className="border-t pt-4">
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-medium text-gray-900">Total</span>
-            <span className="text-2xl font-bold text-gray-900">
-              ${total.toFixed(2)}
-            </span>
-          </div>
-        </div>
+      {/* Botones */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onBack}
+          className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2"
+        >
+          <FaArrowLeft />
+          Back
+        </button>
 
         <button
           onClick={onConfirm}
-          className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
         >
-          Place Order
+          Confirm Order
         </button>
       </div>
     </div>
