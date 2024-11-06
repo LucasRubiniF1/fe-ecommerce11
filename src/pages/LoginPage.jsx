@@ -23,7 +23,7 @@ const LoginPage = () => {
       (user) => user.email === email && user.password === password
     );
     if (user) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      //localStorage.setItem("loggedInUser", JSON.stringify(user));
 
       if (user.role === "ADMIN") {
         login(token, { name: user.firstname, id: user.id});

@@ -7,7 +7,6 @@ import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
-import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
@@ -18,14 +17,20 @@ import NavbarAdm from "./components/NavbarAdm";
 import Footer from "./components/Footer";
 import HomeAdm from "./pages/HomeAdm";
 import ProductPage from "./pages/ProductPage";
+import { AuthProvider } from './context/AuthContext';
+
+
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
+
 
 const AppContent = () => {
   

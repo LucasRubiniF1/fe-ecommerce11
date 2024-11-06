@@ -1,62 +1,74 @@
 import { create } from 'zustand';
-import axios from 'axios';
+import { persist } from 'zustand/middleware';
 
-const useStore = create((set) => ({
- 
+const UseStore = create(
+  persist(
+    (set) => ({
+      cart: [],
+      wishlist: [],
 
-  // Función para cargar el carrito
-  loadCart: async (userId) => {
-    if (!userId) return;
-    try {
-      const response = await axios.get(`http://localhost:5000/cart/${userId}`);
-      set({ cart: response.data });
-    } catch (error) {
-      console.error("Error al cargar el carrito:", error);
-    }
-  },
-
-  // Función para cargar la wishlist
-  loadWishlist: async (userId) => {
-    if (!userId) return;
-    try {
-      const response = await axios.get(`http://localhost:5000/wishlist/${userId}`);
-      set({ wishlist: response.data });
-    } catch (error) {
-      console.error("Error al cargar la wishlist:", error);
-    }
-  },
-
-  // Función para agregar al carrito
-  addToCart: async (product, userId) => {
-    if (!userId) return;
-    try {
-      const response = await axios.post(`http://localhost:5000/cart/${userId}`, product);
-      set((state) => ({
-        cart: state.cart.find(item => item.id === product.id)
-          ? state.cart.map(item => 
-              item.id === product.id 
-                ? { ...item, quantity: item.quantity + 1 } 
+      addToCart: (product) => set((state) => {
+        const exists = state.cart.find(item => item.id === product.id);
+        if (exists) {
+          return {
+            cart: state.cart.map(item =>
+              item.id === product.id
+                ? { ...item, quantity: item.quantity + 1 }
                 : item
-            )
-          : [...state.cart, { ...product, quantity: 1 }],
-      }));
-    } catch (error) {
-      console.error("Error al agregar al carrito:", error);
-    }
-  },
+            ),
+          };
+        }
+        return { cart: [...state.cart, { ...product, quantity: 1 }] };
+      }),
 
-  // Función para agregar a la wishlist
-  addToWishlist: async (product, userId) => {
-    if (!userId) return;
-    try {
-      const response = await axios.post(`http://localhost:5000/wishlist/${userId}`, product);
-      set((state) => ({
-        wishlist: [...state.wishlist, product],
-      }));
-    } catch (error) {
-      console.error("Error al agregar a la wishlist:", error);
-    }
-  },
-}));
+      updateQuantity: (itemId, newQuantity) => {
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.id === itemId ? { ...item, quantity: newQuantity } : item
+          ),
+        }));
+      },
 
-export default useStore;
+      removeFromCart: (productId) =>
+        set((state) => ({
+          cart: state.cart.filter((item) => item.id !== productId),
+        })),
+
+      addToWishlist: (product) =>
+        set((state) => {
+          const isAlreadyInWishlist = state.wishlist.find((item) => item.id === product.id);
+          if (isAlreadyInWishlist) return state;
+          return { wishlist: [...state.wishlist, product] };
+        }),
+
+      removeFromWishlist: (productId) =>
+        set((state) => ({
+          wishlist: state.wishlist.filter((item) => item.id !== productId),
+        })),
+
+      moveFromWishlistToCart: (product) =>
+        set((state) => {
+          const wishlist = state.wishlist.filter((item) => item.id !== product.id);
+          const existsInCart = state.cart.find((item) => item.id === product.id);
+          const cart = existsInCart
+            ? state.cart.map((item) =>
+                item.id === product.id
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+              )
+            : [...state.cart, { ...product, quantity: 1 }];
+          return { wishlist, cart };
+        }),
+    }),
+    {
+      name: 'shop-storage',
+      version: 1, // helps with migrations if you change the store structure
+      partialize: (state) => ({ 
+        cart: state.cart,
+        wishlist: state.wishlist 
+      }), // only persist these fields
+    }
+  )
+);
+
+export default UseStore;

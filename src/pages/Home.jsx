@@ -35,7 +35,7 @@ const Home = () => {
               className="w-full h-full"
             />
         </div>
-    
+        {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
         {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
         {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
         {productsTel.length > 0 && <Carousel products={productsNot} titulo="Notebooks" />}
