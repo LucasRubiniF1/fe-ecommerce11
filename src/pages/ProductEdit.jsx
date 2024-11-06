@@ -82,8 +82,8 @@ const ProductEdit = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.product_id}>
+          {products.map((product, index) => (
+            <tr key={index}>
               <td>{product.product_id}</td>
               <td>
                 {editableProductId === product.product_id ? (

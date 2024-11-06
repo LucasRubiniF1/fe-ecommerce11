@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
@@ -21,28 +21,26 @@ import ProductPage from "./pages/ProductPage";
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <AppContent />
-    </Router>
+    </BrowserRouter>
   );
 };
 
 const AppContent = () => {
-  const location = useLocation();
+  
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
+      
       
       {/* Selección de Navbar según la ruta */}
-      {location.pathname === '/homeAdmin' || location.pathname ==='/product/create'
-      || location.pathname ==='/product/edit' || location.pathname ==='/account'
-      ? <NavbarAdm /> : <Navbar />}
+      {/*pathname !== '/login' && (pathname === '/homeAdmin' || pathname ==='/product/create'
+      || pathname ==='/product/edit' || pathname ==='/account' ? <NavbarAdm /> : <Navbar />)*/}
 
       {/* Contenedor principal */}
       <main className="bg-gray-100 flex-grow">
+      <Navbar />
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
