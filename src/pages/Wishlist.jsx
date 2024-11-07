@@ -7,17 +7,27 @@ const Wishlist = () => {
   const { wishlist, removeFromWishlist } = useStore();
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 8;
+  const totalItems = wishlist.length;
+
+  const handleRemoveFromWishlist = (id) => {
+    try {
+      removeFromWishlist(id);
+    } catch (error) {
+      console.error('Error removing item from wishlist:', error);
+      alert('Hubo un problema al eliminar el artículo de la lista de deseos. Inténtalo de nuevo.');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-8">
+        <header className="flex items-center gap-3 mb-8">
           <FaRegHeart className="text-red-500" size={24} />
           <h1 className="text-3xl font-bold text-gray-900">My Wishlist</h1>
-          <span className="text-sm text-gray-500 ml-2">({wishlist.length} items)</span>
-        </div>
+          <span className="text-sm text-gray-500 ml-2">({totalItems} {totalItems === 1 ? 'item' : 'items'})</span>
+        </header>
 
-        {wishlist.length === 0 ? (
+        {totalItems === 0 ? (
           <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
             <FaRegHeart className="mx-auto text-gray-300 mb-4" size={48} />
             <h2 className="text-xl font-medium text-gray-900 mb-2">Your wishlist is empty</h2>
@@ -44,25 +54,25 @@ const Wishlist = () => {
                         className="w-full h-full object-contain p-4"
                       />
                       <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                        <p className="text-xs font-medium text-gray-600">Stock: {product.stock}</p>
+                        <p className="text-xs font-medium text-gray-600">Stock: {product.stock || 'N/A'}</p>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="p-5">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
-                        {product.name}
+                        {product.name || 'Producto sin nombre'}
                       </h3>
                       <p className="text-sm text-gray-500 line-clamp-2 mb-4 min-h-[2.5rem]">
-                        {product.description}
+                        {product.description || 'No hay descripción disponible para este producto.'}
                       </p>
                       
                       <div className="flex items-center justify-between">
                         <p className="text-2xl font-bold text-gray-900">
-                          ${typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
+                          ${typeof product.price === 'number' ? product.price.toFixed(2) : 'N/A'}
                         </p>
                         <button
-                          onClick={() => removeFromWishlist(product.id)}
+                          onClick={() => handleRemoveFromWishlist(product.id)}
                           className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                         >
                           <FaTrash size={18} />
@@ -76,18 +86,18 @@ const Wishlist = () => {
           </div>
         )}
 
-        {wishlist.length > itemsPerPage && (
+        {totalItems > itemsPerPage && (
           <div className="flex justify-center gap-4 mt-8">
             <button
-              onClick={() => setStartIndex(prev => Math.max(0, prev - itemsPerPage))}
+              onClick={() => setStartIndex((prev) => Math.max(0, prev - itemsPerPage))}
               disabled={startIndex === 0}
               className="px-4 py-2 bg-gray-900 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
               Previous
             </button>
             <button
-              onClick={() => setStartIndex(prev => Math.min(wishlist.length - itemsPerPage, prev + itemsPerPage))}
-              disabled={startIndex + itemsPerPage >= wishlist.length}
+              onClick={() => setStartIndex((prev) => Math.min(totalItems - itemsPerPage, prev + itemsPerPage))}
+              disabled={startIndex + itemsPerPage >= totalItems}
               className="px-4 py-2 bg-gray-900 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
             >
               Next
@@ -97,6 +107,6 @@ const Wishlist = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Wishlist;
