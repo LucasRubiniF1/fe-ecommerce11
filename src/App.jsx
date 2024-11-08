@@ -36,14 +36,6 @@ const App = () => {
   );
 };
 
-const isAuthenticated = () => {
-  return localStorage.getItem("isAuthenticated") === "true";
-};
-
-const ProtectedRoute = ({ element }) => {
-  return isAuthenticated() ? element : <Navigate to="/login" />;
-};
-
 const AppContent = () => {
   
 
