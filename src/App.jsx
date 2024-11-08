@@ -1,6 +1,15 @@
 import React from "react";
 import "./index.css";
+<<<<<<< HEAD
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+=======
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+>>>>>>> 0c75ba4cddb6a8e7c6d5c514f7438844ae71fdd0
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
@@ -31,17 +40,32 @@ const App = () => {
   );
 };
 
+const isAuthenticated = () => {
+  return localStorage.getItem("isAuthenticated") === "true";
+};
+
+const ProtectedRoute = ({ element }) => {
+  return isAuthenticated() ? element : <Navigate to="/login" />;
+};
 
 const AppContent = () => {
   
 
   return (
     <div className="flex flex-col min-h-screen">
-      
-      
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+
       {/* Selección de Navbar según la ruta */}
-      {/*pathname !== '/login' && (pathname === '/homeAdmin' || pathname ==='/product/create'
-      || pathname ==='/product/edit' || pathname ==='/account' ? <NavbarAdm /> : <Navbar />)*/}
+      {location.pathname === "/homeAdmin" ||
+      location.pathname === "/product/create" ||
+      location.pathname === "/product/edit" ||
+      location.pathname === "/account" ? (
+        <NavbarAdm />
+      ) : (
+        <Navbar />
+      )}
 
       {/* Contenedor principal */}
       <main className="bg-gray-100 flex-grow">
@@ -49,7 +73,8 @@ const AppContent = () => {
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/product/edit" element={<ProductEdit />} /> {/* Cambiado para incluir :id */}
+          <Route path="/product/edit" element={<ProductEdit />} />{" "}
+          {/* Cambiado para incluir :id */}
           <Route path="/product/create" element={<ProductCreate />} />
           <Route path="/account" element={<Account />} />
           <Route path="/edit-account" element={<EditAccount />} />
