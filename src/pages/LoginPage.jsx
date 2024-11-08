@@ -8,6 +8,7 @@ const LoginPage = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   useEffect(() => {
     axios

@@ -7,6 +7,7 @@ const Navbar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const toggleSearchBar = () => {
     setShowSearchBar(!showSearchBar);
@@ -27,6 +28,11 @@ const Navbar = ({ onSearch }) => {
     } else {
       navigate("/login");
     }
+  };
+
+  const handleLogoutClick = () => {
+    logout();
+    navigate("/");
   };
 
   const goToHome = () => {
@@ -80,6 +86,21 @@ const Navbar = ({ onSearch }) => {
         >
           <FaSearch size={20} />
         </li>
+        {user ? (
+          <div className="relative">
+            {/* Mostrar el nombre del usuario si esta logueado */}
+            <li className="font-semibold text-black hover:text-gray-600 cursor-pointer">
+              Hola {user.name}!
+            </li>
+          </div>
+        ) : (
+          <li
+            className="text-black hover:text-gray-600 cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            <FaUser size={20} />
+          </li>
+        )}
         <div className="relative">
           <li
             className="text-black hover:text-rose-600 cursor-pointer"

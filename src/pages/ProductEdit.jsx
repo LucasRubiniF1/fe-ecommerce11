@@ -1,6 +1,6 @@
 // src/pages/ProductEdit.jsx
 import React, { useState, useEffect } from 'react';
-import { Container, Table, Button, Form, Alert } from 'react-bootstrap';
+import { Container, Table, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { FaTrash, FaEdit, FaSave } from 'react-icons/fa';
 import axios from 'axios';
 import { API_URL } from "../utils";
@@ -11,25 +11,34 @@ const ProductEdit = () => {
   const [editedProduct, setEditedProduct] = useState({});
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado para el spinner de carga
 
   useEffect(() => {
     // Cargar todos los productos al montar el componente
     axios.get(`${API_URL}/products`)
       .then(response => {
         setProducts(response.data);
+        setLoading(false);
       })
       .catch(error => {
         console.error("Error fetching products:", error);
         setError("Error al cargar los productos.");
+        setLoading(false);
       });
   }, []);
 
   const handleEditClick = (product) => {
     setEditableProductId(product.product_id);
     setEditedProduct(product);
+    setError(null); // Limpiar cualquier error anterior
+    setSuccess(null); // Limpiar cualquier mensaje de éxito anterior
   };
 
   const handleSaveClick = async () => {
+    if (!editedProduct.name || !editedProduct.price || !editedProduct.stock || !editedProduct.category) {
+      setError("Todos los campos son obligatorios.");
+      return;
+    }
     try {
       await axios.put(`${API_URL}/products/${editedProduct.product_id}`, editedProduct);
       setProducts(products.map(p => p.product_id === editedProduct.product_id ? editedProduct : p));
@@ -44,6 +53,9 @@ const ProductEdit = () => {
   };
 
   const handleDeleteClick = async (productId) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.")) {
+      return;
+    }
     try {
       await axios.delete(`${API_URL}/products/${productId}`);
       setProducts(products.filter(p => p.product_id !== productId));
@@ -60,6 +72,17 @@ const ProductEdit = () => {
     const { name, value } = e.target;
     setEditedProduct({ ...editedProduct, [name]: value });
   };
+
+  // Mostrar un spinner mientras se cargan los productos
+  if (loading) {
+    return (
+      <Container style={{ marginTop: '20px' }}>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
 
   return (
     <Container style={{ marginTop: '20px' }}>
@@ -78,12 +101,13 @@ const ProductEdit = () => {
             <th>Stock</th>
             <th>Category</th>
             <th>Featured</th>
+            <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.product_id}>
+          {products.map((product, index) => (
+            <tr key={index}>
               <td>{product.product_id}</td>
               <td>
                 {editableProductId === product.product_id ? (
@@ -92,6 +116,7 @@ const ProductEdit = () => {
                     name="name"
                     value={editedProduct.name}
                     onChange={handleInputChange}
+                    required
                   />
                 ) : (
                   product.name
@@ -116,6 +141,7 @@ const ProductEdit = () => {
                     name="price"
                     value={editedProduct.price}
                     onChange={handleInputChange}
+                    required
                   />
                 ) : (
                   `$${product.price}`
@@ -128,6 +154,7 @@ const ProductEdit = () => {
                     name="stock"
                     value={editedProduct.stock}
                     onChange={handleInputChange}
+                    required
                   />
                 ) : (
                   product.stock
@@ -140,6 +167,7 @@ const ProductEdit = () => {
                     name="category"
                     value={editedProduct.category}
                     onChange={handleInputChange}
+                    required
                   />
                 ) : (
                   product.category
@@ -155,6 +183,20 @@ const ProductEdit = () => {
                   />
                 ) : (
                   product.isFeatured ? 'Yes' : 'No'
+                )}
+              </td>
+              <td>
+                {editableProductId === product.product_id ? (
+                  <Form.Control
+                    type="text"
+                    name="images"
+                    value={editedProduct.images}
+                    onChange={handleInputChange}
+                    placeholder="Image URL"
+                    required
+                  />
+                ) : (
+                  product.images ? <img src={product.images} alt={product.name} style={{ width: '50px' }} /> : 'No image'
                 )}
               </td>
               <td>
