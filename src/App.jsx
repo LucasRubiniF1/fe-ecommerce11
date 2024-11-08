@@ -1,15 +1,11 @@
 import React from "react";
 import "./index.css";
-<<<<<<< HEAD
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
 } from "react-router-dom";
-=======
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
->>>>>>> 0c75ba4cddb6a8e7c6d5c514f7438844ae71fdd0
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
