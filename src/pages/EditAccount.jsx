@@ -1,55 +1,42 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/editMyAccount.css"; // Importa los estilos que desees
+import "../styles/editMyAccount.css";
 
-const API_URL = "http://localhost:5000"; // Reemplaza con tu URL si es diferente
+const API_URL = "http://localhost:5000";
 
 const EditAccount = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [editingField, setEditingField] = useState(null); // Campo que se está editando
-  const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    birth: "",
+    firstname: "",
+    lastname: "",
+    role: "",
+  });
+  const [editingField, setEditingField] = useState(null);
+  const userId = 4; 
+
 
   useEffect(() => {
-    // Obtener los datos del usuario logueado desde localStorage
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser);
-      setUsername(user.username);
-      setEmail(user.email);
-      setPassword(user.password); // Si no manejas contraseñas, omite esto
-      setUserId(user.id); // Asegúrate de que el ID esté presente en los datos del usuario
-    } else {
-      alert("Usuario no autenticado");
-      // Puedes redirigir al login si es necesario
-    }
-  }, []);
+    axios
+      .get(`${API_URL}/users/${userId}`)
+      .then((response) => setUserData(response.data))
+      .catch((error) =>
+        console.error("Error al cargar los datos del usuario:", error)
+      );
+  }, [userId]);
+
 
   const handleSaveChanges = async () => {
-    const updatedUserData = {
-      username,
-      email,
-      password,
+    const updatedFields = {
+      ...(editingField === "username" && { username: userData.username }),
+      ...(editingField === "email" && { email: userData.email }),
+      ...(editingField === "password" && { password: userData.password }),
     };
 
-    if (!userId) {
-      console.error("No se encontró el ID del usuario");
-      alert("Error al guardar los cambios. Intente de nuevo.");
-      return;
-    }
-
     try {
-      console.log("Intentando guardar cambios...");
-      const response = await axios.put(
-        `${API_URL}/users/${userId}`,
-        updatedUserData
-      );
-      console.log("Cambios guardados exitosamente:", response.data);
-
-      // Actualizar el usuario en localStorage
-      localStorage.setItem("loggedInUser", JSON.stringify(response.data));
-
+      await axios.patch(`${API_URL}/users/${userId}`, updatedFields); 
       alert("Cambios guardados correctamente");
       setEditingField(null); // Finaliza la edición
     } catch (error) {
@@ -62,15 +49,22 @@ const EditAccount = () => {
     setEditingField(field);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   return (
     <div className="edit-account-container">
       <h2>Edita tu cuenta</h2>
+
       <div className="form-group">
         <label>Username:</label>
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          value={userData.username}
+          onChange={handleInputChange}
           disabled={editingField !== "username"}
         />
         <button onClick={() => handleEditClick("username")}>Editar</button>
@@ -80,8 +74,9 @@ const EditAccount = () => {
         <label>Email:</label>
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          value={userData.email}
+          onChange={handleInputChange}
           disabled={editingField !== "email"}
         />
         <button onClick={() => handleEditClick("email")}>Editar</button>
@@ -91,14 +86,25 @@ const EditAccount = () => {
         <label>Password:</label>
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          value={userData.password}
+          onChange={handleInputChange}
           disabled={editingField !== "password"}
         />
         <button onClick={() => handleEditClick("password")}>Editar</button>
       </div>
 
-      <button className="btn-save" onClick={handleSaveChanges}>
+      <button
+        className="btn-save"
+        onClick={handleSaveChanges}
+        style={{
+          backgroundColor: "green",
+          color: "white",
+          padding: "10px",
+          border: "none",
+          borderRadius: "5px",
+        }}
+      >
         Guardar cambios
       </button>
     </div>

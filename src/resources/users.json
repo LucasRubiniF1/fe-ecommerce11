@@ -7,14 +7,10 @@
       "id": "1"
     },
     {
-      "id": "2",
-      "username": "mariafernandez@example.com",
+      "username": "maria",
       "email": "mariafernandez@example.com",
       "password": "mariafernandez_password",
-      "birth": "1992-03-22",
-      "firstname": "María",
-      "lastname": "Fernández",
-      "role": "ADMIN"
+      "id": "2"
     },
     {
       "id": "3",
@@ -28,7 +24,7 @@
     },
     {
       "id": "4",
-      "username": "luisaortiz@example.com",
+      "username": "luisa_ortiz",
       "email": "luisaortiz@example.com",
       "password": "luisaortiz_password",
       "birth": "1990-11-05",
