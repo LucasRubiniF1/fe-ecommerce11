@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "axios"; // Importa Axios
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
 
@@ -8,27 +8,30 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const userId = localStorage.getItem("userId");
+
+  const userId = 1; // Simulamos un usuario logueado
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/users/${userId}`
-        );
-        if (response.data) {
-          setUserData(response.data);
+        const response = await axios.get(`http://localhost:5000/users`, {
+          params: { user_id: userId },
+        });
+
+        // Axios ya convierte la respuesta en JSON automáticamente
+        if (response.data.length > 0) {
+          setUserData(response.data[0]);
         } else {
           setError("Usuario no encontrado");
         }
       } catch (error) {
         setError("Error al obtener los datos del usuario");
       } finally {
-        setLoading(false);
+        setLoading(false); // Quitamos el estado de carga
       }
     };
 
-    fetchUserData(); // Llamada a la función
+    fetchUserData();
   }, [userId]);
 
   if (loading) {
@@ -43,7 +46,7 @@ const Account = () => {
     <div className="account-container">
       <div className="account-sidebar">
         <img
-          src="./img/usuario1.avif"
+          src="./img/usuario1.avif" // Coloca aquí el enlace a la imagen de perfil
           alt="Profile"
           className="profile-image"
         />
@@ -66,16 +69,16 @@ const Account = () => {
             <p>
               Nombre y apellido: {userData.firstname} {userData.lastname}
             </p>
-            <p>Nombre de usuario: {userData.username}</p>
+            <p>Nombre de usuario: {userData.firstname}</p>
             <p>Email: {userData.email}</p>
           </div>
           <div className="account-card">
             <h3>
               Información de envio <span>Edit</span>
             </h3>
-            <p>Direccion de envio: {userData.address || "No disponible"}</p>
-            <p>Localidad: {userData.city || "No disponible"}</p>
-            <p>Codigo postal: {userData.postalCode || "No disponible"}</p>
+            <p>Direccion de envio: XXXXXX</p>
+            <p>Localidad: XXXXXX</p>
+            <p>Codigo postal: XXXXX</p>
           </div>
         </div>
       </div>
