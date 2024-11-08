@@ -27,7 +27,7 @@ export default function OrderConfirmation({ onClose }) {
       
       <button
         onClick={onClose}
-        className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+        className="w-full py-3  bg-sky-600  text-white font-semibold rounded-lg hover:bg-sky-700 transition-colors"
       >
         Continue Shopping
       </button>

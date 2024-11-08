@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/editMyAccount.css";
 
-const API_URL = "http://localhost:5000"; // Reemplaza con tu URL si es diferente
+const API_URL = "http://localhost:5000";
 
 const EditAccount = () => {
   const [userData, setUserData] = useState({
@@ -15,9 +15,9 @@ const EditAccount = () => {
     role: "",
   });
   const [editingField, setEditingField] = useState(null);
-  const userId = 4; // Ajusta el ID del usuario según sea necesario
+  const userId = 4; 
 
-  // Cargar los datos completos del usuario al montar el componente
+
   useEffect(() => {
     axios
       .get(`${API_URL}/users/${userId}`)
@@ -27,7 +27,7 @@ const EditAccount = () => {
       );
   }, [userId]);
 
-  // Guardar cambios, solo actualizando los campos editados
+
   const handleSaveChanges = async () => {
     const updatedFields = {
       ...(editingField === "username" && { username: userData.username }),
@@ -36,7 +36,7 @@ const EditAccount = () => {
     };
 
     try {
-      await axios.patch(`${API_URL}/users/${userId}`, updatedFields); // Usar PATCH para actualizar solo los campos seleccionados
+      await axios.patch(`${API_URL}/users/${userId}`, updatedFields); 
       alert("Cambios guardados correctamente");
       setEditingField(null); // Finaliza la edición
     } catch (error) {
