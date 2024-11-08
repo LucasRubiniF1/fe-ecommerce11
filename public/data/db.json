@@ -2,11 +2,23 @@
   "authenticate_user": [
     {
       "access_token": "mi_token_user"
-    }],
+    },
+    {
+      "id": "854d",
+      "email": "john_doe",
+      "password": "hashed_password"
+    },
+    {
+      "id": "ad69",
+      "email": "john_doe",
+      "password": "hashed_password"
+    }
+  ],
   "authenticate_admin": [
     {
       "access_token": "mi_token_admin"
-    }],
+    }
+  ],
   "users": [
     {
       "id": 1,
