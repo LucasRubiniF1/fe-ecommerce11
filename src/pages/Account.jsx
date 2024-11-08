@@ -1,101 +1,81 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import "../styles/account.css";
-import EditButton from "../components/EditButton";
+import "../styles/editMyAccount.css"; // Importa los estilos que desees
 
-const Account = () => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const API_URL = "http://localhost:5000"; // Reemplaza con tu URL si es diferente
 
-<<<<<<< HEAD
-  const userId = localStorage.getItem("userId");
+const EditAccount = () => {
+  const [username, setUsername] = useState("pruebaCambio");
+  const [email, setEmail] = useState("prueba@example.com");
+  const [password, setPassword] = useState("******");
+  const [editingField, setEditingField] = useState(null); // Campo que se está editando
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/users`, {
-          params: { id: userId },
-        });
-=======
-  // Obtén el usuario logueado desde localStorage
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("loggedInUser");
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser);
-      fetchUserData(user.id); // Usa el ID del usuario almacenado en localStorage
-    } else {
-      setError("Usuario no autenticado");
-      setLoading(false);
-    }
-  }, []);
->>>>>>> 0c75ba4cddb6a8e7c6d5c514f7438844ae71fdd0
+  const userId = 1; // Ajusta el ID del usuario según sea necesario
 
-  const fetchUserData = async (userId) => {
+  const handleSaveChanges = async () => {
+    const updatedUserData = {
+      username,
+      email,
+      password,
+    };
+
     try {
-      const response = await axios.get(`http://localhost:5000/users/${userId}`);
-      if (response.data) {
-        setUserData(response.data);
-      } else {
-        setError("Usuario no encontrado");
-      }
+      console.log("Intentando guardar cambios...");
+      await axios.put(${API_URL}/users/${userId}, updatedUserData);
+      console.log("Cambios guardados exitosamente");
+      alert("Cambios guardados correctamente");
+      setEditingField(null); // Finaliza la edición
     } catch (error) {
-      setError("Error al obtener los datos del usuario");
-    } finally {
-      setLoading(false);
+      console.error("Error al guardar los cambios:", error);
+      alert("Error al guardar los cambios");
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  const handleEditClick = (field) => {
+    setEditingField(field);
+  };
 
   return (
-    <div className="account-container">
-      <div className="account-sidebar">
-        <img
-          src="./img/usuario1.avif"
-          alt="Profile"
-          className="profile-image"
+    <div className="edit-account-container">
+      <h2>Edita tu cuenta</h2>
+      <div className="form-group">
+        <label>Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          disabled={editingField !== "username"}
         />
-        <h2>{userData.username}</h2>
-        <ul>
-          <li>Cuenta</li>
-          <li>Órdenes</li>
-          <li>Lista de Favoritos</li>
-          <li>Salir de mi cuenta</li>
-        </ul>
+        <button onClick={() => handleEditClick("username")}>Editar</button>
       </div>
 
-      <div className="account-content">
-        <h1>Mi cuenta</h1>
-        <div className="addresses">
-          <div className="address-card">
-            <h3>
-              Información personal <EditButton to="/edit-account" />
-            </h3>
-            <p>
-              Nombre y apellido: {userData.firstname} {userData.lastname}
-            </p>
-            <p>Nombre de usuario: {userData.username}</p>
-            <p>Email: {userData.email}</p>
-          </div>
-          <div className="account-card">
-            <h3>
-              Información de envio <span>Edit</span>
-            </h3>
-            <p>Direccion de envio: {userData.address}</p>
-            <p>Localidad: {userData.city}</p>
-            <p>Codigo postal: {userData.postalCode}</p>
-          </div>
-        </div>
+      <div className="form-group">
+        <label>Email:</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={editingField !== "email"}
+        />
+        <button onClick={() => handleEditClick("email")}>Editar</button>
       </div>
+
+      <div className="form-group">
+        <label>Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={editingField !== "password"}
+        />
+        <button onClick={() => handleEditClick("password")}>Editar</button>
+      </div>
+
+      <button className="btn-save" onClick={handleSaveChanges}>
+        Guardar cambios
+      </button>
     </div>
   );
 };
 
-export default Account;
+export default EditAccount;
