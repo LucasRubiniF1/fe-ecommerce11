@@ -1,74 +1,120 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import axios from 'axios';
 
-const UseStore = create(
-  persist(
-    (set) => ({
-      cart: [],
-      wishlist: [],
+const useStore = create((set) => ({
 
-      addToCart: (product) => set((state) => {
-        const exists = state.cart.find(item => item.id === product.id);
-        if (exists) {
-          return {
-            cart: state.cart.map(item =>
+  loadCart: async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/cart/${userId}`);
+      set({ cart: response.data });
+    } catch (error) {
+      console.error("Error al cargar el carrito:", error);
+    }
+  },
+
+  loadWishlist: async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/wishlist/${userId}`);
+      set({ wishlist: response.data });
+    } catch (error) {
+      console.error("Error al cargar la wishlist:", error);
+    }
+  },
+
+  addToCart: async (product, userId) => {
+    try {
+      await axios.post(`http://localhost:5000/cart/${userId}`, product);
+      set((state) => ({
+        cart: state.cart.find(item => item.id === product.id)
+          ? state.cart.map(item => 
+              item.id === product.id 
+                ? { ...item, quantity: item.quantity + 1 } 
+                : item
+            )
+          : [...state.cart, { ...product, quantity: 1 }],
+      }));
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error);
+    }
+  },
+
+  removeFromCart: async (productId, userId) => {
+    try {
+      await axios.delete(`http://localhost:5000/cart/${userId}/${productId}`);
+      set((state) => ({
+        cart: state.cart.filter((item) => item.id !== productId),
+      }));
+    } catch (error) {
+      console.error("Error al eliminar del carrito:", error);
+    }
+  },
+
+  addToWishlist: async (product, userId) => {
+    const { wishlist } = useStore.getState();
+    if (wishlist.some(item => item.id === product.id)) {
+      console.warn("Este producto ya está en la wishlist.");
+      return;
+    }
+    try {
+      await axios.post(`http://localhost:5000/wishlist/${userId}`, product);
+      set((state) => ({
+        wishlist: [...state.wishlist, product],
+      }));
+    } catch (error) {
+      console.error("Error al agregar a la wishlist:", error);
+    }
+  },
+
+  removeFromWishlist: async (productId, userId) => {
+    try {
+      await axios.delete(`http://localhost:5000/wishlist/${userId}/${productId}`);
+      set((state) => ({
+        wishlist: state.wishlist.filter((item) => item.id !== productId),
+      }));
+    } catch (error) {
+      console.error("Error al eliminar de la wishlist:", error);
+    }
+  },
+
+  updateQuantity: async (productId, quantity, userId) => {
+    try {
+      await axios.put(`http://localhost:5000/cart/${userId}/${productId}`, { quantity });
+      set((state) => ({
+        cart: state.cart.map((item) =>
+          item.id === productId ? { ...item, quantity } : item
+        ),
+      }));
+    } catch (error) {
+      console.error("Error al actualizar la cantidad:", error);
+    }
+  },
+
+  moveFromWishlistToCart: async (product, userId) => {
+    try {
+      await axios.delete(`http://localhost:5000/wishlist/${userId}/${product.id}`);
+      
+      const existsInCart = await axios.get(`http://localhost:5000/cart/${userId}/${product.id}`);
+      if (existsInCart.data) {
+        await axios.put(`http://localhost:5000/cart/${userId}/${product.id}`, { quantity: existsInCart.data.quantity + 1 });
+      } else {
+        await axios.post(`http://localhost:5000/cart/${userId}`, { ...product, quantity: 1 });
+      }
+
+      set((state) => {
+        const wishlist = state.wishlist.filter((item) => item.id !== product.id);
+        const cart = state.cart.find((item) => item.id === product.id)
+          ? state.cart.map((item) =>
               item.id === product.id
                 ? { ...item, quantity: item.quantity + 1 }
                 : item
-            ),
-          };
-        }
-        return { cart: [...state.cart, { ...product, quantity: 1 }] };
-      }),
-
-      updateQuantity: (itemId, newQuantity) => {
-        set((state) => ({
-          cart: state.cart.map((item) =>
-            item.id === itemId ? { ...item, quantity: newQuantity } : item
-          ),
-        }));
-      },
-
-      removeFromCart: (productId) =>
-        set((state) => ({
-          cart: state.cart.filter((item) => item.id !== productId),
-        })),
-
-      addToWishlist: (product) =>
-        set((state) => {
-          const isAlreadyInWishlist = state.wishlist.find((item) => item.id === product.id);
-          if (isAlreadyInWishlist) return state;
-          return { wishlist: [...state.wishlist, product] };
-        }),
-
-      removeFromWishlist: (productId) =>
-        set((state) => ({
-          wishlist: state.wishlist.filter((item) => item.id !== productId),
-        })),
-
-      moveFromWishlistToCart: (product) =>
-        set((state) => {
-          const wishlist = state.wishlist.filter((item) => item.id !== product.id);
-          const existsInCart = state.cart.find((item) => item.id === product.id);
-          const cart = existsInCart
-            ? state.cart.map((item) =>
-                item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
-              )
-            : [...state.cart, { ...product, quantity: 1 }];
-          return { wishlist, cart };
-        }),
-    }),
-    {
-      name: 'shop-storage',
-      version: 1, // helps with migrations if you change the store structure
-      partialize: (state) => ({ 
-        cart: state.cart,
-        wishlist: state.wishlist 
-      }), // only persist these fields
+            )
+          : [...state.cart, { ...product, quantity: 1 }];
+        return { wishlist, cart };
+      });
+    } catch (error) {
+      console.error("Error al mover de wishlist a carrito:", error);
     }
-  )
-);
+  },
+}));
 
-export default UseStore;
+export default useStore;

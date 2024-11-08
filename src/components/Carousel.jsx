@@ -36,7 +36,7 @@ const Carousel = ({ products, titulo }) => {
     if (wishlist.some((item) => item.id === product.id)) {
       removeFromWishlist(product.id);
     } else {
-      addToWishlist(product);
+      addToWishlist(product, userId);
     }
   };
 
