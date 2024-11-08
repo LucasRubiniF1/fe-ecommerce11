@@ -1,6 +1,11 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
@@ -27,6 +32,14 @@ const App = () => {
   );
 };
 
+const isAuthenticated = () => {
+  return localStorage.getItem("isAuthenticated") === "true";
+};
+
+const ProtectedRoute = ({ element }) => {
+  return isAuthenticated() ? element : <Navigate to="/login" />;
+};
+
 const AppContent = () => {
   const location = useLocation();
 
@@ -35,18 +48,24 @@ const AppContent = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
       </Routes>
-      
+
       {/* Selección de Navbar según la ruta */}
-      {location.pathname === '/homeAdmin' || location.pathname ==='/product/create'
-      || location.pathname ==='/product/edit' || location.pathname ==='/account'
-      ? <NavbarAdm /> : <Navbar />}
+      {location.pathname === "/homeAdmin" ||
+      location.pathname === "/product/create" ||
+      location.pathname === "/product/edit" ||
+      location.pathname === "/account" ? (
+        <NavbarAdm />
+      ) : (
+        <Navbar />
+      )}
 
       {/* Contenedor principal */}
       <main className="bg-gray-100 flex-grow">
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/product/edit" element={<ProductEdit />} /> {/* Cambiado para incluir :id */}
+          <Route path="/product/edit" element={<ProductEdit />} />{" "}
+          {/* Cambiado para incluir :id */}
           <Route path="/product/create" element={<ProductCreate />} />
           <Route path="/account" element={<Account />} />
           <Route path="/edit-account" element={<EditAccount />} />

@@ -8,13 +8,13 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const userId = 1; // Simulamos un usuario logueado
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users`, {
-          params: { user_id: userId },
+          params: { id: userId },
         });
 
         // Axios ya convierte la respuesta en JSON automáticamente
