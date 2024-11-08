@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/UseStore.js";
-import { useAuth } from "../context/AuthContext.jsx"; 
+import { useAuth } from "../hooks/UseAuth.js"; 
 
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth(); 
-  const userId = user ? user.id : null;
+  const { user } = useAuth();
+  //const { user, isAuthenticated } = useAuth(); 
+  //const userId = user ? user.id : null;
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
-  console.log(userId);
+  //console.log(userId);
 
 
   // Pagination controls
@@ -33,10 +34,10 @@ const Carousel = ({ products, titulo }) => {
 
   // Toggle wishlist status
   const handleWishlistToggle = (product) => {
-    if (wishlist.some((item) => item.id === product.id)) {
+    if (wishlist?.some((item) => item.id === product.id)) {
       removeFromWishlist(product.id);
     } else {
-      addToWishlist(product, userId);
+      addToWishlist(product, user.id);
     }
   };
 
@@ -55,7 +56,7 @@ const Carousel = ({ products, titulo }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.slice(startIndex, startIndex + itemsPerPage).map((product) => {
             // Check if the product is in the wishlist
-            const isInWishlist = wishlist.some((item) => item.id === product.id);
+            const isInWishlist = wishlist?.some((item) => item.id === product.id);
             
             return (
               <div

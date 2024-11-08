@@ -1,7 +1,15 @@
 {
+  "authenticate_user": [
+    {
+      "access_token": "mi_token_user"
+    }],
+  "authenticate_admin": [
+    {
+      "access_token": "mi_token_admin"
+    }],
   "users": [
     {
-      "user_id": 1,
+      "id": 1,
       "username": "john_doe",
       "password": "hashed_password",
       "email": "john.doe@example.com",
@@ -62,11 +70,10 @@
           "wishlist_id": 1,
           "product_id": 3
         }
-      ],
-      "id": "bf52"
+      ]
     },
     {
-      "user_id": 2,
+      "id": 2,
       "username": "jane_smith",
       "password": "hashed_password",
       "email": "jane.smith@example.com",
@@ -90,8 +97,7 @@
           "wishlist_id": 2,
           "product_id": 4
         }
-      ],
-      "id": "fa44"
+      ]
     },
     {
       "id": 3,
@@ -136,26 +142,24 @@
   ],
   "products": [
     {
-      "product_id": 2,
+      "id": 2,
       "name": "Teléfono Samsung",
       "description": "Teléfono Samsung Galaxy S21",
       "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
       "price": 999.99,
       "stock": 15,
       "category": "Celular",
-      "is_featured": true,
-      "id": "a16b"
+      "is_featured": true
     },
     {
-      "product_id": 11,
+      "id": 11,
       "name": "Teléfono Apple iPhone 12",
       "description": "Teléfono Apple iPhone 14 con 128GB de almacenamiento",
       "images": "https://http2.mlstatic.com/D_NQ_NP_2X_864844-MLM51559388062_092022-F.webp",
       "price": 1.76453,
       "stock": 10,
       "category": "Celular",
-      "is_featured": false,
-      "id": "c12a"
+      "is_featured": false
     },
     {
       "product_id": 12,
