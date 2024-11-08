@@ -21,7 +21,7 @@ const EditAccount = () => {
 
     try {
       console.log("Intentando guardar cambios...");
-      await axios.put(${API_URL}/users/${userId}, updatedUserData);
+      await axios.put(`${API_URL}/users/${userId}`, updatedUserData);
       console.log("Cambios guardados exitosamente");
       alert("Cambios guardados correctamente");
       setEditingField(null); // Finaliza la edición
