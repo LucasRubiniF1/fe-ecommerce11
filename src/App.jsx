@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
@@ -17,39 +17,34 @@ import NavbarAdm from "./components/NavbarAdm";
 import Footer from "./components/Footer";
 import HomeAdm from "./pages/HomeAdm";
 import ProductPage from "./pages/ProductPage";
-import { AuthProvider } from './context/AuthContext';
-
-
+import LoginPage from "./pages/LoginPage";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <AppContent />
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
-
 const AppContent = () => {
-  
-
   return (
     <div className="flex flex-col min-h-screen">
-      
-      
       {/* Selección de Navbar según la ruta */}
       {/*pathname !== '/login' && (pathname === '/homeAdmin' || pathname ==='/product/create'
       || pathname ==='/product/edit' || pathname ==='/account' ? <NavbarAdm /> : <Navbar />)*/}
 
       {/* Contenedor principal */}
       <main className="bg-gray-100 flex-grow">
-      <Navbar />
+        <Navbar />
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/product/edit" element={<ProductEdit />} /> {/* Cambiado para incluir :id */}
+          <Route path="/product/edit" element={<ProductEdit />} />{" "}
+          {/* Cambiado para incluir :id */}
           <Route path="/product/create" element={<ProductCreate />} />
           <Route path="/account" element={<Account />} />
           <Route path="/edit-account" element={<EditAccount />} />
@@ -59,6 +54,7 @@ const AppContent = () => {
           <Route path="/checkout/:userId" element={<Checkout />} />
           <Route path="/" element={<Home />} />
           <Route path="/products/:category" element={<ProductPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
         </Routes>
       </main>

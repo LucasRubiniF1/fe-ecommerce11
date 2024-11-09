@@ -1,15 +1,24 @@
-import React from 'react';
-
+import React from "react";
 const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-10 rounded-lg shadow-lg max-w-md w-full space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-10 rounded-lg shadow-lg max-w-md w-full space-y-4"
+    >
+      {" "}
       <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
-        Registrar Usuario
-      </h2>
-
-      {/* Campo para el nombre */}
+        {" "}
+        Registrar Usuario{" "}
+      </h2>{" "}
+      {/* Campo para el nombre */}{" "}
       <div className="mb-4">
-        <label htmlFor="firstname" className="block text-sm font-medium text-gray-700">Nombre</label>
+        {" "}
+        <label
+          htmlFor="firstname"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Nombre
+        </label>{" "}
         <input
           type="text"
           id="firstname"
@@ -19,12 +28,17 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           value={formData.firstname}
           onChange={handleChange}
           required
-        />
-      </div>
-
-      {/* Campo para el apellido */}
+        />{" "}
+      </div>{" "}
+      {/* Campo para el apellido */}{" "}
       <div className="mb-4">
-        <label htmlFor="lastname" className="block text-sm font-medium text-gray-700">Apellido</label>
+        {" "}
+        <label
+          htmlFor="lastname"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Apellido
+        </label>{" "}
         <input
           type="text"
           id="lastname"
@@ -34,12 +48,17 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           value={formData.lastname}
           onChange={handleChange}
           required
-        />
-      </div>
-
-      {/* Campo para el nombre de usuario */}
+        />{" "}
+      </div>{" "}
+      {/* Campo para el nombre de usuario */}{" "}
       <div className="mb-4">
-        <label htmlFor="username" className="block text-sm font-medium text-gray-700">Nombre de Usuario</label>
+        {" "}
+        <label
+          htmlFor="username"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Nombre de Usuario
+        </label>{" "}
         <input
           type="text"
           id="username"
@@ -49,12 +68,17 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           value={formData.username}
           onChange={handleChange}
           required
-        />
-      </div>
-
-      {/* Campo para el correo electrónico */}
+        />{" "}
+      </div>{" "}
+      {/* Campo para el correo electrónico */}{" "}
       <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+        {" "}
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Email
+        </label>{" "}
         <input
           type="email"
           id="email"
@@ -64,12 +88,17 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           value={formData.email}
           onChange={handleChange}
           required
-        />
-      </div>
-
-      {/* Campo para la contraseña */}
+        />{" "}
+      </div>{" "}
+      {/* Campo para la contraseña */}{" "}
       <div className="mb-4">
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
+        {" "}
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Contraseña
+        </label>{" "}
         <input
           type="password"
           id="password"
@@ -79,12 +108,17 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           value={formData.password}
           onChange={handleChange}
           required
-        />
-      </div>
-
-      {/* Campo para la fecha de nacimiento */}
+        />{" "}
+      </div>{" "}
+      {/* Campo para la fecha de nacimiento */}{" "}
       <div className="mb-4">
-        <label htmlFor="birth" className="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
+        {" "}
+        <label
+          htmlFor="birth"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Fecha de Nacimiento
+        </label>{" "}
         <input
           type="date"
           id="birth"
@@ -93,20 +127,20 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           value={formData.birth}
           onChange={handleChange}
           required
-        />
-      </div>
-
-      {/* Botón de envío */}
+        />{" "}
+      </div>{" "}
+      {/* Botón de envío */}{" "}
       <div className="mb-6">
+        {" "}
         <button
           type="submit"
           className="w-full border border-indigo-600 text-indigo-600 font-bold py-3 rounded-md hover:bg-indigo-600 hover:text-white transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
         >
-          Registrar
-        </button>
-      </div>
+          {" "}
+          Registrar{" "}
+        </button>{" "}
+      </div>{" "}
     </form>
   );
 };
-
 export default RegisterForm;
