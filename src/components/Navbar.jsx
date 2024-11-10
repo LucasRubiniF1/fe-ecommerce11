@@ -19,7 +19,7 @@ const Navbar = ({ onSearch }) => {
   };
 
   const handleSearchClick = () => {
-    onSearch(searchTerm);
+    navigate(`/productSearch?query=${searchTerm}`);
   };
 
   const handleLogoutClick = () => {
@@ -53,30 +53,19 @@ const Navbar = ({ onSearch }) => {
         <li className="text-black hover:text-gray-600 cursor-pointer">Contact Us</li>
       </ul>
 
-      {/* Barra de búsqueda expandible */}
-      {showSearchBar && (
-        <div className="flex items-center gap-2 ml-7">
-          <input
-            type="text"
-            placeholder="Buscar por nombre o categoría"
-            value={searchTerm}
-            onChange={handleSearchInput}
-            className="border p-2 rounded-lg text-black"
-          />
-          <button
-            onClick={handleSearchClick}
-            className="p-2 bg-gray-200 rounded-lg hover:bg-gray-300"
-          >
-            Buscar
-          </button>
-        </div>
-      )}
-
       {/* Íconos del usuario */}
       <ul className="flex gap-6 items-center">
-        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={toggleSearchBar}>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={searchTerm}
+          onChange={handleSearchInput}
+          className="w-96 border border-gray-300 p-2 rounded-md text-gray-700 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-100 transition duration-200"
+        />
+        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleSearchClick}>
           <FaSearch size={20} />
         </li>
+        
         
         {user ? (
           <div className="relative">
