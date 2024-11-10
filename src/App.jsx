@@ -1,13 +1,12 @@
 import React from "react";
 import "./index.css";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import ProductSearch from "./pages/ProductSearch";
 import ProductDetail from "./pages/ProductDetail";
 import ProductEdit from "./pages/ProductEdit";
 import ProductCreate from "./pages/ProductCreate";
 import Account from "./pages/Account";
 import EditAccount from "./pages/EditAccount";
-import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
@@ -18,31 +17,37 @@ import NavbarAdm from "./components/NavbarAdm";
 import Footer from "./components/Footer";
 import HomeAdm from "./pages/HomeAdm";
 import ProductPage from "./pages/ProductPage";
+import LoginPage from "./pages/LoginPage";
+import { AuthProvider } from './context/AuthContext';
+
+
 
 const App = () => {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    
+    <BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 
+
 const AppContent = () => {
-  const location = useLocation();
+  
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
+      
       
       {/* Selección de Navbar según la ruta */}
-      {location.pathname === '/homeAdmin' || location.pathname ==='/product/create'
-      || location.pathname ==='/product/edit' || location.pathname ==='/account'
-      ? <NavbarAdm /> : <Navbar />}
+      {/*pathname !== '/login' && (pathname === '/homeAdmin' || pathname ==='/product/create'
+      || pathname ==='/product/edit' || pathname ==='/account' ? <NavbarAdm /> : <Navbar />)*/}
 
       {/* Contenedor principal */}
       <main className="bg-gray-100 flex-grow">
+      <Navbar />
         <Routes>
           <Route path="/productSearch" element={<ProductSearch />} />
           <Route path="/product/:id" element={<ProductDetail />} />
@@ -56,6 +61,7 @@ const AppContent = () => {
           <Route path="/checkout/:userId" element={<Checkout />} />
           <Route path="/" element={<Home />} />
           <Route path="/products/:category" element={<ProductPage />} />
+          <Route path= '/login' element={<LoginPage/>} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
         </Routes>
       </main>
