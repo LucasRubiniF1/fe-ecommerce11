@@ -7,12 +7,19 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
-    return JSON.parse(savedUser) ?? null;
+    return savedUser ? JSON.parse(savedUser) : null;
   });
+
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
+
+  const [wishlist, setWishlist] = useState(() => {
+    const savedWishlist = localStorage.getItem("wishlist");
+    return savedWishlist ? JSON.parse(savedWishlist) : [];
+  });
+
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -20,24 +27,32 @@ export function AuthProvider({ children }) {
     try {
       const response = await authenticate(username, password);
 
-      // Almacenar el usuario y el token en localStorage
+      // Store the user and token in localStorage
       setUser(response);
       localStorage.setItem("user", JSON.stringify(response));
       localStorage.setItem("token", response.token);
 
-      // Cargar el carrito desde localStorage si existe
+      // Load the cart and wishlist from localStorage if they exist
       const savedCart = localStorage.getItem("cart");
+      const savedWishlist = localStorage.getItem("wishlist");
+
       if (savedCart) {
         setCart(JSON.parse(savedCart));
       } else {
-        setCart([]); // Si no hay carrito, lo inicializamos como vacío
+        setCart([]); // Initialize cart as empty if none exists
       }
 
-      // Redirigir a la página correspondiente según el rol del usuario
+      if (savedWishlist) {
+        setWishlist(JSON.parse(savedWishlist));
+      } else {
+        setWishlist([]); // Initialize wishlist as empty if none exists
+      }
+
+      // Redirect based on user role
       if (response.role === "ADMIN") {
-        navigate('/HomeAdmin');  
-      } else { 
-        navigate('/');    
+        navigate("/HomeAdmin");
+      } else {
+        navigate("/");
       }
     } catch (err) {
       setError("Credenciales incorrectas");
@@ -46,19 +61,21 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setUser(null);
-    setCart([]); // Limpiar el carrito en el estado global
+    setCart([]); // Clear the cart in state
+    setWishlist([]); // Clear the wishlist in state
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    localStorage.removeItem("cart"); // Eliminar el carrito del localStorage
+    localStorage.removeItem("cart"); // Remove cart from localStorage
+    localStorage.removeItem("wishlist"); // Remove wishlist from localStorage
     navigate("/");
   };
-
+  
   useEffect(() => {
     setError(null);
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, cart, login, logout, error }}>
+    <AuthContext.Provider value={{ user, cart, wishlist, login, logout, error }}>
       {children}
     </AuthContext.Provider>
   );

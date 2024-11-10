@@ -3,21 +3,17 @@ import axios from 'axios';
 
 const useStore = create((set, get) => ({
   cart: [],
+  wishlist: [],
   setCart: (cart) => set({ cart }),
 
-  loadCart: async (userId) => {
-    try {
-      const response = await axios.get(`http://localhost:5000/cart/${userId}`);
-      set({ cart: response.data });
-    } catch (error) {
-      console.error("Error al cargar el carrito:", error);
-    }
-  },
-
   loadWishlist: async (userId) => {
+    if (!userId) {
+      console.error("userId es necesario para cargar la wishlist.");
+      return;
+    }
     try {
       const response = await axios.get(`http://localhost:5000/wishlist/${userId}`);
-      set({ wishlist: response.data });
+      set({ wishlist: response.data || [] });
     } catch (error) {
       console.error("Error al cargar la wishlist:", error);
     }
@@ -38,6 +34,16 @@ const useStore = create((set, get) => ({
     if (savedCart) {
       // Si hay un carrito en localStorage, lo cargamos
       set({ cart: JSON.parse(savedCart) });
+    }
+  },
+
+  initializeWishlist: async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/wishlist/${userId}`);
+      set({ wishlist: Array.isArray(response.data) ? response.data : [] });
+    } catch (error) {
+      console.error("Failed to load wishlist:", error);
+      set({ wishlist: [] });
     }
   },
 
@@ -133,35 +139,59 @@ const useStore = create((set, get) => ({
     localStorage.removeItem('cart'); // Eliminar el carrito de localStorage
   },
 
-  
-  
-  
-  addToWishlist: async (product, userId) => {
-    const { wishlist } = useStore.getState();
-    if (wishlist.some(item => item.id === product.id)) {
-      console.warn("Este producto ya está en la wishlist.");
+
+  addToWishlist: async (productId, userId) => {
+    if (!productId || typeof productId !== 'string' && typeof productId !== 'number') {
+      console.error("productId inválido en addToWishlist:", productId);
       return;
     }
+    if (!userId) {
+      console.error("userId es necesario para agregar a la wishlist.");
+      return;
+    }
+    
     try {
-      await axios.post(`http://localhost:5000/wishlist/${userId}`, product);
-      set((state) => ({
-        wishlist: [...state.wishlist, product],
-      }));
+      const { wishlist } = get();
+      const currentWishlist = wishlist || [];
+
+      if (currentWishlist.some(item => item.id === productId)) {
+        console.warn("Este producto ya está en la wishlist.");
+        return;
+      }
+
+      const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
+      const product = productResponse.data;
+
+      await axios.post(`http://localhost:5000/wishlist`, { userId, productId });
+
+      const updatedWishlist = [...currentWishlist, product];
+      set({ wishlist: updatedWishlist });
+
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     } catch (error) {
       console.error("Error al agregar a la wishlist:", error);
     }
   },
-
+  
+  
+  
+  // Function to remove a product from the wishlist
   removeFromWishlist: async (productId, userId) => {
     try {
+      // Remove the product from the backend wishlist
       await axios.delete(`http://localhost:5000/wishlist/${userId}/${productId}`);
-      set((state) => ({
-        wishlist: state.wishlist.filter((item) => item.id !== productId),
-      }));
+  
+      // Update local state by filtering out the removed product
+      const updatedWishlist = useStore.getState().wishlist.filter(item => item.id !== productId);
+      useStore.setState({ wishlist: updatedWishlist });
+  
+      // Save the updated wishlist to localStorage
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     } catch (error) {
       console.error("Error al eliminar de la wishlist:", error);
     }
   },
+
 
   updateQuantity: async (productId, quantity, userId) => {
     try {

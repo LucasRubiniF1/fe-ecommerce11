@@ -9,7 +9,7 @@ const Carousel = ({ products, titulo }) => {
   const itemsPerPage = 4;
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { addToCart, addToWishlist, removeFromWishlist } = useStore();
+  const { addToCart, addToWishlist} = useStore();
 
   // Pagination controls
   const nextPage = () => {

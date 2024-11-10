@@ -539,11 +539,6 @@
       "id": 1,
       "user_id": 1,
       "product_id": 3
-    },
-    {
-      "id": 2,
-      "user_id": 2,
-      "product_id": 4
     }
   ],
   "cart": [
@@ -592,6 +587,12 @@
       "id": "b168",
       "cart_id": "6697",
       "product_id": "5",
+      "quantity": 3
+    },
+    {
+      "id": "3b6d",
+      "cart_id": "6697",
+      "product_id": "1",
       "quantity": 1
     }
   ]
