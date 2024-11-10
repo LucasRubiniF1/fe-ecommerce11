@@ -65,7 +65,7 @@ const PanelCategories = () => {
                     <ul>
                       <li className="font-semibold text-black-600 mb-2 hover:text-blue cursor-pointer"
                       onClick={() => goToCategory('Audio y Video')} 
-                      >Electrónica, Audio y Video</li>
+                      >Audio y Video</li>
 
                     </ul>
                   </div>

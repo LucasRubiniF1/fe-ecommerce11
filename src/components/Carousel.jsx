@@ -9,10 +9,8 @@ const Carousel = ({ products, titulo }) => {
   const itemsPerPage = 4;
   const navigate = useNavigate();
   const { user } = useAuth();
-  //const { user, isAuthenticated } = useAuth(); 
-  //const userId = user ? user.id : null;
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
-  //console.log(userId);
+
 
 
   // Pagination controls
@@ -60,7 +58,7 @@ const Carousel = ({ products, titulo }) => {
             
             return (
               <div
-                key={product.product_id}
+                key={product.id}
                 className="group relative border-0 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 bg-white overflow-hidden"
               >
                 {/* Badge de stock */}

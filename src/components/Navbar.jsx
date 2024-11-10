@@ -118,12 +118,7 @@ const Navbar = ({ onSearch }) => {
             <FaShoppingCart size={20} />
           </li>
         </div>
-        <li
-          className="text-black hover:text-gray-600 cursor-pointer"
-          onClick={handleUserClick}
-        >
-          <FaUser size={20} />
-        </li>
+        
       </ul>
     </nav>
   );
