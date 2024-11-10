@@ -4,7 +4,7 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
-import useStore from "../hooks/store.js";
+import useStore from "../hooks/UseStore.js";
 
 const ProductCard1 = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
