@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import ProductGrid from '../components/ProductGrid';
+import productsData from '/public/data/db.json';
 
 
 const ProductPage = () => {

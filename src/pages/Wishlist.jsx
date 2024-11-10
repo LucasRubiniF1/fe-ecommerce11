@@ -4,9 +4,10 @@ import { FaTrash, FaRegHeart } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Wishlist = () => {
-  const { wishlist, removeFromWishlist } = useStore();
+  const { wishlist = [], removeFromWishlist } = useStore(); // Valor predeterminado a []
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 8;
+  const defaultImage = 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp';
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
@@ -14,10 +15,10 @@ const Wishlist = () => {
         <div className="flex items-center gap-3 mb-8">
           <FaRegHeart className="text-red-500" size={24} />
           <h1 className="text-3xl font-bold text-gray-900">My Wishlist</h1>
-          <span className="text-sm text-gray-500 ml-2">({wishlist.length} items)</span>
+          <span className="text-sm text-gray-500 ml-2">({(wishlist || []).length} items)</span>
         </div>
 
-        {wishlist.length === 0 ? (
+        {(wishlist || []).length === 0 ? (
           <div className="text-center py-16 bg-white rounded-2xl shadow-sm">
             <FaRegHeart className="mx-auto text-gray-300 mb-4" size={48} />
             <h2 className="text-xl font-medium text-gray-900 mb-2">Your wishlist is empty</h2>
@@ -26,7 +27,7 @@ const Wishlist = () => {
         ) : (
           <div className="flex flex-wrap gap-6">
             <AnimatePresence>
-              {wishlist.slice(startIndex, startIndex + itemsPerPage).map((product) => (
+              {(wishlist || []).slice(startIndex, startIndex + itemsPerPage).map((product) => (
                 <motion.div
                   key={product.id}
                   layout
@@ -36,10 +37,9 @@ const Wishlist = () => {
                   className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)]"
                 >
                   <div className="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
-                    {/* Image Container */}
                     <div className="relative aspect-square bg-gray-50">
                       <img
-                        src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
+                        src={product.images || defaultImage}
                         alt={product.name}
                         className="w-full h-full object-contain p-4"
                       />
@@ -48,7 +48,6 @@ const Wishlist = () => {
                       </div>
                     </div>
 
-                    {/* Content */}
                     <div className="p-5">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
                         {product.name}
@@ -59,7 +58,7 @@ const Wishlist = () => {
                       
                       <div className="flex items-center justify-between">
                         <p className="text-2xl font-bold text-gray-900">
-                          ${typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
+                          ${Number.isFinite(product.price) ? product.price.toFixed(2) : "N/A"}
                         </p>
                         <button
                           onClick={() => removeFromWishlist(product.id)}

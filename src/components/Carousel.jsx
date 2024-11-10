@@ -9,7 +9,9 @@ const Carousel = ({ products, titulo }) => {
   const itemsPerPage = 4;
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
+  const { addToCart, addToWishlist, removeFromWishlist } = useStore();
+  const [wishlist, setWishlist] = useState([]);
+
 
 
 
@@ -27,13 +29,13 @@ const Carousel = ({ products, titulo }) => {
   };
 
   const handleClick = (product) => {
-    navigate(`/product/${product.product_id}`, { state: product });
+    navigate(`/product/${product.id}`, { state: product });
   };
 
   // Toggle wishlist status
   const handleWishlistToggle = (product) => {
     if (wishlist?.some((item) => item.id === product.id)) {
-      removeFromWishlist(product.id);
+      removeFromWishlist(product.id, user.id);
     } else {
       addToWishlist(product, user.id);
     }

@@ -16,7 +16,7 @@ const ProductCard1 = ({ product }) => {
   };
 
   const handleClick = (product) => {
-    navigate(`/product/${product.product_id}`, { state: product });
+    navigate(`/product/${product.id}`, { state: product });
   };
 
   return (
@@ -25,7 +25,7 @@ const ProductCard1 = ({ product }) => {
 
       {/* Información del producto */}
       <div 
-                key={product.product_id}
+                key={product.id}
                 className="group relative border-0 rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 bg-white overflow-hidden">
                 {/* Badge de stock */}
                 <div className="absolute top-4 right-4 bg-gray-50 px-3 py-1 rounded-full">
