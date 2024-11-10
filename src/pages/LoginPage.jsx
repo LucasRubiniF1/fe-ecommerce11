@@ -1,47 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import {useNavigate } from 'react-router-dom';
-import LoginForm from '../components/LoginForm';
-import users from '../resources/users.json'; 
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/LoginForm";
+import axios from "axios";
+import { useAuth } from '../hooks/UseAuth'; 
 
 const LoginPage = () => {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login, error} = useAuth();
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/users')
-      .then(response => setUsers(response.data)) 
-      .catch(error => console.log(error));
-  }, []);
+ 
 
-  const handleLogin = ({ email, password }) => {
-    const user = users.find(user => user.email === email && user.password === password);
-    if (user) {
-      if (user.role === 'ADMIN') {
-        navigate('/editor');  // Redirige al editor si es admin
-      } else {
-        navigate('/home');    // Redirige al home si es user
-      }
-    } else {
-      setError('Incorrect username or password');
-    }
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await login(username, password);
   };
 
   const handleRegister = () => {
-    navigate('/register'); 
+    navigate("/register");
   };
 
-
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8">
-        {/*<h2 className="text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>*/}
-        <LoginForm onLogin={handleLogin} error={error} onRegister={handleRegister}/>
-        
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <div className="card p-4" style={{ width: "20rem" }}>
+        <h3 className="text-center mb-4">Iniciar Sesión</h3>
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">
+              Usuario
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="username"
+              placeholder="Ingresa tu usuario"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Ingresa tu contraseña"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">
+            Iniciar Sesión
+          </button>
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </form>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+
+
+
+export default LoginPage;     
