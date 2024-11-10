@@ -558,6 +558,9 @@
     {
       "id": "6697",
       "user_id": 4
+    },
+    {
+      "id": "998c"
     }
   ],
   "cartItem": [
@@ -584,6 +587,12 @@
       "cart_id": "6697",
       "product_id": 12,
       "quantity": 6
+    },
+    {
+      "id": "080a",
+      "cart_id": "998c",
+      "product_id": "4",
+      "quantity": 1
     }
   ]
 }
