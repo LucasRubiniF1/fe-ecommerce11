@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import productsData from '/public/data/products.json';
-import Cards from '../components/Cards'
+import ProductGrid from '../components/ProductGrid';
+import productsData from '/public/data/db.json';
+
 
 const ProductPage = () => {
   const { category } = useParams(); // Captura el parámetro de categoría de la URL
@@ -9,18 +10,13 @@ const ProductPage = () => {
   // Filtra los productos según la categoría obtenida del parámetro
   const filteredProducts = productsData.products.filter((product) => product.category === category);
 
+
   return (
-    <>
-      
-      <div>
-          {filteredProducts.length > 0 ? (
-            <Cards products={filteredProducts} />
-          ) : (
-            <p className="text-gray-500 text-lg font-semibold text-center mt-6">No se encontraron productos.</p>
-          )}
-      </div>
-  </>
+    <div className="flex">
+      <ProductGrid products={filteredProducts} />
+    </div>
   );
 };
 
 export default ProductPage;
+
