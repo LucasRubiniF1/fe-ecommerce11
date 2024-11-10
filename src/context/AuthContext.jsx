@@ -1,51 +1,53 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { authenticate } from "../Services/serviceLogin.js";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(null);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return JSON.parse(savedUser) ?? null;
+  });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      const fetchUserData = async () => {
-        try {
-          const response = await fetch('http://localhost:5000/api/user', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const userData = await response.json();
-          setUser(userData);  // Aquí defines al usuario con sus datos reales
-          setIsAuthenticated(true);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          setIsAuthenticated(false);
-        }
-      };
+  const login = async (username, password) => {
+    try {
+      const response = await authenticate(username, password);
 
-      fetchUserData();
+      setUser(response);
+      console.log(user);
+      localStorage.setItem("user", JSON.stringify(response));
+      localStorage.setItem("token", response.token); 
+      if (user) {
+        if (user.role === "ADMIN") {
+          navigate('/HomeAdmin');  
+          
+        } else { 
+          navigate('/');    
+        }}
+    } catch (err) {
+      setError("Credenciales incorrectas");
     }
-  }, []);
-
-  const login = (token, userData) => {
-    localStorage.setItem('authToken', token);
-    setIsAuthenticated(true);
-    setUser(userData); // userData es un objeto con la información del usuario, como el id y el nombre
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
-    setIsAuthenticated(false);
     setUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
+  useEffect(() => {
+    setError(null);
+  }, [user]);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, error }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export default AuthContext;
