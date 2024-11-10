@@ -89,10 +89,10 @@ const Navbar = ({ onSearch }) => {
         </li>
         {user ? (
           <div className="relative">
-            {/* Mostrar el nombre del usuario si esta logueado */}
             <li className="font-semibold text-black hover:text-gray-600 cursor-pointer">
               Hola {user.firstname}!
             </li>
+            <button onClick={handleLogoutClick} className="text-sm text-red-500 ml-2">Logout</button>
           </div>
         ) : (
           <li
@@ -102,6 +102,7 @@ const Navbar = ({ onSearch }) => {
             <FaUser size={20} />
           </li>
         )}
+
         <div className="relative">
           <li
             className="text-black hover:text-rose-600 cursor-pointer"

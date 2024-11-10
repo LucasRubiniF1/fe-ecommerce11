@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RegisterForm from '../components/registerForm';
-import users from '../resources/users.json'; 
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({

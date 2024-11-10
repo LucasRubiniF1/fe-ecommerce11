@@ -3,11 +3,13 @@ import useStore from "../hooks/UseStore.js";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import CheckoutModal from '../components/CheckoutModal.jsx';
+import { useAuth } from "../hooks/UseAuth.js"; 
 
 const Cart = () => {
-  const { cart, removeFromCart, updateQuantity } = useStore();
+  const { cart = [], removeFromCart, updateQuantity } = useStore();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const {user} = useAuth();
 
   return (
     <div className="min-h-screen">
@@ -83,7 +85,7 @@ const Cart = () => {
                           </div>
 
                           <button
-                            onClick={() => removeFromCart(item.id)}
+                            onClick={() => removeFromCart(item.id, user.id)}
                             className="text-sm text-red-500 hover:text-red-600 transition-colors flex items-center gap-2"
                           >
                             <FaTrash size={20} color='red'/>

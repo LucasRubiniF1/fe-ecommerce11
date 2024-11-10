@@ -2,16 +2,6 @@
   "authenticate_user": [
     {
       "access_token": "mi_token_user"
-    },
-    {
-      "id": "854d",
-      "email": "john_doe",
-      "password": "hashed_password"
-    },
-    {
-      "id": "ad69",
-      "email": "john_doe",
-      "password": "hashed_password"
     }
   ],
   "authenticate_admin": [
@@ -516,183 +506,54 @@
   ],
   "transactions": [
     {
-      "transaction_id": 1,
+      "id": 1,
       "order_id": 1,
       "transaction_date": "2023-10-01",
       "amount": 1599.97,
       "payment_method": "credit_card",
-      "status": "completed",
-      "id": "032b"
+      "status": "completed"
     }
   ],
   "wishlist": [
     {
-      "wishlist_id": 1,
+      "id": 1,
       "user_id": 1,
-      "product_id": 3,
-      "id": "1a41"
+      "product_id": 3
     },
     {
-      "wishlist_id": 2,
+      "id": 2,
       "user_id": 2,
-      "product_id": 4,
-      "id": "c67c"
-    },
-    {
-      "id": "g16e",
-      "product_id": 15,
-      "name": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM",
-      "description": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM 512 GB violeta 12 GB RAM",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_605893-MLA76451651310_052024-F.webp",
-      "price": 604,
-      "stock": 16,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "g16e",
-      "product_id": 15,
-      "name": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM",
-      "description": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM 512 GB violeta 12 GB RAM",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_605893-MLA76451651310_052024-F.webp",
-      "price": 604,
-      "stock": 16,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "e14c",
-      "product_id": 13,
-      "name": "Teléfono Motorola Moto G42",
-      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
-      "price": 249.99,
-      "stock": 12,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "e14c",
-      "product_id": 13,
-      "name": "Teléfono Motorola Moto G42",
-      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
-      "price": 249.99,
-      "stock": 12,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "e14c",
-      "product_id": 13,
-      "name": "Teléfono Motorola Moto G42",
-      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
-      "price": 249.99,
-      "stock": 12,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "a16b",
-      "product_id": 2,
-      "name": "Teléfono Samsung",
-      "description": "Teléfono Samsung Galaxy S21",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
-      "price": 999.99,
-      "stock": 15,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "a16b",
-      "product_id": 2,
-      "name": "Teléfono Samsung",
-      "description": "Teléfono Samsung Galaxy S21",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
-      "price": 999.99,
-      "stock": 15,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "a16b",
-      "product_id": 2,
-      "name": "Teléfono Samsung",
-      "description": "Teléfono Samsung Galaxy S21",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_614024-MLA52540631929_112022-F.webp",
-      "price": 999.99,
-      "stock": 15,
-      "category": "Celular",
-      "is_featured": true
-    },
-    {
-      "id": "e14c",
-      "product_id": 13,
-      "name": "Teléfono Motorola Moto G42",
-      "description": "Teléfono Motorola Moto G42 Memoria 128 Gb Ram 4 Gb",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_976017-MLU72748300059_112023-F.webp",
-      "price": 249.99,
-      "stock": 12,
-      "category": "Celular",
-      "is_featured": true
+      "product_id": 4
     }
   ],
   "cart": [
     {
-      "cart_id": 1,
-      "user_id": 1,
-      "id": "450a"
+      "id": 1,
+      "user_id": 1
     },
     {
-      "cart_id": 2,
-      "user_id": 2,
-      "id": "be95"
-    },
-    {
-      "id": "o24m",
-      "product_id": 23,
-      "name": "Televisor Sony X900H",
-      "description": "Televisor Sony X900H de 65 pulgadas con 4K",
-      "images": null,
-      "price": 1099.99,
-      "stock": 12,
-      "category": "Televisor",
-      "is_featured": false
-    },
-    {
-      "id": "o24m",
-      "product_id": 23,
-      "name": "Televisor Sony X900H",
-      "description": "Televisor Sony X900H de 65 pulgadas con 4K",
-      "images": null,
-      "price": 1099.99,
-      "stock": 12,
-      "category": "Televisor",
-      "is_featured": false
+      "id": 2,
+      "user_id": 2
     }
   ],
   "cartItem": [
     {
-      "cartItem_id": 1,
+      "id": 1,
       "cart_id": 1,
       "product_id": 1,
-      "quantity": 1,
-      "id": "3171"
+      "quantity": 1
     },
     {
-      "cartItem_id": 2,
+      "id": 2,
       "cart_id": 1,
       "product_id": 2,
-      "quantity": 2,
-      "id": "99e8"
+      "quantity": 2
     },
     {
-      "cartItem_id": 3,
+      "id": 3,
       "cart_id": 2,
       "product_id": 3,
-      "quantity": 1,
-      "id": "784d"
+      "quantity": 1
     }
   ]
 }

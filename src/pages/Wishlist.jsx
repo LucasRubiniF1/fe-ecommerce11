@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import useStore from '../hooks/UseStore.js';
 import { FaTrash, FaRegHeart } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../hooks/UseAuth.js"; 
 
 const Wishlist = () => {
   const { wishlist = [], removeFromWishlist } = useStore(); // Valor predeterminado a []
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 8;
   const defaultImage = 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp';
+  const {user} = useAuth();
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
@@ -61,7 +63,7 @@ const Wishlist = () => {
                           ${Number.isFinite(product.price) ? product.price.toFixed(2) : "N/A"}
                         </p>
                         <button
-                          onClick={() => removeFromWishlist(product.id)}
+                          onClick={() => removeFromWishlist(product.id, user.id)}
                           className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                         >
                           <FaTrash size={18} />
