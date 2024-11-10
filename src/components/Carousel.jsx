@@ -11,6 +11,7 @@ const Carousel = ({ products, titulo }) => {
   const { user } = useAuth();
   const { addToCart, addToWishlist, removeFromWishlist } = useStore();
   const [wishlist, setWishlist] = useState([]);
+  
 
 
 

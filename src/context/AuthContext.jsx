@@ -19,14 +19,12 @@ export function AuthProvider({ children }) {
       setUser(response);
       console.log(user);
       localStorage.setItem("user", JSON.stringify(response));
-      localStorage.setItem("token", user.access_token);
+      localStorage.setItem("token", response.token); 
       if (user) {
         if (user.role === "ADMIN") {
-          localStorage.setItem("token", user.access_token);
           navigate('/HomeAdmin');  
           
         } else { 
-          localStorage.setItem("token", user.access_token);
           navigate('/');    
         }}
     } catch (err) {
@@ -37,6 +35,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     navigate("/");
   };
 
@@ -52,3 +51,4 @@ export function AuthProvider({ children }) {
 }
 
 export default AuthContext;
+      

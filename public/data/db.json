@@ -1,14 +1,4 @@
 {
-  "authenticate_user": [
-    {
-      "access_token": "mi_token_user"
-    }
-  ],
-  "authenticate_admin": [
-    {
-      "access_token": "mi_token_admin"
-    }
-  ],
   "users": [
     {
       "id": 1,
@@ -113,7 +103,7 @@
     },
     {
       "id": 4,
-      "username": "pedrolopez@example.com",
+      "username": "pedrolopez",
       "email": "pedrolopez@example.com",
       "password": "pedrolopez_password",
       "birth": "1988-07-30",
@@ -534,6 +524,10 @@
     {
       "id": 2,
       "user_id": 2
+    },
+    {
+      "id": "6697",
+      "user_id": 4
     }
   ],
   "cartItem": [
@@ -554,6 +548,12 @@
       "cart_id": 2,
       "product_id": 3,
       "quantity": 1
+    },
+    {
+      "id": "f2cb",
+      "cart_id": "6697",
+      "product_id": 12,
+      "quantity": 6
     }
   ]
 }

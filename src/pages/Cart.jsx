@@ -6,10 +6,19 @@ import CheckoutModal from '../components/CheckoutModal.jsx';
 import { useAuth } from "../hooks/UseAuth.js"; 
 
 const Cart = () => {
-  const { cart = [], removeFromCart, updateQuantity } = useStore();
+  const { cart = [], removeFromCart, updateQuantity, checkStock } = useStore();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const {user} = useAuth();
+
+  const handleUpdateQuantity = async (itemId, quantity) => {
+    try {
+      await checkStock(itemId, quantity);
+      updateQuantity(itemId, quantity, user.id);
+    } catch (error) {
+      alert(error.message); 
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -68,7 +77,7 @@ const Cart = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-2">
                             <button
-                              onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                              onClick={() => handleUpdateQuantity(item.id, Math.max(0, item.quantity - 1))}
                               className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors"
                             >
                               <FaMinus size={12} />
@@ -77,7 +86,7 @@ const Cart = () => {
                               {item.quantity}
                             </span>
                             <button
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                               className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors"
                             >
                               <FaPlus size={12} />
