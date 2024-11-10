@@ -62,7 +62,7 @@ const Navbar = ({ onSearch }) => {
           onChange={handleSearchInput}
           className="w-96 border border-gray-300 p-2 rounded-md text-gray-700 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-100 transition duration-200"
         />
-        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleSearchClick}>
+        <li>
           <FaSearch size={20} />
         </li>
         
