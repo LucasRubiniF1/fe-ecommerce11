@@ -93,7 +93,7 @@
     },
     {
       "id": 3,
-      "username": "mariafernandez@example.com",
+      "username": "mariafernandez",
       "email": "mariafernandez@example.com",
       "password": "mariafernandez_password",
       "birth": "1992-03-22",
@@ -583,15 +583,15 @@
       "quantity": 1
     },
     {
-      "id": "f2cb",
-      "cart_id": "6697",
-      "product_id": 12,
-      "quantity": 6
-    },
-    {
       "id": "080a",
       "cart_id": "998c",
       "product_id": "4",
+      "quantity": 1
+    },
+    {
+      "id": "b168",
+      "cart_id": "6697",
+      "product_id": "5",
       "quantity": 1
     }
   ]

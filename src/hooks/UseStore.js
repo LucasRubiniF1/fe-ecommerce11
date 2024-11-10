@@ -23,6 +23,16 @@ const useStore = create((set, get) => ({
     }
   },
 
+  loadCart: async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/cart/${userId}`);
+      set({ cart: response.data });
+      localStorage.setItem('cart', JSON.stringify(response.data)); // Guarda el carrito en localStorage
+    } catch (error) {
+      console.error("Error al cargar el carrito:", error);
+    }
+  },
+
   initializeCart: () => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -30,6 +40,7 @@ const useStore = create((set, get) => ({
       set({ cart: JSON.parse(savedCart) });
     }
   },
+
 
   addToCart: async (product, userId) => {
     try {
@@ -76,26 +87,15 @@ const useStore = create((set, get) => ({
   
         return { cart: updatedCart };
       });
-  
     } catch (error) {
       console.error("Error al agregar al carrito:", error);
     }
   },
-  
-  // Al cargar la página, recuperamos el carrito desde localStorage
-  setCartFromLocalStorage: () => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      set({ cart: JSON.parse(savedCart) });
-    }
-  },
-  
-  
+
   removeFromCart: async (productId, userId) => {
     try {
       // Obtener el carrito del usuario
       let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-      console.log("Carrito del usuario:", userCart.data);
       userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
   
       if (!userCart) {
@@ -103,29 +103,20 @@ const useStore = create((set, get) => ({
         return;
       }
   
-      // Verificar que el carrito existe
-      console.log("Cart encontrado:", userCart);
-  
       // Buscar el cartItem correspondiente al producto
-      console.log("Buscando cartItem con product_id:", productId, "y cart_id:", userCart.id);
       const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${productId}`);
       const cartItemToDelete = cartItemResponse.data[0]; // Asumimos que hay solo un cartItem por producto
   
       if (cartItemToDelete) {
-        console.log("CartItem encontrado:", cartItemToDelete);
-        // Hacer la solicitud DELETE para eliminar el cartItem de la base de datos
         await axios.delete(`http://localhost:5000/cartItem/${cartItemToDelete.id}`);
-        
   
         // Actualiza el carrito en el estado local
         set((state) => {
-          // Filtra el producto eliminado
           const updatedCart = state.cart.filter((item) => item.id !== productId);
   
           // Si hay un carrito en localStorage, actualizamos el carrito también ahí
           localStorage.setItem('cart', JSON.stringify(updatedCart));
   
-          // Retorna el nuevo estado del carrito
           return { cart: updatedCart };
         });
       } else {
@@ -135,7 +126,13 @@ const useStore = create((set, get) => ({
       console.error("Error al eliminar del carrito:", error);
     }
   },
-  
+
+  // Esta función se utilizaría al hacer logout para limpiar el carrito
+  clearCart: () => {
+    set({ cart: [] });
+    localStorage.removeItem('cart'); // Eliminar el carrito de localStorage
+  },
+
   
   
   

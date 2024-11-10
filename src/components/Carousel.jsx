@@ -10,11 +10,6 @@ const Carousel = ({ products, titulo }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { addToCart, addToWishlist, removeFromWishlist } = useStore();
-  const [wishlist, setWishlist] = useState([]);
-  
-
-
-
 
   // Pagination controls
   const nextPage = () => {
@@ -34,11 +29,23 @@ const Carousel = ({ products, titulo }) => {
   };
 
   const handleAddToCart = (product) => {
-    addToCart(product, user.id); 
+    if (!user) {
+      // Redirect to login if the user is not logged in
+      navigate('/login');
+    } else {
+      // Add to cart if user is logged in
+      addToCart(product, user.id);
+    }
   };
 
   const handleAddToWishlist = (product) => {
-    addToWishlist(product, user.id); 
+    if (!user) {
+      // Redirect to login if the user is not logged in
+      navigate('/login');
+    } else {
+      // Add to wishlist if user is logged in
+      addToWishlist(product, user.id);
+    }
   };
 
   return (

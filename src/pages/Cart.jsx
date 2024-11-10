@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useStore from "../hooks/UseStore.js";
 import { FaTrash, FaMinus, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,16 +9,30 @@ const Cart = () => {
   const { cart = [], removeFromCart, updateQuantity, checkStock } = useStore();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const {user} = useAuth();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user?.id) {
+      useStore.getState().initializeCart(user.id);
+    }
+  }, [user?.id]);
 
   const handleUpdateQuantity = async (itemId, quantity) => {
     try {
-      await checkStock(itemId, quantity);
-      updateQuantity(itemId, quantity, user.id);
+      const stockAvailable = await checkStock(itemId, quantity);
+      if (stockAvailable) {
+        updateQuantity(itemId, quantity, user.id);
+      } else {
+        alert("Not enough stock.");
+      }
     } catch (error) {
-      alert(error.message); 
+      alert(error.message);
     }
   };
+
+  if (!user) {
+    return <div>Please log in to view your cart.</div>;
+  }
 
   return (
     <div className="min-h-screen">
@@ -135,7 +149,7 @@ const Cart = () => {
                 </div>
 
                 <button 
-                  onClick={() => setIsCheckoutOpen(true)}
+                  onClick={() => user ? setIsCheckoutOpen(true) : alert('Please log in to checkout')}
                   className="w-full mt-6 bg-black text-white py-4 rounded-xl font-medium hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
                 >
                   Checkout

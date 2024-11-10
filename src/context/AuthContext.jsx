@@ -9,6 +9,10 @@ export function AuthProvider({ children }) {
     const savedUser = localStorage.getItem("user");
     return JSON.parse(savedUser) ?? null;
   });
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -16,17 +20,25 @@ export function AuthProvider({ children }) {
     try {
       const response = await authenticate(username, password);
 
+      // Almacenar el usuario y el token en localStorage
       setUser(response);
-      console.log(user);
       localStorage.setItem("user", JSON.stringify(response));
-      localStorage.setItem("token", response.token); 
-      if (user) {
-        if (user.role === "ADMIN") {
-          navigate('/HomeAdmin');  
-          
-        } else { 
-          navigate('/');    
-        }}
+      localStorage.setItem("token", response.token);
+
+      // Cargar el carrito desde localStorage si existe
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
+      } else {
+        setCart([]); // Si no hay carrito, lo inicializamos como vacío
+      }
+
+      // Redirigir a la página correspondiente según el rol del usuario
+      if (response.role === "ADMIN") {
+        navigate('/HomeAdmin');  
+      } else { 
+        navigate('/');    
+      }
     } catch (err) {
       setError("Credenciales incorrectas");
     }
@@ -34,8 +46,10 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setUser(null);
+    setCart([]); // Limpiar el carrito en el estado global
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("cart"); // Eliminar el carrito del localStorage
     navigate("/");
   };
 
@@ -44,7 +58,7 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, error }}>
+    <AuthContext.Provider value={{ user, cart, login, logout, error }}>
       {children}
     </AuthContext.Provider>
   );
