@@ -94,7 +94,7 @@
       "id": "fa44"
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "mariafernandez@example.com",
       "email": "mariafernandez@example.com",
       "password": "mariafernandez_password",
@@ -104,7 +104,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "pedrolopez@example.com",
       "email": "pedrolopez@example.com",
       "password": "pedrolopez_password",
@@ -114,7 +114,7 @@
       "role": "USER"
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "luisaortiz@example.com",
       "email": "luisaortiz@example.com",
       "password": "luisaortiz_password",
@@ -124,7 +124,7 @@
       "role": "USER"
     },
     {
-      "id": 6,
+      "id": "6",
       "username": "josegarcia@example.com",
       "email": "josegarcia@example.com",
       "password": "josegarcia_password",
@@ -138,10 +138,10 @@
     {
       "product_id": 1,
       "name": "Laptop HP",
-      "description": "Laptop HP de 15 pulgadas con 16GB RAM",
+      "description": "Laptop HP de 15 pulgadas con 16GB RAMa",
       "images": "https://www.unidiversidad.com.ar/cache/pc_1000_1100.jpg",
       "price": 799.99,
-      "stock": 10,
+      "stock": "11",
       "category": "Electrónica",
       "is_featured": true,
       "id": "1"
@@ -486,6 +486,16 @@
       "category": "Notebook",
       "is_featured": true,
       "id": "32"
+    },
+    {
+      "id": "8e20",
+      "name": "Macbook",
+      "description": "2",
+      "price": "2",
+      "stock": "2",
+      "category": "Computadoras",
+      "isFeatured": false,
+      "image": "https://arrichetta.com.ar/wp-content/uploads/2021/06/Lenovo-Thinkbook-Ci5-8gb-256SSD-W10P-20RV0032AR-3.jpg"
     }
   ],
   "orders": [
