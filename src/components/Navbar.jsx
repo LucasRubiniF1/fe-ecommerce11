@@ -34,6 +34,10 @@ const Navbar = ({ onSearch }) => {
   const handleCartClick = () => {
     navigate("/cart");
   };
+  
+  const handleContactClick = () => {
+    navigate("/contact");
+  };
 
   const handleWishlistClick = () => {
     navigate("/wishlist");
@@ -47,16 +51,16 @@ const Navbar = ({ onSearch }) => {
 
 
   return (
-    <nav className="flex items-center justify-between p-4 bg-white relative">
+    <nav className="flex items-center justify-between p-2 bg-white relative">
       {/* Logo */}
-      <h1 className="text-2xl font-bold text-black">3legant</h1>
+      <h1 className="text-3xl font-bold text-slate-500">3legant</h1>
 
       {/* Enlaces de navegación */}
       <ul className="flex gap-6">
         <li className="text-black hover:text-gray-600 cursor-pointer" onClick={goToHome}>Home</li>
         {/* Menú desplegable para Productos */}
         <PanelCategories />
-        <li className="text-black hover:text-gray-600 cursor-pointer">Contact Us</li>
+        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleContactClick}>Contact Us</li>
       </ul>
 
       {/* Íconos del usuario */}
@@ -68,7 +72,7 @@ const Navbar = ({ onSearch }) => {
           onChange={handleSearchInput}
           className="w-96 border border-gray-300 p-2 rounded-md text-gray-700 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-100 transition duration-200"
         />
-        <li>
+        <li className="text-black hover:text-gray-600 cursor-pointer" onClick={handleSearchClick}>
           <FaSearch size={20} />
         </li>
         

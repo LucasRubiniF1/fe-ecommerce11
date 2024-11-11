@@ -37,8 +37,6 @@ const Carousel = ({ products, titulo }) => {
   };
 
   const handleAddToWishlist = (product) => {
-    console.log("productId:", product.id); // Verifica el valor de productId
-
     if (!user) {
       navigate('/login');
     } else {
@@ -48,7 +46,7 @@ const Carousel = ({ products, titulo }) => {
 
   return (
     <div className="p-8">
-      <h2 className="text-3xl font-bold mb-6">{titulo}</h2>
+      <h2 className="text-3xl font-bold text-lime-900 mb-6">{titulo}</h2>
       <div className="flex items-center">
         <button
           onClick={prevPage}

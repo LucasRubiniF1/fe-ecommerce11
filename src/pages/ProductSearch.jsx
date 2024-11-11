@@ -13,9 +13,7 @@ const ProductSearch = () => {
   useEffect(() => {
     axios.get('http://localhost:5000/products')
       .then((response) => {
-        const data = response.data; // Extraer los datos de la respuesta
-
-        // Filtra los productos por el término de búsqueda en la descripción
+        const data = response.data; 
         const filtered = data.filter(product =>
           product.description.toLowerCase().includes(searchTerm.toLowerCase())
         );

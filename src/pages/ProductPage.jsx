@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ProductGrid from '../components/ProductGrid';
+import Cards from '../components/Cards';
 import productsData from '/public/data/db.json';
 
 
@@ -12,9 +12,16 @@ const ProductPage = () => {
 
 
   return (
-    <div className="flex">
-      <ProductGrid products={filteredProducts} />
+    <>
+      
+    <div>
+        {filteredProducts.length > 0 ? (
+          <Cards products={filteredProducts} />
+        ) : (
+          <p className="text-gray-500 text-lg font-semibold text-center mt-6">No se encontraron productos.</p>
+        )}
     </div>
+</>
   );
 };
 

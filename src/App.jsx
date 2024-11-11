@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import HomeAdm from "./pages/HomeAdm";
 import ProductPage from "./pages/ProductPage";
 import LoginPage from "./pages/LoginPage";
+import ContactPage from "./pages/ContactPage"
 import { AuthProvider } from './context/AuthContext';
 
 
@@ -57,6 +58,7 @@ const AppContent = () => {
           <Route path="/edit-account" element={<EditAccount />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/" element={<Home />} />
           <Route path="/products/:category" element={<ProductPage />} />
