@@ -66,7 +66,7 @@ const LoginPage = () => {
           <button type="submit" className="btn btn-primary w-100">
             Iniciar Sesión
           </button>
-          <button className="btn btn-primary w-100" onClick={handleRegister}>
+          <button className="btn btn-primary w-100 mt-2" onClick={handleRegister}>
             Registrar
           </button>
 
