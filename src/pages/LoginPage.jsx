@@ -66,6 +66,9 @@ const LoginPage = () => {
           <button type="submit" className="btn btn-primary w-100">
             Iniciar Sesión
           </button>
+          <button className="btn btn-primary w-100" onClick={handleRegister}>
+            Registrar
+          </button>
 
           {error && <p style={{ color: "red" }}>{error}</p>}
         </form>

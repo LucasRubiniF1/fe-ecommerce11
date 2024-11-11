@@ -130,16 +130,6 @@
       "firstname": "José",
       "lastname": "García",
       "role": "ADMIN"
-    },
-    {
-      "id": 7,
-      "username": "dchirazi",
-      "email": "davidmchirazi26@gmail.com",
-      "password": "ssj172828",
-      "birth": "2024-10-29",
-      "firstname": "David",
-      "lastname": "Chirazi",
-      "role": "USER"
     }
   ],
   "products": [
