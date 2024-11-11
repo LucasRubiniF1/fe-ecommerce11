@@ -30,20 +30,16 @@ const Carousel = ({ products, titulo }) => {
 
   const handleAddToCart = (product) => {
     if (!user) {
-      // Redirect to login if the user is not logged in
       navigate('/login');
     } else {
-      // Add to cart if user is logged in
       addToCart(product, user.id);
     }
   };
 
   const handleAddToWishlist = (product) => {
     if (!user) {
-      // Redirect to login if the user is not logged in
       navigate('/login');
     } else {
-      // Add to wishlist if user is logged in
       addToWishlist(product, user.id);
     }
   };

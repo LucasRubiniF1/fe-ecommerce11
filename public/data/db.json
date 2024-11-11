@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "john_doe",
       "password": "hashed_password",
       "email": "john.doe@example.com",
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "jane_smith",
       "password": "hashed_password",
       "email": "jane.smith@example.com",
@@ -92,7 +92,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "mariafernandez",
       "email": "mariafernandez@example.com",
       "password": "mariafernandez_password",
@@ -102,7 +102,7 @@
       "role": "ADMIN"
     },
     {
-      "id": 4,
+      "id": "4",
       "username": "pedrolopez",
       "email": "pedrolopez@example.com",
       "password": "pedrolopez_password",
@@ -112,7 +112,7 @@
       "role": "USER"
     },
     {
-      "id": 5,
+      "id": "5",
       "username": "luisaortiz@example.com",
       "email": "luisaortiz@example.com",
       "password": "luisaortiz_password",
@@ -122,7 +122,7 @@
       "role": "USER"
     },
     {
-      "id": 6,
+      "id": "6",
       "username": "josegarcia@example.com",
       "email": "josegarcia@example.com",
       "password": "josegarcia_password",
@@ -526,7 +526,7 @@
   ],
   "transactions": [
     {
-      "id": 1,
+      "id": "1",
       "order_id": 1,
       "transaction_date": "2023-10-01",
       "amount": 1599.97,
@@ -536,18 +536,18 @@
   ],
   "wishlist": [
     {
-      "id": 1,
+      "id": "1",
       "user_id": 1,
       "product_id": 3
     }
   ],
   "cart": [
     {
-      "id": 1,
+      "id": "1",
       "user_id": 1
     },
     {
-      "id": 2,
+      "id": "2",
       "user_id": 2
     },
     {
@@ -560,19 +560,13 @@
   ],
   "cartItem": [
     {
-      "id": 1,
+      "id": "1",
       "cart_id": 1,
       "product_id": 1,
       "quantity": 1
     },
     {
-      "id": 2,
-      "cart_id": 1,
-      "product_id": 2,
-      "quantity": 2
-    },
-    {
-      "id": 3,
+      "id": "3",
       "cart_id": 2,
       "product_id": 3,
       "quantity": 1
@@ -581,18 +575,66 @@
       "id": "080a",
       "cart_id": "998c",
       "product_id": "4",
-      "quantity": 1
+      "quantity": 5
     },
     {
-      "id": "b168",
-      "cart_id": "6697",
-      "product_id": "5",
+      "id": "e28d",
+      "cart_id": "998c",
+      "product_id": "2",
       "quantity": 3
     },
     {
-      "id": "3b6d",
+      "id": "b663",
+      "cart_id": "998c",
+      "product_id": "3",
+      "quantity": 3
+    },
+    {
+      "id": "50fb",
+      "cart_id": "998c",
+      "product_id": "6",
+      "quantity": 4
+    },
+    {
+      "id": "0245",
+      "cart_id": "998c",
+      "product_id": "7",
+      "quantity": 3
+    },
+    {
+      "id": "35c5",
+      "cart_id": "998c",
+      "product_id": "5",
+      "quantity": 1
+    },
+    {
+      "id": "3869",
+      "cart_id": "998c",
+      "product_id": "12",
+      "quantity": 1
+    },
+    {
+      "id": "4b2a",
       "cart_id": "6697",
-      "product_id": "1",
+      "product_id": "6",
+      "quantity": 1
+    },
+    {
+      "id": "88e9",
+      "cart_id": "6697",
+      "product_id": "2",
+      "quantity": 1
+    },
+    {
+      "id": "e556",
+      "cart_id": "6697",
+      "product_id": "3",
+      "quantity": 1
+    },
+    {
+      "id": "2696",
+      "cart_id": "6697",
+      "product_id": "4",
       "quantity": 1
     }
   ]

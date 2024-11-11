@@ -22,7 +22,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     // Obtener la lista de usuarios para determinar el último ID
-    axios.get('http://localhost:5000/users')
+    axios.get('http://localhost:5001/users')
       .then(response => {
         const users = response.data;
         const lastId = users.length > 0 ? Math.max(...users.map(user => user.id)) : 0;
@@ -48,7 +48,7 @@ const RegisterPage = () => {
 
     try {
       // Obtener la lista de usuarios para la validación
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axios.get('http://localhost:5001/users');
       const users = response.data;
 
       // Verificar si el username o el email ya existen
@@ -65,7 +65,7 @@ const RegisterPage = () => {
       }
 
       // Realizar la solicitud POST para registrar el usuario
-      await axios.post('http://localhost:5000/users', formData);
+      await axios.post('http://localhost:5001/users', formData);
       setSuccessMessage(true);
       //navigate('/'); // Redirigir a la página de inicio de sesión
     } catch (error) {

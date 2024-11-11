@@ -5,15 +5,26 @@ import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/UseStore.js";
+import { useAuth } from '../hooks/UseAuth.js';
 
 const ProductCard1 = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
   const { addToCart, addToWishlist } = useStore(); 
+  const { user } = useAuth();
+
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
+
+const handleAddToCart = (product) => {
+  if (!user) {
+    navigate('/login');
+  } else {
+    addToCart(product, user.id);
+  }
+};
 
   const handleClick = (product) => {
     navigate(`/product/${product.id}`, { state: product });
@@ -53,7 +64,7 @@ const ProductCard1 = ({ product }) => {
                 {/* Botones con efecto hover mejorado */}
                 <div className="flex gap-3 mt-6">
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => handleAddToCart(product)}
                     className="flex-1 bg-gray-900 text-white py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:bg-gray-800 hover:shadow-lg flex items-center justify-center gap-2 text-sm"
                   >
                     <FaShoppingCart size={16} />

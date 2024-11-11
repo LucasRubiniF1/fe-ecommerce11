@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const authenticate = async (username, password) => {
     try {
-        const response = await axios.get("http://localhost:5000/users");
+        const response = await axios.get("http://localhost:5001/users");
         const user = response.data.find((user) => user.username === username && user.password === password);
         const token = `fake_token_${user.id}`;
         return {

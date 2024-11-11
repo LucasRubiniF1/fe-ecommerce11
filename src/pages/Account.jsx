@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios"; // Importa Axios
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
+import { useAuth } from "../hooks/UseAuth";
+
 
 const Account = () => {
-  const [userData, setUserData] = useState(null);
+  //const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  //const [error, setError] = useState(null);
+  const { user } = useAuth();
 
 
-  const userId = 1; // Simulamos un usuario logueado
+  // const userId = 1; // Simulamos un usuario logueado
 
+  /*
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/users`, {
+        const response = await axios.get(`http://localhost:5001/users`, {
           params: { user_id: userId },
         });
 
@@ -33,6 +37,8 @@ const Account = () => {
 
     fetchUserData();
   }, [userId]);
+
+  */
 
   if (loading) {
     return <p>Loading...</p>;
@@ -67,16 +73,16 @@ const Account = () => {
               Información personal <EditButton to="/edit-account" />
             </h3>
             <p>
-              Nombre y apellido: {userData.firstname} {userData.lastname}
+              Nombre y apellido: {user.firstname} {user.lastname}
             </p>
-            <p>Nombre de usuario: {userData.firstname}</p>
-            <p>Email: {userData.email}</p>
+            <p>Nombre de usuario: {user.firstname}</p>
+            <p>Email: {user.email}</p>
           </div>
           <div className="account-card">
             <h3>
               Información de envio <span>Edit</span>
             </h3>
-            <p>Direccion de envio: XXXXXX</p>
+            <p>Direccion de envio: XXXXX</p>
             <p>Localidad: XXXXXX</p>
             <p>Codigo postal: XXXXX</p>
           </div>
