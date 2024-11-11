@@ -11,7 +11,7 @@ const Home = () => {
   const [productsDest, setProductsDest] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5001/products')
+    axios.get('http://localhost:5000/products')
       .then((response) => {
         const data = response.data; // Extraer los datos directamente de response
         {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}

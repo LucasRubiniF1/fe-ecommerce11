@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/editMyAccount.css";
 
-const API_URL = "http://localhost:5001";
+const API_URL = "http://localhost:5000";
 
 const EditAccount = () => {
   const [userData, setUserData] = useState({

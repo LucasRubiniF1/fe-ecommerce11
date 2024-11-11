@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RegisterForm from '../components/registerForm';
 import users from '../resources/users.json'; 
+import { validateUser, registerUser, getUsersAxios } from "../Services/serviceLogin.js";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -21,17 +22,17 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener la lista de usuarios para determinar el último ID
-    axios.get('http://localhost:5001/users')
-      .then(response => {
-        const users = response.data;
+    const fetchUsers = async () => {
+      try {
+        const users = await getUsersAxios();
         const lastId = users.length > 0 ? Math.max(...users.map(user => user.id)) : 0;
-        setFormData(prev => ({ ...prev, id: lastId + 1 })); // Asigna el próximo ID disponible
-      })
-      .catch(error => {
-        console.error("Error al obtener usuarios:", error);
-        setError('No se pudo cargar la lista de usuarios.');
-      });
+        setFormData(prev => ({ ...prev, id: lastId + 1 }));
+      } catch (error) {
+        setError("No se pudo cargar la lista de usuarios.");
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   const handleChange = (e) => {
@@ -48,15 +49,8 @@ const RegisterPage = () => {
 
     try {
       // Obtener la lista de usuarios para la validación
-      const response = await axios.get('http://localhost:5001/users');
+      const response = await validateUser (formData, setError);
       const users = response.data;
-
-      // Verificar si el username o el email ya existen
-      const userExists = users.some(user => user.username === formData.username || user.email === formData.email);
-      if (userExists) {
-        setError('Ya existe el username o el email. Intente nuevamente.');
-        return;
-      }
 
       // Verificar longitud de la contraseña
       if (formData.password.length < 8) {
@@ -64,8 +58,9 @@ const RegisterPage = () => {
         return;
       }
 
-      // Realizar la solicitud POST para registrar el usuario
-      await axios.post('http://localhost:5001/users', formData);
+      
+      await registerUser(formData, setError);
+      
       setSuccessMessage(true);
       //navigate('/'); // Redirigir a la página de inicio de sesión
     } catch (error) {

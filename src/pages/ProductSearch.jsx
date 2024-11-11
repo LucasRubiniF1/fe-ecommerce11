@@ -11,7 +11,7 @@ const ProductSearch = () => {
   const searchTerm = new URLSearchParams(location.search).get("query");
 
   useEffect(() => {
-    axios.get('http://localhost:5001/products')
+    axios.get('http://localhost:5000/products')
       .then((response) => {
         const data = response.data; // Extraer los datos de la respuesta
 

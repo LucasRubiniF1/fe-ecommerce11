@@ -12,7 +12,7 @@ const useStore = create((set, get) => ({
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:5001/wishlist/${userId}`);
+      const response = await axios.get(`http://localhost:5000/wishlist/${userId}`);
       set({ wishlist: response.data || [] });
     } catch (error) {
       console.error("Error al cargar la wishlist:", error);
@@ -21,7 +21,7 @@ const useStore = create((set, get) => ({
 
   loadCart: async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5001/cart/${userId}`);
+      const response = await axios.get(`http://localhost:5000/cart/${userId}`);
       set({ cart: response.data });
       localStorage.setItem('cart', JSON.stringify(response.data)); // Guarda el carrito en localStorage
     } catch (error) {
@@ -44,7 +44,7 @@ initializeWishlist: async (userId) => {
   }
 
   try {
-    const response = await axios.get(`http://localhost:5001/wishlist?userId=${userId}`);
+    const response = await axios.get(`http://localhost:5000/wishlist?userId=${userId}`);
     
     // Verificamos si la respuesta es un array y tiene contenido
     const wishlist = Array.isArray(response.data) ? response.data : [];
@@ -67,28 +67,28 @@ initializeWishlist: async (userId) => {
   addToCart: async (product, userId) => {
     try {
       // Verifica si el carrito del usuario existe
-      let userCart = await axios.get(`http://localhost:5001/cart?user_id=${userId}`);
+      let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
       userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
   
       if (!userCart) {
         // Si el carrito no existe, creamos uno nuevo
-        userCart = await axios.post(`http://localhost:5001/cart`, { user_id: userId });
+        userCart = await axios.post(`http://localhost:5000/cart`, { user_id: userId });
         userCart = userCart.data; // Recuperamos el carrito recién creado
       }
   
       // Verifica si el producto ya está en el carrito
-      const cartItemResponse = await axios.get(`http://localhost:5001/cartItem?cart_id=${userCart.id}&product_id=${product.id}`);
+      const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${product.id}`);
       const existingCartItem = cartItemResponse.data[0]; // Asumimos que hay solo un producto por carrito
   
       if (existingCartItem) {
         // Si el producto ya está en el carrito, incrementamos la cantidad
-        await axios.put(`http://localhost:5001/cartItem/${existingCartItem.id}`, {
+        await axios.put(`http://localhost:5000/cartItem/${existingCartItem.id}`, {
           ...existingCartItem,
           quantity: existingCartItem.quantity + 1,
         });
       } else {
         // Si el producto no está en el carrito, lo agregamos
-        await axios.post(`http://localhost:5001/cartItem`, {
+        await axios.post(`http://localhost:5000/cartItem`, {
           cart_id: userCart.id,
           product_id: product.id,
           quantity: 1,
@@ -128,7 +128,7 @@ initializeWishlist: async (userId) => {
 
     try {
       // Verifica si el producto ya está en la wishlist del usuario en el servidor
-      const wishlistResponse = await axios.get(`http://localhost:5001/wishlist?userId=${userId}&productId=${productId}`);
+      const wishlistResponse = await axios.get(`http://localhost:5000/wishlist?userId=${userId}&productId=${productId}`);
       const existingWishlistItem = wishlistResponse.data[0]; // Asumimos que hay solo un registro por usuario y producto
 
       if (existingWishlistItem) {
@@ -137,11 +137,11 @@ initializeWishlist: async (userId) => {
       }
 
       // Obtiene la información del producto
-      const productResponse = await axios.get(`http://localhost:5001/products/${productId}`);
+      const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
       const product = productResponse.data;
 
       // Agrega el producto a la wishlist en el servidor
-      await axios.post(`http://localhost:5001/wishlist`, { userId, productId });
+      await axios.post(`http://localhost:5000/wishlist`, { userId, productId });
 
       // Actualiza el estado local y el localStorage
       set((state) => {
@@ -158,7 +158,7 @@ initializeWishlist: async (userId) => {
   removeFromCart: async (productId, userId) => {
     try {
       // Obtener el carrito del usuario
-      let userCart = await axios.get(`http://localhost:5001/cart?user_id=${userId}`);
+      let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
       userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
   
       if (!userCart) {
@@ -167,11 +167,11 @@ initializeWishlist: async (userId) => {
       }
   
       // Buscar el cartItem correspondiente al producto
-      const cartItemResponse = await axios.get(`http://localhost:5001/cartItem?cart_id=${userCart.id}&product_id=${productId}`);
+      const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${productId}`);
       const cartItemToDelete = cartItemResponse.data[0]; // Asumimos que hay solo un cartItem por producto
   
       if (cartItemToDelete) {
-        await axios.delete(`http://localhost:5001/cartItem/${cartItemToDelete.id}`);
+        await axios.delete(`http://localhost:5000/cartItem/${cartItemToDelete.id}`);
   
         // Actualiza el carrito en el estado local
         set((state) => {
@@ -203,7 +203,7 @@ initializeWishlist: async (userId) => {
   removeFromWishlist: async (productId, userId) => {
     try {
       // Remove the product from the backend wishlist
-      await axios.delete(`http://localhost:5001/wishlist/${userId}/${productId}`);
+      await axios.delete(`http://localhost:5000/wishlist/${userId}/${productId}`);
   
       // Update local state by filtering out the removed product
       const updatedWishlist = useStore.getState().wishlist.filter(item => item.id !== productId);
@@ -220,13 +220,13 @@ initializeWishlist: async (userId) => {
   updateQuantity: async (productId, quantity, userId) => {
     try {
       // Obtener el carrito del usuario
-      const userCart = await axios.get(`http://localhost:5001/cart?user_id=${userId}`);
+      const userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
       const cartId = userCart.data[0].id;
   
       console.log(`Buscando cartItem con product_id: ${productId} y cart_id: ${cartId}`);
   
       // Obtener el elemento específico del carrito
-      const cartItemResponse = await axios.get(`http://localhost:5001/cartItem?cart_id=${cartId}&product_id=${productId}`);
+      const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${cartId}&product_id=${productId}`);
       const cartItem = cartItemResponse.data[0];
   
       if (!cartItem) {
@@ -234,7 +234,7 @@ initializeWishlist: async (userId) => {
         return;
       }
       // Actualizar la cantidad en el cartItem
-      await axios.put(`http://localhost:5001/cartItem/${cartItem.id}`, {
+      await axios.put(`http://localhost:5000/cartItem/${cartItem.id}`, {
         ...cartItem,  // Mantener los datos existentes como cart_id y product_id
         quantity     // Solo actualizamos la cantidad
       });
@@ -258,7 +258,7 @@ initializeWishlist: async (userId) => {
   checkStock: async (productId, quantity) => {
     try {
       // Obtener el producto por su ID
-      const productResponse = await axios.get(`http://localhost:5001/products/${productId}`);
+      const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
       const product = productResponse.data;
   
       // Verificar si la cantidad solicitada excede el stock disponible
@@ -277,13 +277,13 @@ initializeWishlist: async (userId) => {
 
   moveFromWishlistToCart: async (product, userId) => {
     try {
-      await axios.delete(`http://localhost:5001/wishlist/${userId}/${product.id}`);
+      await axios.delete(`http://localhost:5000/wishlist/${userId}/${product.id}`);
       
-      const existsInCart = await axios.get(`http://localhost:5001/cart/${userId}/${product.id}`);
+      const existsInCart = await axios.get(`http://localhost:5000/cart/${userId}/${product.id}`);
       if (existsInCart.data) {
-        await axios.put(`http://localhost:5001/cart/${userId}/${product.id}`, { quantity: existsInCart.data.quantity + 1 });
+        await axios.put(`http://localhost:5000/cart/${userId}/${product.id}`, { quantity: existsInCart.data.quantity + 1 });
       } else {
-        await axios.post(`http://localhost:5001/cart/${userId}`, { ...product, quantity: 1 });
+        await axios.post(`http://localhost:5000/cart/${userId}`, { ...product, quantity: 1 });
       }
 
       set((state) => {
