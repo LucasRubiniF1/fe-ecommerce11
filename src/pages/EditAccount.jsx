@@ -22,7 +22,7 @@ const EditAccount = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/users/${userId}`)
+      .get(`${API_URL}/users/${user.id}`)
       .then((response) => setUserData(response.data))
       .catch((error) =>
         console.error("Error al cargar los datos del usuario:", error)
@@ -35,6 +35,7 @@ const EditAccount = () => {
       ...(editingField === "username" && { username: user.username }),
       ...(editingField === "email" && { email: user.email }),
       ...(editingField === "password" && { password: user.password }),
+      
     };
 
     try {
