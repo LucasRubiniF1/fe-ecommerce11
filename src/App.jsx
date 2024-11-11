@@ -10,7 +10,6 @@ import EditAccount from "./pages/EditAccount";
 import RegisterPage from "./pages/RegisterPage";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
 import Wishlist from "./pages/Wishlist";
 import Navbar from "./components/Navbar";
 import NavbarAdm from "./components/NavbarAdm";
@@ -53,12 +52,12 @@ const AppContent = () => {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/product/edit" element={<ProductEdit />} /> 
           <Route path="/product/create" element={<ProductCreate />} />
+          
           <Route path="/account" element={<Account />} />
           <Route path="/edit-account" element={<EditAccount />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/checkout/:userId" element={<Checkout />} />
           <Route path="/" element={<Home />} />
           <Route path="/products/:category" element={<ProductPage />} />
           <Route path= '/login' element={<LoginPage/>} />

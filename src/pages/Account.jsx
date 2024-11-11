@@ -1,94 +1,33 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"; // Importa Axios
-import "../styles/account.css";
-import EditButton from "../components/EditButton";
+import React from 'react';
 import { useAuth } from "../hooks/UseAuth";
-
+import { FaUserCircle } from "react-icons/fa";
 
 const Account = () => {
-  //const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  //const [error, setError] = useState(null);
   const { user } = useAuth();
 
-
-  // const userId = 1; // Simulamos un usuario logueado
-
-  /*
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5001/users`, {
-          params: { user_id: userId },
-        });
-
-        // Axios ya convierte la respuesta en JSON automáticamente
-        if (response.data.length > 0) {
-          setUserData(response.data[0]);
-        } else {
-          setError("Usuario no encontrado");
-        }
-      } catch (error) {
-        setError("Error al obtener los datos del usuario");
-      } finally {
-        setLoading(false); // Quitamos el estado de carga
-      }
-    };
-
-    fetchUserData();
-  }, [userId]);
-
-  */
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="p-6 bg-white rounded-md shadow-sm">
+          <p className="text-center text-gray-600">No estás logueado</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="account-container">
-      <div className="account-sidebar">
-        <img
-          src="./img/usuario1.avif" // Coloca aquí el enlace a la imagen de perfil
-          alt="Profile"
-          className="profile-image"
-        />
-        <h2>{userData.username}</h2>
-        <ul>
-          <li>Cuenta</li>
-          <li>Órdenes</li>
-          <li>Lista de Favoritos</li>
-          <li>Salir de mi cuenta</li>
-        </ul>
-      </div>
+<div className="flex items-center justify-center bg-gray-100 min-h-[calc(100vh-2rem)]">
+  <div className="flex flex-col items-center p-6 bg-white rounded-md shadow-sm">
+    <FaUserCircle size={60} className="text-gray-400 mb-4" />
 
-      <div className="account-content">
-        <h1>Mi cuenta</h1>
-        <div className="addresses">
-          <div className="address-card">
-            <h3>
-              Información personal <EditButton to="/edit-account" />
-            </h3>
-            <p>
-              Nombre y apellido: {user.firstname} {user.lastname}
-            </p>
-            <p>Nombre de usuario: {user.firstname}</p>
-            <p>Email: {user.email}</p>
-          </div>
-          <div className="account-card">
-            <h3>
-              Información de envio <span>Edit</span>
-            </h3>
-            <p>Direccion de envio: XXXXX</p>
-            <p>Localidad: XXXXXX</p>
-            <p>Codigo postal: XXXXX</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h2 className="text-xl font-medium text-gray-800">
+      {`${user.firstname} ${user.lastname}`}
+    </h2>
+
+    <p className="text-sm text-gray-500">{user.email}</p>
+  </div>
+</div>
+
   );
 };
 
