@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAuth } from "../hooks/UseAuth";
+import "../styles/account.css";
+import EditButton from "../components/EditButton";
 import { FaUserCircle } from "react-icons/fa";
 
 const Account = () => {
@@ -42,8 +44,9 @@ const Account = () => {
             <p>
               Nombre y apellido: {user.firstname} {user.lastname}
             </p>
-            <p>Nombre de usuario: {user.firstname}</p>
+            <p>Nombre de usuario: {user.username}</p>
             <p>Email: {user.email}</p>
+            <p>Fecha de Nacimiento: {user.birth}</p>
           </div>
           <div className="account-card">
             <h3>

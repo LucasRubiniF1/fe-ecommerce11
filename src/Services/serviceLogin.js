@@ -7,7 +7,9 @@ export const authenticate = async (username, password) => {
         const token = `fake_token_${user.id}`;
         return {
             id: user.id,
+            username: user.username,
             email: user.email,
+            birth: user.birth,
             firstname: user.firstname,
             lastname: user.lastname,
             role: user.role,
