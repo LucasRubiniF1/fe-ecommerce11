@@ -37,15 +37,31 @@ const useStore = create((set, get) => ({
     }
   },
 
-  initializeWishlist: async (userId) => {
-    try {
-      const response = await axios.get(`http://localhost:5001/wishlist/${userId}`);
-      set({ wishlist: Array.isArray(response.data) ? response.data : [] });
-    } catch (error) {
-      console.error("Failed to load wishlist:", error);
-      set({ wishlist: [] });
-    }
-  },
+initializeWishlist: async (userId) => {
+  if (!userId) {
+    console.error("userId es necesario para cargar la wishlist.");
+    return;
+  }
+
+  try {
+    const response = await axios.get(`http://localhost:5001/wishlist?userId=${userId}`);
+    
+    // Verificamos si la respuesta es un array y tiene contenido
+    const wishlist = Array.isArray(response.data) ? response.data : [];
+    set({ wishlist });
+    
+    // Guardamos la wishlist en localStorage para persistencia
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  } catch (error) {
+    console.error("Error al cargar la wishlist:", error);
+    
+    // En caso de error, inicializamos la wishlist como un array vacío
+    set({ wishlist: [] });
+    localStorage.setItem("wishlist", JSON.stringify([]));
+  }
+},
+
+
 
 
   addToCart: async (product, userId) => {
@@ -98,6 +114,47 @@ const useStore = create((set, get) => ({
     }
   },
 
+  
+
+  addToWishlist: async (productId, userId) => {
+    if (!productId || (typeof productId !== 'string' && typeof productId !== 'number')) {
+      console.error("productId inválido en addToWishlist:", productId);
+      return;
+    }
+    if (!userId) {
+      console.error("userId es necesario para agregar a la wishlist.");
+      return;
+    }
+
+    try {
+      // Verifica si el producto ya está en la wishlist del usuario en el servidor
+      const wishlistResponse = await axios.get(`http://localhost:5001/wishlist?userId=${userId}&productId=${productId}`);
+      const existingWishlistItem = wishlistResponse.data[0]; // Asumimos que hay solo un registro por usuario y producto
+
+      if (existingWishlistItem) {
+        console.warn("Este producto ya está en la wishlist.");
+        return;
+      }
+
+      // Obtiene la información del producto
+      const productResponse = await axios.get(`http://localhost:5001/products/${productId}`);
+      const product = productResponse.data;
+
+      // Agrega el producto a la wishlist en el servidor
+      await axios.post(`http://localhost:5001/wishlist`, { userId, productId });
+
+      // Actualiza el estado local y el localStorage
+      set((state) => {
+        const updatedWishlist = [...state.wishlist, product];
+        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+        return { wishlist: updatedWishlist };
+      });
+    } catch (error) {
+      console.error("Error al agregar a la wishlist:", error);
+    }
+  },
+
+
   removeFromCart: async (productId, userId) => {
     try {
       // Obtener el carrito del usuario
@@ -140,39 +197,6 @@ const useStore = create((set, get) => ({
   },
 
 
-  addToWishlist: async (productId, userId) => {
-    if (!productId || typeof productId !== 'string' && typeof productId !== 'number') {
-      console.error("productId inválido en addToWishlist:", productId);
-      return;
-    }
-    if (!userId) {
-      console.error("userId es necesario para agregar a la wishlist.");
-      return;
-    }
-    
-    try {
-      const { wishlist } = get();
-      const currentWishlist = wishlist || [];
-
-      if (currentWishlist.some(item => item.id === productId)) {
-        console.warn("Este producto ya está en la wishlist.");
-        return;
-      }
-
-      const productResponse = await axios.get(`http://localhost:5001/products/${productId}`);
-      const product = productResponse.data;
-
-      await axios.post(`http://localhost:5001/wishlist`, { userId, productId });
-
-      const updatedWishlist = [...currentWishlist, product];
-      set({ wishlist: updatedWishlist });
-
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-    } catch (error) {
-      console.error("Error al agregar a la wishlist:", error);
-    }
-  },
-  
   
   
   // Function to remove a product from the wishlist

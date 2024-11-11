@@ -37,10 +37,12 @@ const Carousel = ({ products, titulo }) => {
   };
 
   const handleAddToWishlist = (product) => {
+    console.log("productId:", product.id); // Verifica el valor de productId
+
     if (!user) {
       navigate('/login');
     } else {
-      addToWishlist(product, user.id);
+      addToWishlist(product.id, user.id);
     }
   };
 

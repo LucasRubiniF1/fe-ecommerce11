@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../hooks/UseAuth.js"; 
 
 const Wishlist = () => {
-  const { wishlist = [], removeFromWishlist, initializeWishlist } = useStore(); // Default to empty array
+  const { wishlist = [], removeFromWishlist, initializeWishlist } = useStore(); 
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 8;
   const defaultImage = 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp';
@@ -13,9 +13,13 @@ const Wishlist = () => {
 
   useEffect(() => {
     if (user?.id) {
-      initializeWishlist(user.id); // Initialize wishlist based on user ID
+      initializeWishlist(user.id);
     }
   }, [user?.id, initializeWishlist]);
+
+  useEffect(() => {
+    console.log("Wishlist actualizada:", wishlist);
+  }, [wishlist]);
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
@@ -38,7 +42,7 @@ const Wishlist = () => {
               {wishlist.slice(startIndex, startIndex + itemsPerPage).map((product) => (
                 <motion.div key={product.id} layout>
                   <div className="product-card">
-                    <img src={product.images} alt={product.name} />
+                    <img src={product.images || defaultImage} alt={product.name} />
                     <p>{product.name}</p>
                   </div>
                 </motion.div>

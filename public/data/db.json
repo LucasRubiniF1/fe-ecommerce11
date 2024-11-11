@@ -539,6 +539,46 @@
       "id": "1",
       "user_id": 1,
       "product_id": 3
+    },
+    {
+      "id": "ea45",
+      "userId": "4",
+      "productId": "1"
+    },
+    {
+      "id": "f37c",
+      "userId": "4",
+      "productId": "2"
+    },
+    {
+      "id": "991a",
+      "userId": "4",
+      "productId": "5"
+    },
+    {
+      "id": "5167",
+      "userId": "4",
+      "productId": "7"
+    },
+    {
+      "id": "c9d7",
+      "userId": "4",
+      "productId": "1"
+    },
+    {
+      "id": "7116",
+      "userId": "4",
+      "productId": "2"
+    },
+    {
+      "id": "f8ab",
+      "userId": "4",
+      "productId": "5"
+    },
+    {
+      "id": "a272",
+      "userId": "4",
+      "productId": "7"
     }
   ],
   "cart": [
