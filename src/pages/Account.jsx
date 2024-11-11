@@ -16,19 +16,46 @@ const Account = () => {
   }
 
   return (
-<div className="flex items-center justify-center bg-gray-100 min-h-[calc(100vh-2rem)]">
-  <div className="flex flex-col items-center p-6 bg-white rounded-md shadow-sm">
-    <FaUserCircle size={60} className="text-gray-400 mb-4" />
+    <div className="account-container">
+      <div className="account-sidebar">
+        <img
+          src="./img/usuario1.avif" // Coloca aquí el enlace a la imagen de perfil
+          alt="Profile"
+          className="profile-image"
+        />
+        <h2>{user.username}</h2>
+        <ul>
+          <li>Cuenta</li>
+          <li>Órdenes</li>
+          <li>Lista de Favoritos</li>
+          <li>Salir de mi cuenta</li>
+        </ul>
+      </div>
 
-    <h2 className="text-xl font-medium text-gray-800">
-      {`${user.firstname} ${user.lastname}`}
-    </h2>
-
-    <p className="text-sm text-gray-500">{user.email}</p>
-  </div>
-</div>
-
+      <div className="account-content">
+        <h1>Mi cuenta</h1>
+        <div className="addresses">
+          <div className="address-card">
+            <h3>
+              Información personal <EditButton to="/edit-account" />
+            </h3>
+            <p>
+              Nombre y apellido: {user.firstname} {user.lastname}
+            </p>
+            <p>Nombre de usuario: {user.firstname}</p>
+            <p>Email: {user.email}</p>
+          </div>
+          <div className="account-card">
+            <h3>
+              Información de envio <span>Edit</span>
+            </h3>
+            <p>Direccion de envio: XXXXXX</p>
+            <p>Localidad: XXXXXX</p>
+            <p>Codigo postal: XXXXX</p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
-
 export default Account;

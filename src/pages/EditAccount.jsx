@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/editMyAccount.css";
+import { useAuth } from "../hooks/UseAuth";
 
 const API_URL = "http://localhost:5000";
 
 const EditAccount = () => {
-  const [userData, setUserData] = useState({
+  /*const [userData, setUserData] = useState({
     username: "",
     email: "",
     password: "",
@@ -13,9 +14,10 @@ const EditAccount = () => {
     firstname: "",
     lastname: "",
     role: "",
-  });
-  const [editingField, setEditingField] = useState(null);
-  const userId = 4; 
+  });*/
+  //const [editingField, setEditingField] = useState(null);
+  //const userId = 4; 
+  const { user } = useAuth();
 
 
   useEffect(() => {
@@ -30,13 +32,13 @@ const EditAccount = () => {
 
   const handleSaveChanges = async () => {
     const updatedFields = {
-      ...(editingField === "username" && { username: userData.username }),
-      ...(editingField === "email" && { email: userData.email }),
-      ...(editingField === "password" && { password: userData.password }),
+      ...(editingField === "username" && { username: user.username }),
+      ...(editingField === "email" && { email: user.email }),
+      ...(editingField === "password" && { password: user.password }),
     };
 
     try {
-      await axios.patch(`${API_URL}/users/${userId}`, updatedFields); 
+      await axios.put(`${API_URL}/users/${userId}`, updatedFields); 
       alert("Cambios guardados correctamente");
       setEditingField(null); // Finaliza la edición
     } catch (error) {
@@ -63,7 +65,7 @@ const EditAccount = () => {
         <input
           type="text"
           name="username"
-          value={userData.username}
+          value={user.username}
           onChange={handleInputChange}
           disabled={editingField !== "username"}
         />
@@ -87,7 +89,7 @@ const EditAccount = () => {
         <input
           type="password"
           name="password"
-          value={userData.password}
+          value={user.password}
           onChange={handleInputChange}
           disabled={editingField !== "password"}
         />
