@@ -134,15 +134,13 @@
   ],
   "products": [
     {
-      "product_id": 1,
-      "name": "Apple iPhone 15 Pro Max",
-      "description": "Apple iPhone 15 Pro Max (1 TB) - Titanio Negro",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_768125-MLA71783090116_092023-F.webp",
-      "price": 799.99,
-      "stock": "11",
-      "category": "Celular",
-      "is_featured": true,
-      "id": "1"
+      "id": "1",
+      "name": "Producto de prueba",
+      "description": "Descripción de prueba",
+      "price": 100,
+      "category": "Categoría de prueba",
+      "stock": 8,
+      "is_featured": true
     },
     {
       "product_id": 2,
@@ -156,26 +154,24 @@
       "id": "2"
     },
     {
-      "product_id": 3,
+      "id": "3",
       "name": "Teléfono Apple iPhone 12",
       "description": "Teléfono Apple iPhone 14 con 128GB de almacenamiento",
       "images": "https://http2.mlstatic.com/D_NQ_NP_2X_864844-MLM51559388062_092022-F.webp",
       "price": 1.76453,
-      "stock": 10,
       "category": "Celular",
-      "is_featured": false,
-      "id": "3"
+      "stock": -2,
+      "is_featured": false
     },
     {
-      "product_id": 4,
+      "id": "4",
       "name": "Teléfono Xiaomi Redmi Note 13",
       "description": "Teléfono Xiaomi Redmi Note 13 con 256GB de almacenamiento",
       "images": "https://http2.mlstatic.com/D_NQ_NP_2X_750113-MLU78923328223_092024-F.webp",
       "price": 527,
-      "stock": 20,
       "category": "Celular",
-      "is_featured": false,
-      "id": "4"
+      "stock": 18,
+      "is_featured": false
     },
     {
       "product_id": 5,
@@ -200,15 +196,14 @@
       "id": "6"
     },
     {
-      "product_id": 7,
+      "id": "7",
       "name": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM",
       "description": "Teléfono Xiaomi Pocophone Poco M6 Pro Dual SIM 512 GB violeta 12 GB RAM",
       "images": "https://http2.mlstatic.com/D_NQ_NP_2X_605893-MLA76451651310_052024-F.webp",
       "price": 604,
-      "stock": 16,
       "category": "Celular",
-      "is_featured": false,
-      "id": "7"
+      "stock": 14,
+      "is_featured": false
     },
     {
       "product_id": 8,
@@ -514,32 +509,6 @@
       "id": "df5a"
     }
   ],
-  "orderDetail": [
-    {
-      "id": 1,
-      "orderId": 1,
-      "productId": 3,
-      "unitPrice": 299.99,
-      "quantity": 2,
-      "totalPrice": 599.98
-    },
-    {
-      "id": 2,
-      "orderId": 2,
-      "productId": 6,
-      "unitPrice": 649.99,
-      "quantity": 1,
-      "totalPrice": 649.99
-    },
-    {
-      "id": "34c3",
-      "order_id": "a042",
-      "product_id": "8",
-      "unit_price": 769.999,
-      "quantity": 1,
-      "total_price": 769.999
-    }
-  ],
   "transactions": [
     {
       "id": "1",
@@ -631,19 +600,13 @@
       "id": "080a",
       "cart_id": "998c",
       "product_id": "4",
-      "quantity": 5
-    },
-    {
-      "id": "e28d",
-      "cart_id": "998c",
-      "product_id": "2",
-      "quantity": 3
+      "quantity": 6
     },
     {
       "id": "b663",
       "cart_id": "998c",
       "product_id": "3",
-      "quantity": 3
+      "quantity": 9
     },
     {
       "id": "50fb",
@@ -655,7 +618,7 @@
       "id": "0245",
       "cart_id": "998c",
       "product_id": "7",
-      "quantity": 3
+      "quantity": 4
     },
     {
       "id": "35c5",
@@ -676,21 +639,27 @@
       "quantity": 1
     },
     {
-      "id": "88e9",
-      "cart_id": "6697",
+      "id": "6570",
+      "cart_id": "998c",
+      "product_id": "8",
+      "quantity": 1
+    },
+    {
+      "id": "2e82",
+      "cart_id": "998c",
+      "product_id": "15",
+      "quantity": 2
+    },
+    {
+      "id": "c599",
+      "cart_id": "998c",
+      "product_id": "1",
+      "quantity": 1
+    },
+    {
+      "id": "1330",
+      "cart_id": "998c",
       "product_id": "2",
-      "quantity": 1
-    },
-    {
-      "id": "e556",
-      "cart_id": "6697",
-      "product_id": "3",
-      "quantity": 1
-    },
-    {
-      "id": "2696",
-      "cart_id": "6697",
-      "product_id": "4",
       "quantity": 1
     }
   ]
