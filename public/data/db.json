@@ -166,7 +166,7 @@
       "images": "https://http2.mlstatic.com/D_NQ_NP_2X_864844-MLM51559388062_092022-F.webp",
       "price": 1.76453,
       "category": "Celular",
-      "stock": -2,
+      "stock": -4,
       "is_featured": false
     },
     {
@@ -612,7 +612,7 @@
       "id": "b663",
       "cart_id": "998c",
       "product_id": "3",
-      "quantity": 9
+      "quantity": 12
     },
     {
       "id": "50fb",
