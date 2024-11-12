@@ -44,10 +44,13 @@ initializeWishlist: async (userId) => {
   }
 
   try {
-    const response = await axios.get(`http://localhost:5000/wishlist?userId=${userId}`);
-    
-    // Verificamos si la respuesta es un array y tiene contenido
-    const wishlist = Array.isArray(response.data) ? response.data : [];
+    // Realiza una solicitud GET para traer al usuario y su wishlist
+    const response = await axios.get(`http://localhost:5000/users/${userId}`);
+
+    // Obtiene la wishlist del usuario
+    const user = response.data;
+    const wishlist = user.wishlist || [];
+
     set({ wishlist });
     
     // Guardamos la wishlist en localStorage para persistencia
@@ -128,18 +131,17 @@ initializeWishlist: async (userId) => {
 
     try {
       // Verifica si el producto ya está en la wishlist del usuario en el servidor
-// Obtén la información del usuario
-const userRespon = await axios.get(`http://localhost:5000/users/${userId}`);
-const userRes = userRespon.data;
+      // Obtén la información del usuario
+      const userRespon = await axios.get(`http://localhost:5000/users/${userId}`);
+      const userRes = userRespon.data;
 
-// Busca si el producto ya está en la wishlist
-const existingWishlistItem = userRes.wishlist?.find(item => item.product_id === productId);
+      // Busca si el producto ya está en la wishlist
+      const existingWishlistItem = userRes.wishlist?.find(item => item.product_id === productId);
 
-if (existingWishlistItem) {
-  console.warn("Este producto ya está en la wishlist.");
-  return;
-}
-
+      if (existingWishlistItem) {
+        console.warn("Este producto ya está en la wishlist.");
+        return;
+      }
 
     // Obtiene la información del producto
     const lastWishlistItem = userRes.wishlist?.length > 0 ? userRes.wishlist[userRes.wishlist.length - 1]
@@ -156,7 +158,7 @@ if (existingWishlistItem) {
       await axios.put(`http://localhost:5000/users/${userId}`, { ...userRes, wishlist: updatedWishlist });
       // Actualiza el estado local y el localStorage
       set((state) => {
-        const updatedWishlist = [...state.wishlist, product];
+        const updatedWishlist = [...state.wishlist, productId];
         localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
         return { wishlist: updatedWishlist };
       });
