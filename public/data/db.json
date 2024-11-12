@@ -514,6 +514,32 @@
       "id": "df5a"
     }
   ],
+  "orderDetail": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "productId": 3,
+      "unitPrice": 299.99,
+      "quantity": 2,
+      "totalPrice": 599.98
+    },
+    {
+      "id": 2,
+      "orderId": 2,
+      "productId": 6,
+      "unitPrice": 649.99,
+      "quantity": 1,
+      "totalPrice": 649.99
+    },
+    {
+      "id": "34c3",
+      "order_id": "a042",
+      "product_id": "8",
+      "unit_price": 769.999,
+      "quantity": 1,
+      "total_price": 769.999
+    }
+  ],
   "transactions": [
     {
       "id": "1",

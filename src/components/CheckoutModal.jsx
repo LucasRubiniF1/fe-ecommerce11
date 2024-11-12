@@ -3,11 +3,17 @@ import ShippingForm from './ShippingForm';
 import PaymentForm from './PaymentForm';
 import OrderSummary from './OrderSummary';
 import OrderConfirmation from './OrderConfirmation';
+import { checkoutCart, clearCart } from '../Services/serviceCheckout.js';
+import { useAuth } from "../hooks/UseAuth.js"; 
 
 export default function CheckoutModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
   const [shippingData, setShippingData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [error, setError] = useState(null);
+  const { user, cart } = useAuth();
+  
 
   const handleShippingSubmit = (data) => {
     setShippingData(data);
@@ -19,10 +25,25 @@ export default function CheckoutModal({ isOpen, onClose }) {
     setStep(3);
   };
 
+  const handleConfirmOrder = async () => {
+    try {
+      // Llama a la función de checkout
+      const newOrder = await checkoutCart(user.id);
+      setOrder(newOrder);
+      setStep(4);  // Avanza al paso de confirmación
+      clearCart();
+    } catch (err) {
+      console.error("Error durante el checkout:", err);
+      setError("Hubo un problema con el checkout. Inténtalo de nuevo.");
+    }
+  };
+
   const handleClose = () => {
     setStep(1);
     setShippingData(null);
     setPaymentData(null);
+    setOrder(null);
+    setError(null);
     onClose();
   };
 
@@ -43,11 +64,19 @@ export default function CheckoutModal({ isOpen, onClose }) {
             <OrderSummary 
               shippingData={shippingData} 
               paymentData={paymentData} 
-              onConfirm={() => setStep(4)} 
+              onConfirm={handleConfirmOrder} 
+              onBack={() => setStep(2)}
             />
           )}
           {step === 4 && (
-            <OrderConfirmation onClose={handleClose} />
+            <OrderConfirmation 
+              order={order} 
+              onClose={handleClose} 
+              error={error} 
+            />
+          )}
+          {error && (
+            <div className="text-red-500 mt-4">{error}</div>
           )}
         </div>
       </div>
