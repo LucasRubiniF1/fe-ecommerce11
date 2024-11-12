@@ -1,11 +1,13 @@
-import React from 'react';
+import React from 'react'; 
 import { useAuth } from "../hooks/UseAuth";
+import { useNavigate } from 'react-router-dom';
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
 import { FaUserCircle } from "react-icons/fa";
 
 const Account = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   if (!user) {
     return (
@@ -17,20 +19,32 @@ const Account = () => {
     );
   }
 
+  const handleOrders = () => {
+    //navigate('/orders'); // Cambia '/orders' a la ruta de tus órdenes de compra
+  };
+
+  const handleWishlist = () => {
+    navigate('/wishlist'); // Cambia '/wishlist' a la ruta de tu lista de favoritos
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/'); // Redirige a la página de inicio después de cerrar sesión
+  };
+
   return (
     <div className="account-container">
       <div className="account-sidebar">
         <img
-          src="./img/usuario1.avif" // Coloca aquí el enlace a la imagen de perfil
+          src="./img/usuario1.avif"
           alt="Profile"
           className="profile-image"
         />
         <h2>{user.username}</h2>
         <ul>
-          <li>Cuenta</li>
-          <li>Órdenes</li>
-          <li>Lista de Favoritos</li>
-          <li>Salir de mi cuenta</li>
+          <li onClick={handleOrders}>Órdenes</li>
+          <li onClick={handleWishlist}>Lista de Favoritos</li>
+          <li onClick={handleLogout}>Salir de mi cuenta</li>
         </ul>
       </div>
 
@@ -61,4 +75,5 @@ const Account = () => {
     </div>
   );
 };
+
 export default Account;
