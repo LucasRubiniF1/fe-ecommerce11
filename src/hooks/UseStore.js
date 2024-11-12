@@ -136,7 +136,7 @@ initializeWishlist: async (userId) => {
       const userRes = userRespon.data;
 
       // Busca si el producto ya está en la wishlist
-      const existingWishlistItem = userRes.wishlist?.find(item => item.product_id === productId);
+      const existingWishlistItem = userRes.wishlist?.find(item => item.product_id == productId);
 
       if (existingWishlistItem) {
         console.warn("Este producto ya está en la wishlist.");
@@ -215,14 +215,17 @@ initializeWishlist: async (userId) => {
   // Function to remove a product from the wishlist
   removeFromWishlist: async (productId, userId) => {
     try {
-      // Remove the product from the backend wishlist
-      await axios.delete(`http://localhost:5000/wishlist/${userId}/${productId}`);
-  
-      // Update local state by filtering out the removed product
-      const updatedWishlist = useStore.getState().wishlist.filter(item => item.id !== productId);
+      const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
+      const user = userResponse.data;
+      const updatedWishlist = user.wishlist.filter(item => item.product_id != productId);
+
+      await axios.put(`http://localhost:5000/users/${userId}`, {
+        ...user,
+        wishlist: updatedWishlist
+      });
+      
+      // Actualizar el estado local y localStorage
       useStore.setState({ wishlist: updatedWishlist });
-  
-      // Save the updated wishlist to localStorage
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     } catch (error) {
       console.error("Error al eliminar de la wishlist:", error);
