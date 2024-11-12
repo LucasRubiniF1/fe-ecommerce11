@@ -20,7 +20,7 @@ const NavbarAdm = () => {
       <h1 className="text-3xl font-bold text-slate-500">3legant</h1>
 
       <ul className="flex gap-6">
-        <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/')}>
+        <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/homeAdmin')}>
           Home
         </li>
 
@@ -31,7 +31,7 @@ const NavbarAdm = () => {
         >
           Products
           {showDropdown && (
-            <div className="absolute left-0 mt-2 bg-white border border-gray-200 rounded shadow-lg p-4 grid grid-cols-3 gap-6 w-[700px] z-10">
+            <div className="absolute left-0 mt-0 bg-white border border-gray-200 rounded shadow-lg p-4 w-[200px] z-10">
               <ul>
                 <li className="text-gray-600 hover:text-blue cursor-pointer" onClick={handleNavigateToCreate}>
                   Create

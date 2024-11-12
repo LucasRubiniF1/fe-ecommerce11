@@ -199,18 +199,31 @@ const ProductEdit = () => {
                   product.images ? <img src={product.images} alt={product.name} style={{ width: '50px' }} /> : 'No image'
                 )}
               </td>
-              <td>
+              <td className="d-flex justify-content-between align-items-center">
                 {editableProductId === product.product_id ? (
-                  <Button variant="success" onClick={handleSaveClick}>
-                    <FaSave /> Save
+                  <Button
+                    variant="success"
+                    onClick={handleSaveClick}
+                    style={{ width: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    <FaSave className="me-2" /> Save
                   </Button>
                 ) : (
-                  <Button variant="warning" onClick={() => handleEditClick(product)}>
-                    <FaEdit /> Edit
+                  <Button
+                    variant="warning"
+                    onClick={() => handleEditClick(product)}
+                    style={{ width: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    <FaEdit className="me-2" /> Edit
                   </Button>
                 )}
-                <Button variant="danger" onClick={() => handleDeleteClick(product.product_id)} style={{ marginLeft: '10px' }}>
-                  <FaTrash /> Delete
+                <div style={{ width: '10px' }}></div> {/* Espacio entre botones */}
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteClick(product.product_id)}
+                  style={{ width: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <FaTrash className="me-2" /> Delete
                 </Button>
               </td>
             </tr>

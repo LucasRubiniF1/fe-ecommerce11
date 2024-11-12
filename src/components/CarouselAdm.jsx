@@ -43,7 +43,7 @@ const Carousel = ({ products, titulo }) => {
             >
               {/* Contenedor de imagen con efecto hover */}
               <div className="relative mb-6 rounded-xl bg-gray-50 p-4 transition-transform duration-300 group-hover:scale-[1.02] cursor-pointer"
-                onClick={() => handleClick(product)}>
+                onClick={() => handleClick()}>
                 <img
                   src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
                   alt={product.name}
@@ -53,7 +53,7 @@ const Carousel = ({ products, titulo }) => {
 
               {/* Contenido de texto */}
               <div className="space-y-2 cursor-pointer" 
-                onClick={() => handleClick(product)}>
+                onClick={() => handleClick()}>
                 <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">{product.name}</h3>
                 <p className="text-sm text-gray-500 line-clamp-2 min-h-[2.5rem]">{product.description}</p>
                 <p className="text-sm font-bold text-gray-500 line-clamp-2 min-h-[2.5rem]">Stock: {product.stock}</p>

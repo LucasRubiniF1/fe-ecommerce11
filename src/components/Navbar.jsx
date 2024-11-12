@@ -62,7 +62,7 @@ const Navbar = ({ onSearch }) => {
         // Navbar para ADMIN
         <>
           <ul className="flex gap-6">
-            <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/')}>
+            <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/homeAdmin')}>
               Home
             </li>
             <li
@@ -72,13 +72,13 @@ const Navbar = ({ onSearch }) => {
             >
               Products
               {showDropdown && (
-                <div className="absolute left-0 mt-2 bg-white border border-gray-200 rounded shadow-lg p-4 grid grid-cols-3 gap-6 w-[700px] z-10">
+                <div className="absolute left-0 mt-0 bg-white border border-gray-200 rounded shadow-lg p-4 grid grid-cols-3 gap-6 w-[700px] z-10">
                   <div>
                     <ul>
-                      <li className="font-semibold text-black mb-2" onClick={handleNavigateToCreate}>
+                      <li className="font-semibold hover:text-blue cursor-pointer" onClick={handleNavigateToCreate}>
                         Create
                       </li>
-                      <li className="text-gray-600 hover:text-blue cursor-pointer" onClick={handleNavigateToEdit}>
+                      <li className="font-semibold hover:text-blue cursor-pointer" onClick={handleNavigateToEdit}>
                         Update/Delete
                       </li>
                     </ul>
