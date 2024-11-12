@@ -1,6 +1,6 @@
-import React from 'react'; 
+import React from "react";
 import { useAuth } from "../hooks/UseAuth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
 import { FaUserCircle } from "react-icons/fa";
@@ -20,16 +20,16 @@ const Account = () => {
   }
 
   const handleOrders = () => {
-    //navigate('/orders'); // Cambia '/orders' a la ruta de tus órdenes de compra
+    navigate("/checkout-history");
   };
 
   const handleWishlist = () => {
-    navigate('/wishlist'); // Cambia '/wishlist' a la ruta de tu lista de favoritos
+    navigate("/wishlist");
   };
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // Redirige a la página de inicio después de cerrar sesión
+    navigate("/");
   };
 
   return (

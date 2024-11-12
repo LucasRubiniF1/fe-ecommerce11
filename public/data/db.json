@@ -516,7 +516,7 @@
   ],
   "orderDetail": [
     {
-      "id": 1,
+      "id": "1",
       "orderId": 1,
       "productId": 3,
       "unitPrice": 299.99,
@@ -524,7 +524,7 @@
       "totalPrice": 599.98
     },
     {
-      "id": 2,
+      "id": "2",
       "orderId": 2,
       "productId": 6,
       "unitPrice": 649.99,
