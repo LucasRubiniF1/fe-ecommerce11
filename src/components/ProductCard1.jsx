@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/UseAuth.js';
 const ProductCard1 = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
-  const { addToCart, addToWishlist } = useStore(); 
+  const { addToCart, addToWishlist} = useStore(); 
   const { user } = useAuth();
 
 

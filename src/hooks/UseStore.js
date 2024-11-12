@@ -65,61 +65,84 @@ initializeWishlist: async (userId) => {
 },
 
 
-
-
-  addToCart: async (product, userId) => {
-    try {
-      let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-      userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
-      
-      if (!userCart) {
-        // Si el carrito no existe, creamos uno nuevo
-        userCart = await axios.post(`http://localhost:5000/cart`, { user_id: userId });
-        userCart = userCart.data; // Recuperamos el carrito recién creado
-      }
-      
-  
-      // Verifica si el producto ya está en el carrito
-      const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${product.id}`);
-      const existingCartItem = cartItemResponse.data[0]; // Asumimos que hay solo un producto por carrito
-  
-      if (existingCartItem) {
-        // Si el producto ya está en el carrito, incrementamos la cantidad
-        await axios.put(`http://localhost:5000/cartItem/${existingCartItem.id}`, {
-          ...existingCartItem,
-          quantity: existingCartItem.quantity + 1,
-        });
-      } else {
-        // Si el producto no está en el carrito, lo agregamos
-        await axios.post(`http://localhost:5000/cartItem`, {
-          cart_id: userCart.id,
-          product_id: product.id,
-          quantity: 1,
-        });
-      }
-
-      
-  
-      set((state) => {
-        const updatedCart = state.cart.find(item => item.id === product.id)
-          ? state.cart.map(item => 
-              item.id === product.id 
-                ? { ...item, quantity: item.quantity + 1 } 
-                : item
-            )
-          : [...state.cart, { ...product, quantity: 1 }];
-  
-        // Guarda el carrito actualizado en localStorage
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-  
-        return { cart: updatedCart };
-      });
-    } catch (error) {
-      console.error("Error al agregar al carrito:", error);
+addToCart: async (product, userId) => {
+  try {
+    // Obtener o crear el carrito del usuario
+    let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
+    userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
+    
+    if (!userCart) {
+      userCart = await axios.post(`http://localhost:5000/cart`, { user_id: userId });
+      userCart = userCart.data;
     }
-  },
 
-  
+    // Obtener la información del usuario
+    let userRespon = await axios.get(`http://localhost:5000/users/${userId}`);
+    let userRes = userRespon.data;
+
+    // Inicializar el carrito en el JSON del usuario si no existe
+    if (!userRes.cart) {
+      userRes.cart = { cart_id: userCart.id, items: [] };
+    }
+
+    // Buscar el producto en `cartItem`
+    const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${product.id}`);
+    const existingCartItem = cartItemResponse.data[0];
+
+    if (existingCartItem) {
+      // Si el producto ya está en el carrito, incrementa la cantidad en `cartItem`
+      await axios.put(`http://localhost:5000/cartItem/${existingCartItem.id}`, {
+        ...existingCartItem,
+        quantity: existingCartItem.quantity + 1,
+      });
+    } else {
+      // Si el producto no está en el carrito, lo agregamos a `cartItem`
+      await axios.post(`http://localhost:5000/cartItem`, {
+        cart_id: userCart.id,
+        product_id: product.id,
+        quantity: 1,
+      });
+    }
+
+    // Actualizar el JSON de `user.cart.items`
+    let userCartItem = userRes.cart.items.find(item => item.product_id === product.id);
+
+    if (userCartItem) {
+      userCartItem.quantity += 1; // Incrementar cantidad si el producto ya existe en el JSON
+    } else {
+      // Si el producto no está en el JSON del usuario, agregarlo con nuevo `cartItem_id`
+      const lastCartItem = userRes.cart.items.length > 0 ? userRes.cart.items[userRes.cart.items.length - 1] : { cartItem_id: 0 };
+      const newCartItemId = lastCartItem.cartItem_id + 1;
+
+      userRes.cart.items.push({
+        cartItem_id: newCartItemId,
+        product_id: product.id,
+        quantity: 1,
+      });
+    }
+
+    // Actualizar el JSON del usuario con el nuevo carrito
+    await axios.put(`http://localhost:5000/users/${userId}`, userRes);
+
+    // Actualizar el estado local y el `localStorage`
+    set((state) => {
+      const updatedCart = state.cart.find(item => item.id === product.id)
+        ? state.cart.map(item =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [...state.cart, { ...product, quantity: 1 }];
+
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return { cart: updatedCart };
+    });
+
+  } catch (error) {
+    console.error("Error al agregar al carrito:", error);
+  }
+},
+
 
   addToWishlist: async (productId, userId) => {
     if (!productId || (typeof productId !== 'string' && typeof productId !== 'number')) {
@@ -178,7 +201,7 @@ initializeWishlist: async (userId) => {
     try {
       // Obtener el carrito del usuario
       let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-      userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
+      userCart = userCart.data[0];
   
       if (!userCart) {
         console.error('Carrito no encontrado');
@@ -187,20 +210,35 @@ initializeWishlist: async (userId) => {
   
       // Buscar el cartItem correspondiente al producto
       const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${productId}`);
-      const cartItemToDelete = cartItemResponse.data[0]; // Asumimos que hay solo un cartItem por producto
+      const cartItemToDelete = cartItemResponse.data[0];
   
       if (cartItemToDelete) {
+        // Eliminar el cartItem del backend
         await axios.delete(`http://localhost:5000/cartItem/${cartItemToDelete.id}`);
   
-        // Actualiza el carrito en el estado local
+        // Obtener el usuario para modificar el JSON de `user.cart.items`
+        const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
+        const user = userResponse.data;
+  
+        // Filtrar el item a eliminar en el JSON de usuario
+        const updatedCartItems = user.cart.items.filter(item => item.product_id !== productId);
+  
+        // Actualizar el usuario con el carrito modificado
+        await axios.put(`http://localhost:5000/users/${userId}`, {
+          ...user,
+          cart: {
+            ...user.cart,
+            items: updatedCartItems
+          }
+        });
+  
+        // Actualizar el carrito en el estado local
         set((state) => {
           const updatedCart = state.cart.filter((item) => item.id !== productId);
-  
-          // Si hay un carrito en localStorage, actualizamos el carrito también ahí
           localStorage.setItem('cart', JSON.stringify(updatedCart));
-  
           return { cart: updatedCart };
         });
+  
       } else {
         console.error('Producto no encontrado en el carrito.');
       }
@@ -208,6 +246,7 @@ initializeWishlist: async (userId) => {
       console.error("Error al eliminar del carrito:", error);
     }
   },
+  
 
   // Esta función se utilizaría al hacer logout para limpiar el carrito
   clearCart: () => {
@@ -241,9 +280,21 @@ initializeWishlist: async (userId) => {
 
   updateQuantity: async (productId, quantity, userId) => {
     try {
+      // Verificar si hay suficiente stock antes de actualizar
+      //const isStockAvailable = await checkStock(productId, quantity);
+      //if (!isStockAvailable) {
+        //console.warn("Stock insuficiente para la cantidad solicitada.");
+        //return;
+      //}
+  
       // Obtener el carrito del usuario
       const userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-      const cartId = userCart.data[0].id;
+      const cartId = userCart.data[0]?.id;
+    
+      if (!cartId) {
+        console.error("Carrito no encontrado para el usuario.");
+        return;
+      }
   
       console.log(`Buscando cartItem con product_id: ${productId} y cart_id: ${cartId}`);
   
@@ -255,28 +306,43 @@ initializeWishlist: async (userId) => {
         console.error("Producto no encontrado en el carrito.");
         return;
       }
+  
       // Actualizar la cantidad en el cartItem
       await axios.put(`http://localhost:5000/cartItem/${cartItem.id}`, {
         ...cartItem,  // Mantener los datos existentes como cart_id y product_id
-        quantity     // Solo actualizamos la cantidad
+        quantity      // Solo actualizamos la cantidad
       });
   
-      const currentCart = get().cart;  // Usa get() para acceder al estado actual
-
-      const updatedCart = currentCart.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
-      );
-
-      set({ cart: updatedCart });
-
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      
+      // Actualizar la cantidad en el JSON del usuario en `user.cart.items`
+      const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
+      let user = userResponse.data;
+  
+      // Verificar y actualizar el producto en el JSON de `user.cart.items`
+      const userCartItem = user.cart?.items?.find(item => item.product_id === productId);
+      if (userCartItem) {
+        userCartItem.quantity = quantity; // Actualizar la cantidad
+      } else {
+        console.warn("Producto no encontrado en el JSON de usuario.");
+      }
+  
+      // Enviar la actualización del JSON de usuario al servidor
+      await axios.put(`http://localhost:5000/users/${userId}`, user);
+  
+      // Actualizar el estado local y el `localStorage`
+      set((state) => {
+        const updatedCart = state.cart.map((item) =>
+          item.id === productId ? { ...item, quantity } : item
+        );
+  
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return { cart: updatedCart };
+      });
   
     } catch (error) {
       console.error("Error al actualizar la cantidad:", error);
     }
   },
-
+  
   checkStock: async (productId, quantity) => {
     try {
       // Obtener el producto por su ID

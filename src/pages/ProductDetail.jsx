@@ -41,7 +41,7 @@ const ProductDetail = () => {
     );
   }
   const handleAddToCart = (product) => {
-    addToCart(product, user.id);    
+    addToCart(product, user.id);  
   };
 
   const handleAddToWishlist = (product) => {
