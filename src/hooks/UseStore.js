@@ -44,10 +44,13 @@ initializeWishlist: async (userId) => {
   }
 
   try {
-    const response = await axios.get(`http://localhost:5000/wishlist?userId=${userId}`);
-    
-    // Verificamos si la respuesta es un array y tiene contenido
-    const wishlist = Array.isArray(response.data) ? response.data : [];
+    // Realiza una solicitud GET para traer al usuario y su wishlist
+    const response = await axios.get(`http://localhost:5000/users/${userId}`);
+
+    // Obtiene la wishlist del usuario
+    const user = response.data;
+    const wishlist = user.wishlist || [];
+
     set({ wishlist });
     
     // Guardamos la wishlist en localStorage para persistencia
@@ -128,24 +131,34 @@ initializeWishlist: async (userId) => {
 
     try {
       // Verifica si el producto ya está en la wishlist del usuario en el servidor
-      const wishlistResponse = await axios.get(`http://localhost:5000/wishlist?userId=${userId}&productId=${productId}`);
-      const existingWishlistItem = wishlistResponse.data[0]; // Asumimos que hay solo un registro por usuario y producto
+      // Obtén la información del usuario
+      const userRespon = await axios.get(`http://localhost:5000/users/${userId}`);
+      const userRes = userRespon.data;
+
+      // Busca si el producto ya está en la wishlist
+      const existingWishlistItem = userRes.wishlist?.find(item => item.product_id == productId);
 
       if (existingWishlistItem) {
         console.warn("Este producto ya está en la wishlist.");
         return;
       }
 
-      // Obtiene la información del producto
-      const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
-      const product = productResponse.data;
+    // Obtiene la información del producto
+    const lastWishlistItem = userRes.wishlist?.length > 0 ? userRes.wishlist[userRes.wishlist.length - 1]
+    : { wishlist_id: 0 };
+      // Incrementar el id para el nuevo elemento
+      const newWishlistId = lastWishlistItem.wishlist_id + 1;
 
-      // Agrega el producto a la wishlist en el servidor
-      await axios.post(`http://localhost:5000/wishlist`, { userId, productId });
+      const updatedWishlist = [
+        ...userRes.wishlist,
+        { wishlist_id: newWishlistId, product_id: parseInt(productId) }
+      ];
 
+      // Actualizar el usuario con la nueva wishlist
+      await axios.put(`http://localhost:5000/users/${userId}`, { ...userRes, wishlist: updatedWishlist });
       // Actualiza el estado local y el localStorage
       set((state) => {
-        const updatedWishlist = [...state.wishlist, product];
+        const updatedWishlist = [...state.wishlist, productId];
         localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
         return { wishlist: updatedWishlist };
       });
@@ -202,14 +215,17 @@ initializeWishlist: async (userId) => {
   // Function to remove a product from the wishlist
   removeFromWishlist: async (productId, userId) => {
     try {
-      // Remove the product from the backend wishlist
-      await axios.delete(`http://localhost:5000/wishlist/${userId}/${productId}`);
-  
-      // Update local state by filtering out the removed product
-      const updatedWishlist = useStore.getState().wishlist.filter(item => item.id !== productId);
+      const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
+      const user = userResponse.data;
+      const updatedWishlist = user.wishlist.filter(item => item.product_id != productId);
+
+      await axios.put(`http://localhost:5000/users/${userId}`, {
+        ...user,
+        wishlist: updatedWishlist
+      });
+      
+      // Actualizar el estado local y localStorage
       useStore.setState({ wishlist: updatedWishlist });
-  
-      // Save the updated wishlist to localStorage
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     } catch (error) {
       console.error("Error al eliminar de la wishlist:", error);
