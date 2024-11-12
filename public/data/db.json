@@ -187,6 +187,7 @@
       "stock": "11",
       "category": "Celular",
       "is_featured": true,
+      "visto": true,
       "id": "1"
     },
     {
@@ -198,6 +199,7 @@
       "stock": 15,
       "category": "Celular",
       "is_featured": true,
+      "visto": true,
       "id": "2"
     },
     {
@@ -209,6 +211,7 @@
       "stock": 10,
       "category": "Celular",
       "is_featured": false,
+      "visto": true,
       "id": "3"
     },
     {
@@ -220,6 +223,7 @@
       "stock": 20,
       "category": "Celular",
       "is_featured": false,
+      "visto": true,
       "id": "4"
     },
     {
@@ -231,6 +235,7 @@
       "stock": 12,
       "category": "Celular",
       "is_featured": false,
+      "visto": true,
       "id": "5"
     },
     {
@@ -242,6 +247,7 @@
       "stock": 8,
       "category": "Celular",
       "is_featured": false,
+      "visto": true,
       "id": "6"
     },
     {
@@ -253,6 +259,7 @@
       "stock": 16,
       "category": "Celular",
       "is_featured": false,
+      "visto": false,
       "id": "7"
     },
     {
@@ -264,6 +271,7 @@
       "stock": 6,
       "category": "Celular",
       "is_featured": true,
+      "visto": false,
       "id": "8"
     },
     {
@@ -275,6 +283,7 @@
       "stock": 9,
       "category": "Celular",
       "is_featured": false,
+      "visto": false,
       "id": "9"
     },
     {
@@ -286,6 +295,7 @@
       "stock": 7,
       "category": "Celular",
       "is_featured": false,
+      "visto": false,
       "id": "10"
     },
     {
@@ -297,6 +307,7 @@
       "stock": 5,
       "category": "Celular",
       "is_featured": false,
+      "visto": false,
       "id": "11"
     },
     {
@@ -308,6 +319,7 @@
       "stock": 14,
       "category": "Celular",
       "is_featured": false,
+      "visto": false,
       "id": "12"
     },
     {
@@ -319,6 +331,7 @@
       "stock": 10,
       "category": "Televisor",
       "is_featured": false,
+      "visto": false,
       "id": "13"
     },
     {
@@ -330,6 +343,7 @@
       "stock": 8,
       "category": "Televisor",
       "is_featured": false,
+      "visto": true,
       "id": "14"
     },
     {

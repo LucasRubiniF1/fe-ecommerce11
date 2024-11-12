@@ -9,6 +9,7 @@ const Home = () => {
   const [productsTel, setProductsTel] = useState([]);
   const [productsNot, setProductsNot] = useState([]);
   const [productsDest, setProductsDest] = useState([]);
+  const [vistoReciente, setVistoReciente] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:5000/products')
@@ -19,6 +20,7 @@ const Home = () => {
         setProductsTel(data.filter(product => product.category === "Televisor"));
         setProductsNot(data.filter(product => product.category === "Notebook"));
         setProductsDest(data.filter(product => product.is_featured === true));
+        setVistoReciente(data.filter(product => product.visto === true));
       })
       .catch((error) => {
         console.error('Error al traer los productos:', error);
@@ -36,6 +38,7 @@ const Home = () => {
             />
         </div>
         {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
+        {vistoReciente.length > 0 && <Carousel products={vistoReciente} titulo="Visto Recientemente" />}
         {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
         {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
         {productsTel.length > 0 && <Carousel products={productsNot} titulo="Notebooks" />}
