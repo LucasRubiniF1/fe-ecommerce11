@@ -22,9 +22,9 @@ const Cart = () => {
       const stockAvailable = await checkStock(itemId, quantity);
       if (stockAvailable) {
         updateQuantity(itemId, quantity, user.id);
-      } else {
-        alert("Not enough stock.");
-      }
+      } //else {
+        //alert("Not enough stock.");
+      //}
     } catch (error) {
       alert(error.message);
     }
