@@ -9,6 +9,9 @@
       "firstname": "John",
       "lastname": "Doe",
       "role": "USER",
+      "shipping_address": "123 Main St",
+      "locality": "Springfield",
+      "postal_code": "12345",
       "cart": {
         "cart_id": 1,
         "items": [
@@ -73,6 +76,9 @@
       "firstname": "Jane",
       "lastname": "Smith",
       "role": "USER",
+      "shipping_address": "456 Oak Ave",
+      "locality": "Shelbyville",
+      "postal_code": "67890",
       "cart": {
         "cart_id": 2,
         "items": [

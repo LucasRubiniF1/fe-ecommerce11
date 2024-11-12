@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useAuth } from "../hooks/UseAuth";
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
@@ -21,7 +21,7 @@ const Account = () => {
     <div className="account-container">
       <div className="account-sidebar">
         <img
-          src="./img/usuario1.avif" // Coloca aquí el enlace a la imagen de perfil
+          src="./img/usuario1.avif" //aca pusimos la imagen del perfil
           alt="Profile"
           className="profile-image"
         />
@@ -46,15 +46,16 @@ const Account = () => {
             </p>
             <p>Nombre de usuario: {user.username}</p>
             <p>Email: {user.email}</p>
-            <p>Fecha de Nacimiento: {user.birth}</p>
           </div>
           <div className="account-card">
             <h3>
-              Información de envio <span>Edit</span>
+              Información de envio <EditButton to="/edit-account" />
             </h3>
-            <p>Direccion de envio: XXXXXX</p>
-            <p>Localidad: XXXXXX</p>
-            <p>Codigo postal: XXXXX</p>
+            <p>
+              Direccion de envio: {user.shipping_address || "No disponible"}
+            </p>
+            <p>Localidad: {user.locality || "No disponible"}</p>
+            <p>Codigo postal: {user.postal_code || "No disponible"}</p>
           </div>
         </div>
       </div>
