@@ -75,19 +75,64 @@
       "role": "USER",
       "cart": {
         "cart_id": 2,
-        "items": [
-          {
-            "cartItem_id": 3,
-            "product_id": 3,
-            "quantity": 1
-          }
-        ]
+        "items": []
       },
-      "orders": [],
+      "orders": [
+        {
+          "order_id": "2456",
+          "order_date": "2024-11-12T16:32:28.005Z",
+          "status": "PENDING",
+          "total_amount": 1771.75353,
+          "order_details": [
+            {
+              "id": "063c",
+              "order_id": "2456",
+              "product_id": "3",
+              "unit_price": 1.76453,
+              "quantity": 1,
+              "total_price": 1.76453
+            },
+            {
+              "id": "9ec3",
+              "order_id": "2456",
+              "product_id": "2",
+              "unit_price": 999.99,
+              "quantity": 1,
+              "total_price": 999.99
+            },
+            {
+              "id": "3b32",
+              "order_id": "2456",
+              "product_id": "8",
+              "unit_price": 769.999,
+              "quantity": 1,
+              "total_price": 769.999
+            }
+          ],
+          "transactions": [
+            {
+              "id": "06ca",
+              "order_id": "2456",
+              "transaction_date": "2024-11-12T16:32:28.038Z",
+              "amount": 1771.75353,
+              "payment_method": "CREDIT_CARD",
+              "status": "COMPLETED"
+            }
+          ]
+        }
+      ],
       "wishlist": [
         {
           "wishlist_id": 2,
           "product_id": 4
+        },
+        {
+          "wishlist_id": 3,
+          "product_id": 2
+        },
+        {
+          "wishlist_id": 4,
+          "product_id": 8
         }
       ]
     },
@@ -512,6 +557,39 @@
         }
       ],
       "id": "df5a"
+    },
+    {
+      "id": "2456",
+      "user_id": "2",
+      "status": "COMPLETED",
+      "order_date": "2024-11-12T16:32:28.005Z",
+      "total_amount": 1771.75353,
+      "order_details": [
+        {
+          "id": "063c",
+          "order_id": "2456",
+          "product_id": "3",
+          "unit_price": 1.76453,
+          "quantity": 1,
+          "total_price": 1.76453
+        },
+        {
+          "id": "9ec3",
+          "order_id": "2456",
+          "product_id": "2",
+          "unit_price": 999.99,
+          "quantity": 1,
+          "total_price": 999.99
+        },
+        {
+          "id": "3b32",
+          "order_id": "2456",
+          "product_id": "8",
+          "unit_price": 769.999,
+          "quantity": 1,
+          "total_price": 769.999
+        }
+      ]
     }
   ],
   "orderDetail": [
@@ -538,6 +616,30 @@
       "unit_price": 769.999,
       "quantity": 1,
       "total_price": 769.999
+    },
+    {
+      "id": "063c",
+      "order_id": "2456",
+      "product_id": "3",
+      "unit_price": 1.76453,
+      "quantity": 1,
+      "total_price": 1.76453
+    },
+    {
+      "id": "9ec3",
+      "order_id": "2456",
+      "product_id": "2",
+      "unit_price": 999.99,
+      "quantity": 1,
+      "total_price": 999.99
+    },
+    {
+      "id": "3b32",
+      "order_id": "2456",
+      "product_id": "8",
+      "unit_price": 769.999,
+      "quantity": 1,
+      "total_price": 769.999
     }
   ],
   "transactions": [
@@ -548,6 +650,14 @@
       "amount": 1599.97,
       "payment_method": "credit_card",
       "status": "completed"
+    },
+    {
+      "id": "06ca",
+      "order_id": "2456",
+      "transaction_date": "2024-11-12T16:32:28.038Z",
+      "amount": 1771.75353,
+      "payment_method": "CREDIT_CARD",
+      "status": "COMPLETED"
     }
   ],
   "wishlist": [
@@ -691,6 +801,18 @@
       "id": "2696",
       "cart_id": "6697",
       "product_id": "4",
+      "quantity": 1
+    },
+    {
+      "id": "66f1",
+      "cart_id": "2",
+      "product_id": "2",
+      "quantity": 1
+    },
+    {
+      "id": "9e7f",
+      "cart_id": "2",
+      "product_id": "8",
       "quantity": 1
     }
   ]

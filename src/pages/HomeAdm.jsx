@@ -1,15 +1,47 @@
-import React from "react";
+import { useState, useEffect } from 'react';
+import '../index.css';
+import Carousel from '../components/CarouselAdm';
+import axios from 'axios';
 
 
 const HomeAdm = () => {
-    return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Bienvenido, Administrador 😎
-        </h1>
-      </div>
-    );
-  };
-  
-  export default HomeAdm;
-  
+  const [productsCel, setProductsCel] = useState([]);
+  const [productsTel, setProductsTel] = useState([]);
+  const [productsNot, setProductsNot] = useState([]);
+  const [productsDest, setProductsDest] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/products')
+      .then((response) => {
+        const data = response.data; // Extraer los datos directamente de response
+        {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
+        setProductsCel(data.filter(product => product.category === "Celular"));
+        setProductsTel(data.filter(product => product.category === "Televisor"));
+        setProductsNot(data.filter(product => product.category === "Notebook"));
+        setProductsDest(data.filter(product => product.is_featured === true));
+      })
+      .catch((error) => {
+        console.error('Error al traer los productos:', error);
+      });
+  }, []);
+  return (
+    
+    <>
+        
+        <div className="w-full h-[89vh]">
+            <img
+              src="/masSamsungs.jpg"
+              alt="Imagen destacada"
+              className="w-full h-full"
+            />
+        </div>
+        {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
+        {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
+        {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
+        {productsTel.length > 0 && <Carousel products={productsNot} titulo="Notebooks" />}
+
+          </>
+      );
+    };
+
+export default HomeAdm;
