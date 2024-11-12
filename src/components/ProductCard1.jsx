@@ -7,24 +7,26 @@ import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/UseStore.js";
 import { useAuth } from '../hooks/UseAuth.js';
 
-const ProductCard1 = ({ product }) => {
+const ProductCard1 = ({ product, user }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
   const { addToCart, addToWishlist} = useStore(); 
   const { user } = useAuth();
+  console.log(user.id);
 
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
 
-const handleAddToCart = (product) => {
-  if (!user) {
-    navigate('/login');
-  } else {
-    addToCart(product, user.id);
-  }
-};
+  const handleAddToCart = async (product) => {
+    if (!user || !user.id) {
+      console.error("Usuario no autenticado o ID no definido.");
+      navigate('/login');
+    } else {
+      await addToCart(product, user.id);
+    }
+  };
 
   const handleClick = (product) => {
     navigate(`/product/${product.id}`, { state: product });

@@ -7,6 +7,7 @@ const Cards = ({products}) => {
   const navigate = useNavigate();
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
   const { user } = useAuth();
+
   const handleAddToWishlist = (product) => {
     if (!user) {
       navigate('/login');
@@ -20,6 +21,16 @@ const Cards = ({products}) => {
   const handleClick = (product) => {
     navigate(`/product/${product.product_id}`, { state: product });
   };
+
+  const handleAddToCart = async (product) => {
+    if (!user || !user.id) {
+      console.error("Usuario no autenticado o ID no definido.");
+      navigate('/login');
+    } else {
+      await addToCart(product, user.id);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {products.map((product) => {
@@ -54,7 +65,7 @@ const Cards = ({products}) => {
             {/* Botones con efecto hover */}
             <div className="flex gap-3 mt-6">
               <button
-                onClick={() => addToCart(product)}
+                onClick={() => handleAddToCart(product)}
                 className="flex-1 bg-gray-900 text-white py-3 px-4 rounded-xl font-medium transition-all duration-300 hover:bg-gray-800 hover:shadow-lg flex items-center justify-center gap-2 text-sm"
               >
                 <FaShoppingCart size={11} />

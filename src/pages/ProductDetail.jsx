@@ -40,10 +40,17 @@ const ProductDetail = () => {
       </Container>
     );
   }
+
   const handleAddToCart = (product) => {
-    addToCart(product, user.id);  
+    if (!user || !user.id) {
+      console.error("Usuario no autenticado o ID no definido.");
+      navigate('/login');  // Redirigir al login si el usuario no está autenticado
+    } else {
+      addToCart(product, user.id);
+    }
   };
 
+  
   const handleAddToWishlist = (product) => {
       addToWishlist(product.id, user.id);
   };
