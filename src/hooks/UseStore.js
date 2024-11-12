@@ -280,14 +280,6 @@ addToCart: async (product, userId) => {
 
   updateQuantity: async (productId, quantity, userId) => {
     try {
-      // Verificar si hay suficiente stock antes de actualizar
-      //const isStockAvailable = await checkStock(productId, quantity);
-      //if (!isStockAvailable) {
-        //console.warn("Stock insuficiente para la cantidad solicitada.");
-        //return;
-      //}
-  
-      // Obtener el carrito del usuario
       const userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
       const cartId = userCart.data[0]?.id;
     
