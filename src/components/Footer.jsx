@@ -2,35 +2,31 @@ import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-gray-200 py-8 mt-12">
+    <footer className="bg-gray-900 text-gray-400 py-6 mt-12">
       <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center space-y-4 sm:space-y-0">
           {/* Logo y Nombre de la Empresa */}
-          <div className="w-full sm:w-auto text-center sm:text-left mb-4 sm:mb-0">
-            <h2 className="text-2xl font-semibold">3legant</h2>
-            <p className="text-sm text-gray-400">Tu tienda de tecnología en línea</p>
+          <div className="text-center sm:text-left">
+            <h2 className="text-xl font-semibold text-white">3legant</h2>
           </div>
 
-          <div className="flex space-x-6 mb-4 sm:mb-0">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-              <FaFacebook size={24} />
+          {/* Enlaces de Redes Sociales */}
+          <div className="flex space-x-4">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <FaFacebook size={20} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-              <FaInstagram size={24} />
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <FaInstagram size={20} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
-              <FaTwitter size={24} />
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <FaTwitter size={20} />
             </a>
           </div>
 
-          <div className="w-full sm:w-auto text-center sm:text-right">
-            <p className="text-sm">
-              <strong>Contacto:</strong> contacto@3legant.com
-            </p>
-            <p className="text-sm">
-              <strong>Teléfono:</strong> +549 1134568943
-            </p>
-            <p className="text-sm text-gray-400">3legant © 2024 - Todos los derechos reservados</p>
+          {/* Información de Contacto y Derechos */}
+          <div className="text-center sm:text-right text-sm space-y-1">
+            <p>contacto@3legant.com | +549 1134568943</p>
+            <p className="text-gray-500">© 2024 3legant</p>
           </div>
         </div>
       </div>
