@@ -8,7 +8,6 @@ const CheckoutHistory = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    // Cargar los pedidos del usuario logueado si está autenticado
     if (user) {
       fetchOrders(user.id);
     }
@@ -18,11 +17,11 @@ const CheckoutHistory = () => {
     try {
       const response = await axios.get(`http://localhost:5000/users/${userId}`);
       const userData = response.data;
-      // Filtrar solo las órdenes completadas
-      const completedOrders = userData.orders.filter(
-        (order) => order.status === "completed"
-      );
-      setOrders(completedOrders);
+
+      // Setear directamente las órdenes del usuario
+      if (userData.orders) {
+        setOrders(userData.orders);
+      }
     } catch (error) {
       console.error("Error al obtener los pedidos:", error);
     }
@@ -46,7 +45,7 @@ const CheckoutHistory = () => {
               <h3>Detalles del Pedido:</h3>
               <ul>
                 {order.order_details.map((detail) => (
-                  <li key={detail.order_detail_id}>
+                  <li key={`${order.order_id}-${detail.order_detail_id}`}>
                     <p>Producto ID: {detail.product_id}</p>
                     <p>Precio Unitario: ${detail.unit_price.toFixed(2)}</p>
                     <p>Cantidad: {detail.quantity}</p>
@@ -57,7 +56,7 @@ const CheckoutHistory = () => {
               <h3>Transacciones:</h3>
               <ul>
                 {order.transactions.map((transaction) => (
-                  <li key={transaction.transaction_id}>
+                  <li key={`${order.order_id}-${transaction.transaction_id}`}>
                     <p>Fecha de Transacción: {transaction.transaction_date}</p>
                     <p>Método de Pago: {transaction.payment_method}</p>
                     <p>Monto: ${transaction.amount.toFixed(2)}</p>

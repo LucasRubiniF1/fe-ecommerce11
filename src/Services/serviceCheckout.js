@@ -7,7 +7,7 @@ export const checkoutCart = async (userId) => {
     const orderResponse = await axios.post('http://localhost:5000/orders', {
       user_id: userId,
       status: "PENDING",
-      order_date: new Date().toISOString(),
+      order_date: new Date().toLocaleDateString('en-CA'),
       total_amount: 0 // Este será calculado
     });
 
@@ -53,7 +53,7 @@ export const checkoutCart = async (userId) => {
     // Crea una transacción para la orden
     const transactionResponse = await axios.post('http://localhost:5000/transactions', {
       order_id: order.id,
-      transaction_date: new Date().toISOString(),
+      transaction_date: new Date().toLocaleDateString('en-CA'),
       amount: totalCost,
       payment_method: "CREDIT_CARD",
       status: "COMPLETED"
