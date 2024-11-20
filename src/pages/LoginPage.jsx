@@ -5,13 +5,13 @@ import axios from "axios";
 import { useAuth } from "../hooks/UseAuth";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login, error } = useAuth();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -20,7 +20,7 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(username, password);
+    await login(email, password);
   };
 
   const handleRegister = () => {
@@ -36,16 +36,16 @@ const LoginPage = () => {
         <h3 className="text-center mb-4">Iniciar Sesión</h3>
         <form onSubmit={handleLogin}>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">
+            <label htmlFor="email" className="form-label">
               Usuario
             </label>
             <input
               type="text"
               className="form-control"
-              id="username"
-              placeholder="Ingresa tu usuario"
-              value={username}
-              onChange={handleUsernameChange}
+              id="email"
+              placeholder="Ingresa tu Email"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
           <div className="mb-3">

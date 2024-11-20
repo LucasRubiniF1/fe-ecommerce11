@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://localhost:5000/", // Base URL para todas las peticiones
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: "https://localhost:8080/", // Base URL para todas las peticiones
 });
 
 apiClient.interceptors.request.use(

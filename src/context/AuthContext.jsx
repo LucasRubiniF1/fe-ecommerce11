@@ -23,9 +23,9 @@ export function AuthProvider({ children }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
-      const response = await authenticate(username, password);
+      const response = await authenticate(email, password);
 
       // Store the user and token in localStorage
       setUser(response);

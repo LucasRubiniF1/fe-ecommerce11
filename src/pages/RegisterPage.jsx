@@ -6,14 +6,14 @@ import { validateUser, registerUser, getUsersAxios } from "../Services/serviceLo
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    id: null,
-    username: '',
-    email: '',
-    password: '',
-    birth: '',
-    firstname: '',
-    lastname: '',
-    role: 'USER',
+    id:null,
+    username:'',
+    email:'',
+    password:'',
+    birthDate:'',
+    firstname:'',
+    lastname:'',
+    role:'USER',
   });
 
   const [error, setError] = useState(null);

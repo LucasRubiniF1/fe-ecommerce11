@@ -1,10 +1,12 @@
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
-export const authenticate = async (username, password) => {
+
+export const authenticate = async (email, password) => {
     try {
-        const response = await axios.get("http://localhost:5000/users");
-        const user = response.data.find((user) => user.username === username && user.password === password);
-        const token = `fake_token_${user.id}`;
+        const response = await axiosClient.get("/users");
+        const user = response.data.find((user) => user.email === email && user.password === password);
+        //const token = `fake_token_${user.id}`;
         return {
             id: user.id,
             username: user.username,
@@ -23,7 +25,7 @@ export const authenticate = async (username, password) => {
 
 export const validateUser = async (formData, setError) => {
     try {
-      const response = await axios.get('http://localhost:5000/users');
+      const response = await axiosClient.get('/users');
       const users = response.data;
   
       // Verificar si el username o el email ya existen
@@ -44,7 +46,7 @@ export const validateUser = async (formData, setError) => {
   export const registerUser = async (formData, setError) => {
     try {
       // Realizar la solicitud POST para registrar el usuario
-      await axios.post('http://localhost:5000/users', formData);
+      await axios.post('http://localhost:8080/api/v1/auth/register', formData);
       
     } catch (error) {
       console.error("Error al registrar el usuario:", error);
@@ -56,7 +58,7 @@ export const validateUser = async (formData, setError) => {
 
   export const getUsersAxios = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/users");
+      const response = await axios.get("http://localhost:8080/users");
       return response.data; // Retorna la data completa si el array de usuarios está en response.data
     } catch (error) {
       console.error("Error al obtener usuarios:", error);
