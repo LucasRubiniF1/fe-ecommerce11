@@ -7,8 +7,9 @@ import { useAuth } from "../hooks/UseAuth";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { login, error } = useAuth();
+  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,8 +21,29 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(email, password);
-  };
+
+    try {
+        // Realizar la solicitud de login al backend
+        const response = await axios.post("http://localhost:8080/api/v1/auth/login", {
+            email,
+            password,
+        });
+
+        // Extraer el token y el id del usuario de la respuesta
+        const { token, id } = response.data;
+
+        // Guardar el token y el id en localStorage
+        localStorage.setItem("token", token);
+        localStorage.setItem("userId", id);
+
+        // Redirigir al usuario a la página de cuenta
+        navigate("/account");
+    } catch (error) {
+        console.error("Error durante el inicio de sesión:", error.response?.data?.message || error.message);
+        setError("Error al iniciar sesión. Verifica tus credenciales.");
+    }
+};
+
 
   const handleRegister = () => {
     navigate("/register");

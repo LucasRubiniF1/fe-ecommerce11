@@ -21,6 +21,7 @@ import ContactPage from "./pages/ContactPage";
 import { AuthProvider } from "./context/AuthContext";
 import CheckoutHistory from "./pages/CheckoutHistory";
 
+
 const App = () => {
   return (
     <BrowserRouter>
