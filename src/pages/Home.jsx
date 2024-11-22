@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Obtén el token almacenado (supongo que está en localStorage)
+        // Obtén el token almacenado
         const token = localStorage.getItem('token');
         if (!token) {
           throw new Error('Usuario no autenticado');
@@ -38,8 +38,15 @@ const Home = () => {
         setProductsDest(data.filter((product) => product.is_featured === true));
         setVistoReciente(data.filter((product) => product.visto === true));
       } catch (err) {
+        // Maneja el error si ocurre
         console.error('Error al traer los productos:', err);
-        setError('No se pudieron cargar los productos.');
+        
+        // Si el error es de autenticación, muestra un mensaje específico
+        if (err.message === 'Usuario no autenticado') {
+          setError('Por favor, inicie sesión para ver los productos.');
+        } else {
+          setError('No se pudieron cargar los productos. Intenta nuevamente más tarde.');
+        }
       }
     };
 

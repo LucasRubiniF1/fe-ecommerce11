@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm";
-import axios from "axios";
-import { useAuth } from "../hooks/UseAuth";
+import { useAuth } from "../hooks/UseAuth"; // Importamos el hook de contexto de autenticación
 
 const LoginPage = () => {
+  const { login, error } = useAuth(); // Usamos el login y el error del contexto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -23,27 +20,16 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-        // Realizar la solicitud de login al backend
-        const response = await axios.post("http://localhost:8080/api/v1/auth/login", {
-            email,
-            password,
-        });
-
-        // Extraer el token y el id del usuario de la respuesta
-        const { token, id } = response.data;
-
-        // Guardar el token y el id en localStorage
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", id);
-
-        // Redirigir al usuario a la página de cuenta
-        navigate("/account");
-    } catch (error) {
-        console.error("Error durante el inicio de sesión:", error.response?.data?.message || error.message);
-        setError("Error al iniciar sesión. Verifica tus credenciales.");
+      
+      await login(email, password);
+      console.log("Token después del login:", localStorage.getItem("token"));
+      console.log("ID del usuario después del login:", localStorage.getItem("userId"));
+      navigate("/");
+    } catch (err) {
+      // El error se maneja a través del contexto, no necesitamos setearlo aquí
+      console.error("Error durante el inicio de sesión:", err);
     }
-};
-
+  };
 
   const handleRegister = () => {
     navigate("/register");
@@ -93,7 +79,7 @@ const LoginPage = () => {
             Registrar
           </button>
 
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>} {/* Mostrar error desde el contexto */}
         </form>
       </div>
     </div>

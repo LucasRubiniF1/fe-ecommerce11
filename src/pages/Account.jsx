@@ -17,7 +17,9 @@ const Account = () => {
                 console.log("ID del usuario desde localStorage:", userId); // Log para depurar
 
                 if (!token || !userId) {
-                    throw new Error("Usuario no está autenticado");
+                    setError("Usuario no está autenticado");
+                    setLoading(false);
+                    return;
                 }
 
                 // Realizar la solicitud al backend para obtener los datos del usuario
@@ -26,8 +28,13 @@ const Account = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log("Datos del usuario recibidos:", response.data);
-                setUserData(response.data);
+
+                if (response.status === 200) {
+                    console.log("Datos del usuario recibidos:", response.data);
+                    setUserData(response.data);
+                } else {
+                    setError("No se pudieron obtener los datos del usuario");
+                }
                 setLoading(false);
             } catch (error) {
                 console.error("Error al obtener los datos del usuario:", error.message);
@@ -39,12 +46,16 @@ const Account = () => {
         fetchUserData();
     }, []);
 
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
+
     if (error) {
         return <div>Error: {error}</div>;
     }
 
     if (!userData) {
-        return <div>Cargando...</div>;
+        return <div>No se encontraron datos del usuario</div>;
     }
 
     return (
@@ -53,14 +64,12 @@ const Account = () => {
             <p>Nombre: {userData.firstname}</p>
             <p>Apellido: {userData.lastname}</p>
             <p>Email: {userData.email}</p>
-            <p>Dirección: {userData.address}</p>
+            <p>Dirección: {userData.address || "Dirección no disponible"}</p>
         </div>
     );
 };
 
 export default Account;
-
-
 
 
 
