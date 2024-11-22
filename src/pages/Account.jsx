@@ -1,23 +1,118 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../styles/account.css";
+
+const Account = () => {
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const userId = localStorage.getItem("userId"); // Obtener el userId del localStorage
+
+                console.log("Token desde localStorage:", token); // Log para depurar
+                console.log("ID del usuario desde localStorage:", userId); // Log para depurar
+
+                if (!token || !userId) {
+                    throw new Error("Usuario no está autenticado");
+                }
+
+                // Realizar la solicitud al backend para obtener los datos del usuario
+                const response = await axios.get(`http://localhost:8080/users/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log("Datos del usuario recibidos:", response.data);
+                setUserData(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error al obtener los datos del usuario:", error.message);
+                setError("No se pudieron obtener los datos del usuario");
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (!userData) {
+        return <div>Cargando...</div>;
+    }
+
+    return (
+        <div className="account-container">
+            <h1>Mi cuenta</h1>
+            <p>Nombre: {userData.firstname}</p>
+            <p>Apellido: {userData.lastname}</p>
+            <p>Email: {userData.email}</p>
+            <p>Dirección: {userData.address}</p>
+        </div>
+    );
+};
+
+export default Account;
+
+
+
+
+
+
+/*import React, { useEffect, useState } from "react";
 import { useAuth } from "../hooks/UseAuth";
 import { useNavigate } from "react-router-dom";
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
-import { FaUserCircle } from "react-icons/fa";
 
 const Account = () => {
-  const { user, logout } = useAuth();
+  const { user: authUser, logout } = useAuth();
+  const [user, setUser] = useState(null); // Estado para los datos del usuario
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="p-6 bg-white rounded-md shadow-sm">
-          <p className="text-center text-gray-600">No estás logueado</p>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (!authUser || !authUser.id) {
+          throw new Error("Usuario no está autenticado");
+        }
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token no encontrado");
+        }
+
+        // Llamada al backend para obtener los datos del usuario
+        const response = await fetch(`http://localhost:8080/users/${authUser.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Error al obtener los datos del usuario");
+        }
+
+        const data = await response.json();
+        setUser(data); // Guardar los datos del usuario en el estado
+      } catch (error) {
+        console.error("Error al obtener los datos del usuario:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [authUser]);
 
   const handleOrders = () => {
     navigate("/checkout-history");
@@ -31,6 +126,26 @@ const Account = () => {
     logout();
     navigate("/");
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="p-6 bg-white rounded-md shadow-sm">
+          <p className="text-center text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="p-6 bg-white rounded-md shadow-sm">
+          <p className="text-center text-gray-600">{error || "No estás logueado"}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="account-container">
@@ -64,11 +179,11 @@ const Account = () => {
           </div>
           <div className="account-card">
             <h3>
-              Información de envio <span>Edit</span>
+              Información de envío <span>Edit</span>
             </h3>
-            <p>Direccion de envio: XXXXXX</p>
-            <p>Localidad: XXXXXX</p>
-            <p>Codigo postal: XXXXX</p>
+            <p>Dirección de envío: {user.shippingAddress || "No registrada"}</p>
+            <p>Localidad: {user.city || "No registrada"}</p>
+            <p>Código postal: {user.postalCode || "No registrado"}</p>
           </div>
         </div>
       </div>
@@ -76,4 +191,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Account;*/
