@@ -21,9 +21,10 @@ export function AuthProvider({ children }) {
       
       //console.log("token: ", localStorage.getItem(token));
       //console.log("Token desde localStorage:", response.token); // Log para depurar
-      //console.log("ID del usuario desde localStorage:", user.userId); // Log para depurar
+      //console.log("ID del usuario desde localStorage:", user.userId); // Log para depura
       const userData = await getUserById(localStorage.getItem("userId"));
       setUser(userData);
+      //localStorage.setItem("user", JSON.stringify(response));
       console.log(user);
 
      

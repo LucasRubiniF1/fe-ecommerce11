@@ -9,7 +9,7 @@ export const authenticate = async (email, password) => {
       password,
     });
 
-    const { user_id, username, role, token } = response.data;
+    const { userId, username, role, access_token } = response.data;
     localStorage.setItem("token", response.data.access_token);
     localStorage.setItem("userId", response.data.userId);
 
