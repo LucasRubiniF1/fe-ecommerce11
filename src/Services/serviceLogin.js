@@ -104,3 +104,20 @@ export const getUsersAxios = async () => {
     throw new Error("Error al obtener usuarios");
   }
 };
+
+export const getUserById = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,  // Asegúrate de enviar el token en el header
+        },
+      });
+  
+      console.log("Detalles del usuario:", response.data);
+      return response.data;  // Devuelve los datos completos del usuario
+    } catch (error) {
+      console.error("Error al obtener los detalles del usuario:", error.response?.data || error.message);
+      throw new Error("Error al obtener los detalles del usuario");
+    }
+  };
+  

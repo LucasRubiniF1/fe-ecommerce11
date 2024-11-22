@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate} from "../Services/serviceLogin.js";
+import { authenticate, getUserById} from "../Services/serviceLogin.js";
 
 const AuthContext = createContext();
 
@@ -18,10 +18,13 @@ export function AuthProvider({ children }) {
       
       console.log("localStorage:", response);
 
-      setUser(response);
-      console.log("token: ", localStorage.getItem(token));
-      console.log("Token desde localStorage:", response.token); // Log para depurar
-      console.log("ID del usuario desde localStorage:", user.userId); // Log para depurar
+      
+      //console.log("token: ", localStorage.getItem(token));
+      //console.log("Token desde localStorage:", response.token); // Log para depurar
+      //console.log("ID del usuario desde localStorage:", user.userId); // Log para depurar
+      const userData = await getUserById(localStorage.getItem("userId"));
+      setUser(userData);
+      console.log(user);
 
      
 
