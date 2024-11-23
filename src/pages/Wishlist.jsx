@@ -81,7 +81,7 @@ const Wishlist = () => {
         </p>
         <button
           onClick={handleRedirectToHome}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+          className="px-6 py-3 bg-blue-600 text-blue rounded-lg hover:bg-blue-700 transition-all"
         >
           Ver productos
         </button>
