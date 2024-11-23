@@ -14,34 +14,30 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Obtén el token almacenado
         const token = localStorage.getItem('token');
         if (!token) {
           throw new Error('Usuario no autenticado');
         }
-
-        // Configura los headers con el token
+  
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
-
+  
         // Llama al backend para obtener los productos
         const response = await axios.get('http://localhost:8080/products', config);
         const data = response.data;
-
-        // Filtra y organiza los productos
-        setProductsCel(data.filter((product) => product.category === 'Celular'));
+        console.log('Productos recibidos:', data);
+  
+        // Actualiza los estados usando las claves correctas
+        setProductsCel(data.filter((product) => product.category === 'Electrónica')); // Ajusta "category" según corresponda
         setProductsTel(data.filter((product) => product.category === 'Televisor'));
         setProductsNot(data.filter((product) => product.category === 'Notebook'));
-        setProductsDest(data.filter((product) => product.is_featured === true));
-        setVistoReciente(data.filter((product) => product.visto === true));
+        setProductsDest(data.filter((product) => product.featured === true));
+        setVistoReciente(data.filter((product) => product.visto === true)); // Si no tienes "visto", elimina esto
       } catch (err) {
-        // Maneja el error si ocurre
         console.error('Error al traer los productos:', err);
-        
-        // Si el error es de autenticación, muestra un mensaje específico
         if (err.message === 'Usuario no autenticado') {
           setError('Por favor, inicie sesión para ver los productos.');
         } else {
@@ -49,9 +45,10 @@ const Home = () => {
         }
       }
     };
-
+  
     fetchProducts();
   }, []);
+  
 
   return (
     <>
