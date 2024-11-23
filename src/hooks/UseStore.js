@@ -144,57 +144,50 @@ addToCart: async (product, userId) => {
 },
 
 
-  addToWishlist: async (productId, userId) => {
-    if (!productId || (typeof productId !== 'string' && typeof productId !== 'number')) {
-      console.error("productId inválido en addToWishlist:", productId);
-      return;
-    }
-    if (!userId) {
-      console.error("userId es necesario para agregar a la wishlist.");
-      return;
-    }
+addToWishlist: async (productId, userId) => {
+  if (!productId || (typeof productId !== "string" && typeof productId !== "number")) {
+    console.error("productId inválido en addToWishlist:", productId);
+    return;
+  }
+  if (!userId) {
+    console.error("userId es necesario para agregar a la wishlist.");
+    return;
+  }
 
-    try {
-      // Verifica si el producto ya está en la wishlist del usuario en el servidor
-      // Obtén la información del usuario
-      const userRespon = await axios.get(`http://localhost:5000/users/${userId}`);
-      const userRes = userRespon.data;
-
-      if (!userRes.wishlist) {
-      userRes.wishlist = [];
+  try {
+    // Obtener el token desde el localStorage
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token no encontrado. Por favor, inicia sesión.");
     }
 
-      // Busca si el producto ya está en la wishlist
-      const existingWishlistItem = userRes.wishlist?.find(item => item.product_id == productId);
+    // Configurar el encabezado con el token
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-      if (existingWishlistItem) {
-        console.warn("Este producto ya está en la wishlist.");
-        return;
-      }
+    // Llamar al backend para agregar el producto a la wishlist del usuario
+    await axios.post(
+      `http://localhost:8080/wishlist/add?userId=${userId}&productId=${productId}`,
+      {}, // Body vacío, ya que no es necesario enviar datos en el body
+      config
+    );
 
-    // Obtiene la información del producto
-    const lastWishlistItem = userRes.wishlist?.length > 0 ? userRes.wishlist[userRes.wishlist.length - 1]
-    : { wishlist_id: 0 };
-      // Incrementar el id para el nuevo elemento
-      const newWishlistId = lastWishlistItem.wishlist_id + 1;
+    // Actualizar el estado local y el `localStorage`
+    set((state) => {
+      const updatedWishlist = [...state.wishlist, productId];
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      return { wishlist: updatedWishlist };
+    });
 
-      const updatedWishlist = [
-        ...userRes.wishlist,
-        { wishlist_id: newWishlistId, product_id: parseInt(productId) }
-      ];
+    console.log(`Producto ${productId} agregado a la wishlist del usuario ${userId}`);
+  } catch (error) {
+    console.error("Error al agregar a la wishlist:", error.response?.data || error.message);
+  }
+},
 
-      // Actualizar el usuario con la nueva wishlist
-      await axios.put(`http://localhost:5000/users/${userId}`, { ...userRes, wishlist: updatedWishlist });
-      // Actualiza el estado local y el localStorage
-      set((state) => {
-        const updatedWishlist = [...state.wishlist, productId];
-        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-        return { wishlist: updatedWishlist };
-      });
-    } catch (error) {
-      console.error("Error al agregar a la wishlist:", error);
-    }
-  },
 
 
   removeFromCart: async (productId, userId) => {
