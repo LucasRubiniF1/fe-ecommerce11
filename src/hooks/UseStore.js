@@ -252,21 +252,45 @@ addToWishlist: async (productId, userId) => {
   
   // Function to remove a product from the wishlist
   removeFromWishlist: async (productId, userId) => {
+    if (!productId || (typeof productId !== "string" && typeof productId !== "number")) {
+      console.error("productId inválido en removeFromWishlist:", productId);
+      return;
+    }
+    if (!userId) {
+      console.error("userId es necesario para eliminar de la wishlist.");
+      return;
+    }
+  
     try {
-      const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
-      const user = userResponse.data;
-      const updatedWishlist = user.wishlist.filter(item => item.product_id != productId);
-
-      await axios.put(`http://localhost:5000/users/${userId}`, {
-        ...user,
-        wishlist: updatedWishlist
+      // Obtener el token desde el localStorage
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token no encontrado. Por favor, inicia sesión.");
+      }
+  
+      // Configurar los headers con el token
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+      // Llamar al backend para eliminar el producto de la wishlist
+      await axios.delete(
+        `http://localhost:8080/wishlist/delete?userId=${userId}&productId=${productId}`,
+        config
+      );
+  
+      // Actualizar el estado local y el localStorage
+      set((state) => {
+        const updatedWishlist = state.wishlist.filter((product) => product.id !== productId);
+        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+        return { wishlist: updatedWishlist };
       });
-      
-      // Actualizar el estado local y localStorage
-      useStore.setState({ wishlist: updatedWishlist });
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  
+      console.log(`Producto ${productId} eliminado de la wishlist del usuario ${userId}`);
     } catch (error) {
-      console.error("Error al eliminar de la wishlist:", error);
+      console.error("Error al eliminar de la wishlist:", error.response?.data || error.message);
     }
   },
 
