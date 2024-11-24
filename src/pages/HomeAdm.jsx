@@ -11,19 +11,38 @@ const HomeAdm = () => {
   const [productsDest, setProductsDest] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/products')
-      .then((response) => {
-        const data = response.data; // Extraer los datos directamente de response
-        {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
+    const fetchProducts = async () => {
+      try {
+        // Obtener el token desde el localStorage
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token no encontrado. Por favor, inicia sesión.");
+        }
+  
+        // Configurar la cabecera con el token
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+  
+        // Realizar la solicitud al backend
+        const response = await axios.get('http://localhost:8080/products', config);
+        const data = response.data;
+  
+        // Filtrar productos por categoría o destacada
         setProductsCel(data.filter(product => product.category === "Celular"));
         setProductsTel(data.filter(product => product.category === "Televisor"));
         setProductsNot(data.filter(product => product.category === "Notebook"));
         setProductsDest(data.filter(product => product.is_featured === true));
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error al traer los productos:', error);
-      });
+      }
+    };
+  
+    fetchProducts();
   }, []);
+  
   return (
     
     <>
