@@ -1,66 +1,89 @@
 import { useState, useEffect } from 'react';
 import '../index.css';
-import Carousel from '../components/CarouselAdm';
+import Carousel from '../components/CarouselAdm'; // Asegúrate de que este componente funciona correctamente
 import axios from 'axios';
-
 
 const HomeAdm = () => {
   const [productsCel, setProductsCel] = useState([]);
   const [productsTel, setProductsTel] = useState([]);
   const [productsNot, setProductsNot] = useState([]);
   const [productsDest, setProductsDest] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Obtener el token desde el localStorage
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         if (!token) {
-          throw new Error("Token no encontrado. Por favor, inicia sesión.");
+          throw new Error('Usuario no autenticado');
         }
-  
-        // Configurar la cabecera con el token
+
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
-  
-        // Realizar la solicitud al backend
+
         const response = await axios.get('http://localhost:8080/products', config);
         const data = response.data;
-  
-        // Filtrar productos por categoría o destacada
-        setProductsCel(data.filter(product => product.category === "Celular"));
-        setProductsTel(data.filter(product => product.category === "Televisor"));
-        setProductsNot(data.filter(product => product.category === "Notebook"));
-        setProductsDest(data.filter(product => product.is_featured === true));
-      } catch (error) {
-        console.error('Error al traer los productos:', error);
+        console.log('Productos recibidos:', data); // Log para verificar los datos recibidos
+
+        // Filtrar productos por categorías y destacados
+        setProductsCel(data.filter((product) => product.category === 'Celular'));
+        setProductsTel(data.filter((product) => product.category === 'Televisor'));
+        setProductsNot(data.filter((product) => product.category === 'Notebook'));
+        setProductsNot(data.filter((product) => product.category === 'Electrónica'));
+        setProductsDest(data.filter((product) => product.is_featured === true));
+      } catch (err) {
+        console.error('Error al traer los productos:', err);
+        if (err.message === 'Usuario no autenticado') {
+          setError('Por favor, inicie sesión para ver los productos.');
+        } else {
+          setError('No se pudieron cargar los productos. Intenta nuevamente más tarde.');
+        }
       }
     };
-  
+
     fetchProducts();
   }, []);
-  
-  return (
-    
-    <>
-        
-        <div className="w-full h-[89vh]">
-            <img
-              src="/masSamsungs.jpg"
-              alt="Imagen destacada"
-              className="w-full h-full"
-            />
-        </div>
-        {productsDest.length > 0 && <Carousel products={productsDest} titulo="Productos Destacados" />}
-        {productsCel.length > 0 && <Carousel products={productsCel} titulo="Celulares" />}
-        {productsTel.length > 0 && <Carousel products={productsTel} titulo="Televisores" />}
-        {productsTel.length > 0 && <Carousel products={productsNot} titulo="Notebooks" />}
 
-          </>
-      );
-    };
+  return (
+    <>
+      <div className="w-full h-[89vh]">
+        <img
+          src="/masSamsungs.jpg"
+          alt="Imagen destacada"
+          className="w-full h-full"
+        />
+      </div>
+
+      {error && <p className="text-red-500">{error}</p>}
+
+      {productsDest.length > 0 ? (
+        <Carousel products={productsDest} titulo="Productos Destacados" />
+      ) : (
+        <p className="text-gray-500 text-center mt-4">No hay productos destacados para mostrar.</p>
+      )}
+
+      {productsCel.length > 0 ? (
+        <Carousel products={productsCel} titulo="Celulares" />
+      ) : (
+        <p className="text-gray-500 text-center mt-4">No hay productos en la categoría de Celulares.</p>
+      )}
+
+      {productsTel.length > 0 ? (
+        <Carousel products={productsTel} titulo="Televisores" />
+      ) : (
+        <p className="text-gray-500 text-center mt-4">No hay productos en la categoría de Televisores.</p>
+      )}
+
+      {productsNot.length > 0 ? (
+        <Carousel products={productsNot} titulo="Notebooks" />
+      ) : (
+        <p className="text-gray-500 text-center mt-4">No hay productos en la categoría de Notebooks.</p>
+      )}
+    </>
+  );
+};
 
 export default HomeAdm;
