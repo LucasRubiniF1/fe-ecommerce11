@@ -179,18 +179,6 @@
   ],
   "products": [
     {
-      "product_id": 1,
-      "name": "Apple iPhone 15 Pro Max",
-      "description": "Apple iPhone 15 Pro Max (1 TB) - Titanio Negro",
-      "images": "https://http2.mlstatic.com/D_NQ_NP_2X_768125-MLA71783090116_092023-F.webp",
-      "price": 799.99,
-      "stock": "11",
-      "category": "Celular",
-      "is_featured": true,
-      "visto": true,
-      "id": "1"
-    },
-    {
       "product_id": 2,
       "name": "Teléfono Samsung",
       "description": "Teléfono Samsung Galaxy S21",
@@ -543,6 +531,16 @@
       "category": "Notebook",
       "is_featured": false,
       "id": "32"
+    },
+    {
+      "id": "4b4f",
+      "name": "Notebook Asus Vivobook Go 17z",
+      "description": "Tarjeta gráfica: NVIDIA GeForce RTX 3080\nCon pantalla táctil: No\nResolución de la pantalla: 2560 px x 1440 px\nProcesador: Intel Core i7",
+      "price": "3000.00",
+      "stock": "3",
+      "category": "Notebook",
+      "isFeatured": true,
+      "image": "https://http2.mlstatic.com/D_NQ_NP_2X_872003-MLU74980833041_032024-F.webp"
     }
   ],
   "orders": [
@@ -683,7 +681,7 @@
     {
       "id": "ea45",
       "userId": "4",
-      "productId": "1"
+      "productId": null
     },
     {
       "id": "f37c",
@@ -703,7 +701,7 @@
     {
       "id": "c9d7",
       "userId": "4",
-      "productId": "1"
+      "productId": null
     },
     {
       "id": "7116",
