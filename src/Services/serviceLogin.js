@@ -79,7 +79,6 @@ export const validateUser = async (formData, setError) => {
     return true;
   } catch (error) {
     console.error("Error al validar usuario:", error.response?.data || error.message);
-    setError("Hubo un problema al validar los datos. Intente nuevamente.");
     return false;
   }
 };
