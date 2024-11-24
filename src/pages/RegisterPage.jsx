@@ -64,7 +64,7 @@ const RegisterPage = () => {
       //navigate('/'); // Redirigir a la página de inicio de sesión
     } catch (error) {
       console.error("Error al registrar el usuario:", error);
-      setError('No se pudo registrar el usuario. Intenta nuevamente más tarde.');
+      setError('No se pudo registrar el usuario. El mail ya existe.');
     }
   };
 

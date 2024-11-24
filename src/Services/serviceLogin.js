@@ -60,7 +60,11 @@ export const login = async (email, password) => {
 // Validar usuario antes de registrar
 export const validateUser = async (formData, setError) => {
   try {
-    const response = await axiosClient.get("/users");
+    const response = await axios.get('http://localhost:8080/users', {
+        headers: {
+          Authorization: `Bearer ${yourToken}`
+        }
+      });
     const users = response.data;
 
     const userExists = users.some(
@@ -83,10 +87,12 @@ export const validateUser = async (formData, setError) => {
 // Registrar un usuario
 export const registerUser = async (formData, setError) => {
   try {
-    const response = await axiosClient.post("/api/v1/auth/register", formData);
+    const response = await axios.post("http://localhost:8080/api/v1/auth/register", formData);
+    console.log(response.data);
 
     // Devuelve los datos del usuario registrado
     return response.data;
+    
   } catch (error) {
     console.error("Error al registrar el usuario:", error.response?.data || error.message);
     setError("No se pudo registrar el usuario. Intenta nuevamente más tarde.");
@@ -97,7 +103,11 @@ export const registerUser = async (formData, setError) => {
 // Obtener todos los usuarios
 export const getUsersAxios = async () => {
   try {
-    const response = await axiosClient.get("/users");
+    const response = await axios.get('http://localhost:8080/users', {
+        headers: {
+          Authorization: `Bearer ${yourToken}`
+        }
+      });
     return response.data;
   } catch (error) {
     console.error("Error al obtener usuarios:", error.response?.data || error.message);

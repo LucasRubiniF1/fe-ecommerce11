@@ -753,7 +753,7 @@
       "id": "080a",
       "cart_id": "998c",
       "product_id": "4",
-      "quantity": 5
+      "quantity": 2
     },
     {
       "id": "e28d",
@@ -766,12 +766,6 @@
       "cart_id": "998c",
       "product_id": "3",
       "quantity": 3
-    },
-    {
-      "id": "50fb",
-      "cart_id": "998c",
-      "product_id": "6",
-      "quantity": 4
     },
     {
       "id": "0245",

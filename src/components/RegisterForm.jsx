@@ -105,6 +105,11 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
           Registrar
         </button>
       </div>
+      {error && (
+        <div className="border-2 border-red bg-red-100 text-red text-center p-2 rounded-md mt-4">
+          <p>{error}</p>
+        </div>
+      )}
     </form>
   );
 };

@@ -67,81 +67,100 @@ initializeWishlist: async (userId) => {
 
 addToCart: async (product, userId) => {
   try {
-    // Obtener o crear el carrito del usuario
-    let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-    userCart = userCart.data[0]; // Asumimos que hay solo un carrito por usuario
-    
-    if (!userCart) {
-      userCart = await axios.post(`http://localhost:5000/cart`, { user_id: userId });
-      userCart = userCart.data;
+    // Validar que el producto y el usuario tengan datos válidos
+    if (!product || !product.id) {
+      throw new Error("Producto inválido.");
+    }
+    if (!userId) {
+      throw new Error("ID de usuario no válido.");
     }
 
-    // Obtener la información del usuario
-    let userRespon = await axios.get(`http://localhost:5000/users/${userId}`);
-    let userRes = userRespon.data;
-
-    // Inicializar el carrito en el JSON del usuario si no existe
-    if (!userRes.cart) {
-      userRes.cart = { cart_id: userCart.id, items: [] };
+    // Obtener el token desde el localStorage
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token no encontrado. Por favor, inicia sesión.");
     }
 
-    // Buscar el producto en `cartItem`
-    const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${product.id}`);
-    const existingCartItem = cartItemResponse.data[0];
+    // Configurar el encabezado con el token
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-    if (existingCartItem) {
-      // Si el producto ya está en el carrito, incrementa la cantidad en `cartItem`
-      await axios.put(`http://localhost:5000/cartItem/${existingCartItem.id}`, {
-        ...existingCartItem,
-        quantity: existingCartItem.quantity + 1,
-      });
-    } else {
-      // Si el producto no está en el carrito, lo agregamos a `cartItem`
-      await axios.post(`http://localhost:5000/cartItem`, {
-        cart_id: userCart.id,
-        product_id: product.id,
-        quantity: 1,
-      });
+    // Realizar la solicitud al servidor
+    const response = await axios.post(
+      `http://localhost:8080/cart/${userId}/add?productId=${product.id}&quantity=1`,
+      {},
+      config
+    );
+
+    // Verificar la respuesta del servidor
+    if (response.status !== 200) {
+      throw new Error(
+        `Error en la solicitud. Código de estado: ${response.status}`
+      );
     }
 
-    // Actualizar el JSON de `user.cart.items`
-    let userCartItem = userRes.cart.items.find(item => item.product_id === product.id);
-
-    if (userCartItem) {
-      userCartItem.quantity += 1; // Incrementar cantidad si el producto ya existe en el JSON
-    } else {
-      // Si el producto no está en el JSON del usuario, agregarlo con nuevo `cartItem_id`
-      const lastCartItem = userRes.cart.items.length > 0 ? userRes.cart.items[userRes.cart.items.length - 1] : { cartItem_id: 0 };
-      const newCartItemId = lastCartItem.cartItem_id + 1;
-
-      userRes.cart.items.push({
-        cartItem_id: newCartItemId,
-        product_id: product.id,
-        quantity: 1,
-      });
-    }
-
-    // Actualizar el JSON del usuario con el nuevo carrito
-    await axios.put(`http://localhost:5000/users/${userId}`, userRes);
-
-    // Actualizar el estado local y el `localStorage`
+    // Actualizar el estado local y el localStorage
     set((state) => {
-      const updatedCart = state.cart.find(item => item.id === product.id)
-        ? state.cart.map(item =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          )
-        : [...state.cart, { ...product, quantity: 1 }];
+      const existingProductIndex = state.cart.findIndex(
+        (item) => item.id === product.id
+      );
 
+      let updatedCart;
+      if (existingProductIndex !== -1) {
+        // Si el producto ya está en el carrito, actualizar su cantidad
+        updatedCart = state.cart.map((item, index) =>
+          index === existingProductIndex
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // Si el producto no está en el carrito, agregarlo
+        updatedCart = [...state.cart, { ...product, quantity: 1 }];
+      }
+
+      // Actualizar el carrito en el localStorage
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+
       return { cart: updatedCart };
     });
 
+    console.log("Producto agregado al carrito exitosamente.");
   } catch (error) {
-    console.error("Error al agregar al carrito:", error);
+    // Manejo de errores detallado
+    if (error.response) {
+      console.error(
+        "Error del servidor:",
+        error.response.data || error.response.statusText
+      );
+
+      // Mostrar mensajes específicos según el código de error
+      if (error.response.status === 403) {
+        alert("No tienes permiso para realizar esta acción.");
+      } else if (error.response.status === 500) {
+        alert(
+          "No hay stock suficiente del producto"
+        );
+      } else if (error.response.data && error.response.data.error) {
+        // Mostrar mensaje detallado de error desde el servidor
+        alert(`Error: ${error.response.data.error}`);
+      } else {
+        alert(
+          `Error al agregar al carrito: ${error.response.data?.message || "Desconocido"}`
+        );
+      }
+    } else if (error.request) {
+      console.error("No se recibió respuesta del servidor:", error.request);
+      alert("No se pudo conectar con el servidor. Por favor, verifica tu red.");
+    } else {
+      console.error("Error al configurar la solicitud:", error.message);
+      alert(error.message);
+    }
   }
 },
+
 
 
 addToWishlist: async (productId, userId) => {
@@ -170,7 +189,7 @@ addToWishlist: async (productId, userId) => {
 
     // Llamar al backend para agregar el producto a la wishlist del usuario
     await axios.post(
-      `http://localhost:8080/wishlist/add?userId=${userId}&productId=${productId}`,
+      `http://localhost:8080/cart/${userId}/add?productId=${product.id}&quantity=${product.quantity || 1}`,
       {}, // Body vacío, ya que no es necesario enviar datos en el body
       config
     );
@@ -188,57 +207,80 @@ addToWishlist: async (productId, userId) => {
   }
 },
 
-
-
-  removeFromCart: async (productId, userId) => {
-    try {
-      // Obtener el carrito del usuario
-      let userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-      userCart = userCart.data[0];
-  
-      if (!userCart) {
-        console.error('Carrito no encontrado');
-        return;
-      }
-  
-      // Buscar el cartItem correspondiente al producto
-      const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${userCart.id}&product_id=${productId}`);
-      const cartItemToDelete = cartItemResponse.data[0];
-  
-      if (cartItemToDelete) {
-        // Eliminar el cartItem del backend
-        await axios.delete(`http://localhost:5000/cartItem/${cartItemToDelete.id}`);
-  
-        // Obtener el usuario para modificar el JSON de `user.cart.items`
-        const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
-        const user = userResponse.data;
-  
-        // Filtrar el item a eliminar en el JSON de usuario
-        const updatedCartItems = user.cart.items.filter(item => item.product_id !== productId);
-  
-        // Actualizar el usuario con el carrito modificado
-        await axios.put(`http://localhost:5000/users/${userId}`, {
-          ...user,
-          cart: {
-            ...user.cart,
-            items: updatedCartItems
-          }
-        });
-  
-        // Actualizar el carrito en el estado local
-        set((state) => {
-          const updatedCart = state.cart.filter((item) => item.id !== productId);
-          localStorage.setItem('cart', JSON.stringify(updatedCart));
-          return { cart: updatedCart };
-        });
-  
-      } else {
-        console.error('Producto no encontrado en el carrito.');
-      }
-    } catch (error) {
-      console.error("Error al eliminar del carrito:", error);
+removeFromCart: async (productId, userId) => {
+  try {
+    // Verificar que el ID del producto y el ID del usuario sean válidos
+    if (!productId || !userId) {
+      throw new Error('Producto o usuario no válido.');
     }
-  },
+
+    // Obtener el token desde el localStorage
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token no encontrado. Por favor, inicia sesión.");
+    }
+
+    // Configurar el encabezado con el token para la solicitud
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    // Realizar la solicitud al backend para eliminar el producto del carrito
+    const response = await axios.delete(
+      `http://localhost:8080/cart/${userId}/items/${productId}`,
+      config
+    );
+
+    // Verificar la respuesta del servidor
+    if (response.status !== 200) {
+      throw new Error(
+        `Error al eliminar el producto del carrito. Código de estado: ${response.status}`
+      );
+    }
+
+    // Actualizar el estado local y el localStorage después de la eliminación
+    set((state) => {
+      const updatedCart = state.cart.filter((item) => item.id !== productId);
+
+      // Actualizar el carrito en el localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      return { cart: updatedCart };
+    });
+
+    console.log("Producto eliminado del carrito exitosamente.");
+  } catch (error) {
+    // Manejo de errores detallado
+    if (error.response) {
+      console.error(
+        "Error del servidor:",
+        error.response.data || error.response.statusText
+      );
+
+      // Mostrar mensajes específicos según el código de error
+      if (error.response.status === 403) {
+        alert("No tienes permiso para realizar esta acción.");
+      } else if (error.response.status === 500) {
+        alert(
+          "Ocurrió un problema con el servidor. Intenta nuevamente más tarde."
+        );
+      } else {
+        alert(
+          `Error al eliminar del carrito: ${error.response.data?.message || "Desconocido"}`
+        );
+      }
+    } else if (error.request) {
+      console.error("No se recibió respuesta del servidor:", error.request);
+      alert("No se pudo conectar con el servidor. Por favor, verifica tu red.");
+    } else {
+      console.error("Error al configurar la solicitud:", error.message);
+      alert(error.message);
+    }
+  }
+},
+
   
 
   // Esta función se utilizaría al hacer logout para limpiar el carrito
