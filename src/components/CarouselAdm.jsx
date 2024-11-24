@@ -23,6 +23,15 @@ const CarouselAdm = ({ products, titulo }) => {
     navigate(`/product/${product.id}`, { state: product });
   };
 
+  const decodeBase64Image = (base64String) => {
+    try {
+      return atob(base64String); // Decodifica el Base64
+    } catch (error) {
+      console.error("Error al decodificar la imagen:", error);
+      return ''; // Devuelve una cadena vacía si falla
+    }
+  };
+
   return (
     <div className="p-8">
       <h2 className="text-3xl font-bold text-lime-900 mb-6">{titulo}</h2>
@@ -49,7 +58,11 @@ const CarouselAdm = ({ products, titulo }) => {
                 onClick={() => handleClick(product)}
               >
                 <img
-                  src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
+                  src={
+                    product.images
+                      ? decodeBase64Image(product.images)
+                      : 'https://via.placeholder.com/150'
+                  }
                   alt={product.name || 'Producto'}
                   className="w-full h-48 object-contain mix-blend-multiply"
                 />
