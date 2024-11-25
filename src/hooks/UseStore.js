@@ -388,7 +388,7 @@ const useStore = create((set, get) => ({
     checkStock: async (productId, quantity) => {
       try {
         // Obtener el producto por su ID
-        const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
+        const productResponse = await axios.get(`http://localhost:8080/products/${productId}`);
         const product = productResponse.data;
     
         // Verificar si la cantidad solicitada excede el stock disponible
