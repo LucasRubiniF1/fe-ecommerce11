@@ -25,7 +25,6 @@ const ProductEdit = () => {
       return atob(base64String);
     } catch (error) {
       console.error('Error decoding Base64 string:', error);
-      // Imagen por defecto si hay un error en la decodificación
       return 'https://via.placeholder.com/50';
     }
   };
@@ -58,8 +57,8 @@ const ProductEdit = () => {
       id: product.id,
       name: product.name || '',
       description: product.description || '',
-      price: product.price || '',
-      stock: product.stock || '',
+      price: product.price || 0,
+      stock: product.stock || 0,
       category: product.category || '',
       isFeatured: product.isFeatured || false,
       images: product.images || '',
@@ -110,6 +109,13 @@ const ProductEdit = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Validación para evitar valores negativos en precio y stock
+    if (name === 'price' || name === 'stock') {
+      const numericValue = value.replace(/[^0-9]/g, '');
+      if (numericValue < 0) return; // No permite números negativos
+    }
+
     setEditedProduct((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
@@ -227,17 +233,27 @@ const ProductEdit = () => {
               </td>
               <td>
                 {editableProductId === product.id ? (
+                  // Campo editable que muestra la URL decodificada
                   <Form.Control
                     type="text"
                     name="images"
-                    value={editedProduct.images || ''}
+                    value={decodeImageUrl(editedProduct.images) || ''}
                     onChange={handleInputChange}
+                    placeholder="Image URL"
+                    required
                   />
                 ) : product.images ? (
+                  // Mostrar la imagen cuando no está en modo edición
                   <img
                     src={decodeImageUrl(product.images)}
                     alt={product.name}
-                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                    style={{
+                      width: '60px',
+                      height: '60px',
+                      objectFit: 'cover',
+                      borderRadius: '5px',
+                      border: '1px solid #ddd',
+                    }}
                   />
                 ) : (
                   'No image'
@@ -245,16 +261,43 @@ const ProductEdit = () => {
               </td>
               <td>
                 {editableProductId === product.id ? (
-                  <Button variant="success" onClick={handleSaveClick}>
-                    <FaSave /> Save
+                  <Button
+                    variant="success"
+                    onClick={handleSaveClick}
+                    style={{
+                      width: '100px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <FaSave className="me-2" /> Save
                   </Button>
                 ) : (
                   <>
-                    <Button variant="warning" onClick={() => handleEditClick(product)}>
-                      <FaEdit /> Edit
+                    <Button
+                      variant="warning"
+                      onClick={() => handleEditClick(product)}
+                      style={{
+                        width: '100px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <FaEdit className="me-2" /> Edit
                     </Button>
-                    <Button variant="danger" onClick={() => handleDeleteClick(product.id)}>
-                      <FaTrash /> Delete
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDeleteClick(product.id)}
+                      style={{
+                        width: '100px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <FaTrash className="me-2" /> Delete
                     </Button>
                   </>
                 )}
