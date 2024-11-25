@@ -1,4 +1,3 @@
-// src/components/ProductCreate.jsx
 import React, { useState, useEffect } from "react";
 import { Alert, Container, Spinner } from "react-bootstrap";
 import axios from "axios";
@@ -22,7 +21,7 @@ const ProductCreate = () => {
   // Manejar la creación del producto
   const handleSubmit = async (formData) => {
     // Validación de campos requeridos
-    if (!formData.name || !formData.description || !formData.price || !formData.stock || !formData.category || !formData.image) {
+    if (!formData.name || !formData.description || !formData.price || !formData.stock || !formData.category || !formData.images) {
       setError('Todos los campos son obligatorios.');
       return;
     }
@@ -31,10 +30,11 @@ const ProductCreate = () => {
     setSuccess(false);
   
     try {
-      // Agregar `orderDetails` como array vacío
+      // Agregar `visto` como `true` y `orderDetails` como array vacío
       const payload = {
         ...formData,
-        orderDetails: [], // Harcodeamos este campo
+        visto: true, // Se establece automáticamente en true
+        orderDetails: [], // Hardcodeamos este campo
       };
   
       // Obtener el token desde el localStorage
@@ -57,23 +57,21 @@ const ProductCreate = () => {
       setTimeout(() => {
         setSuccess(false);
         setFormData({
-          product_id: formData.product_id + 1,
           name: '',
           description: '',
           price: '',
           stock: '',
           category: '',
           isFeatured: false,
-          image: '', // Resetear URL de la imagen
+          images: '', // Resetear URL de la imagen
         });
       }, 2000);
   
     } catch (error) {
-      console.error("Error creando producto:", error);
+      console.error("Error creando producto:", error.response?.data || error.message);
       setError('Error al crear el producto.');
     }
   };
-  
 
   if (loading) {
     return (
