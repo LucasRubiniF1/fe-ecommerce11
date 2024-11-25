@@ -3,92 +3,50 @@ import useStore from "../hooks/UseStore.js";
 
 export const checkoutCart = async (userId) => {
   try {
-    // Crea la orden en el servidor
-    const orderResponse = await axios.post('http://localhost:5000/orders', {
-      user_id: userId,
-      status: "PENDING",
-      order_date: new Date().toLocaleDateString('en-CA'),
-      total_amount: 0 // Este será calculado
-    });
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token no encontrado. Por favor, inicia sesión.");
+    }
 
-    const order = orderResponse.data;
-    let totalCost = 0;
+    if (!userId) {
+      throw new Error("ID de usuario no válido.");
+    }
 
-    // Recupera el carrito del usuario
-    const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
-    const user = userResponse.data;
-    const cartItems = user.cart.items || [];
-
-    // Itera sobre los ítems del carrito para crear los detalles de la orden
-    const orderDetails = await Promise.all(
-      cartItems.map(async (item) => {
-        const productResponse = await axios.get(`http://localhost:5000/products/${item.product_id}`);
-        const product = productResponse.data;
-        console.log(product.price);
-
-        const itemTotalPrice = product.price * item.quantity;
-        totalCost += itemTotalPrice;
-
-        // Crea el detalle de la orden
-        const orderDetailResponse = await axios.post('http://localhost:5000/orderDetail', {
-          order_id: order.id,
-          product_id: product.id,
-          unit_price: product.price,
-          quantity: item.quantity,
-          total_price: itemTotalPrice
-        });
-
-        return orderDetailResponse.data;
-      })
-    );
-
-    // Actualiza la orden con el total calculado y los detalles
-    await axios.put(`http://localhost:5000/orders/${order.id}`, {
-      ...order,
-      total_amount: totalCost,
-      status: "COMPLETED",
-      order_details: orderDetails
-    });
-
-    // Crea una transacción para la orden
-    const transactionResponse = await axios.post('http://localhost:5000/transactions', {
-      order_id: order.id,
-      transaction_date: new Date().toLocaleDateString('en-CA'),
-      amount: totalCost,
-      payment_method: "CREDIT_CARD",
-      status: "COMPLETED"
-    });
-    const transaction = transactionResponse.data;
-
-    // Agrega la orden y transacción en el usuario
-    const updatedUser = {
-      ...user,
-      orders: [
-        ...(user.orders || []),
-        {
-          order_id: order.id,
-          order_date: order.order_date,
-          status: order.status,
-          total_amount: totalCost,
-          order_details: orderDetails,
-          transactions: [transaction]
-        }
-      ],
-      cart: {
-        ...user.cart,
-        items: [] // Limpia el carrito
-      }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Asegúrate de que el token esté en el formato correcto
+      },
     };
 
-    // Actualiza el usuario con la nueva orden y carrito vacío
-    await axios.put(`http://localhost:5000/users/${userId}`, updatedUser);
+    const orderResponse = await axios.post(
+      `http://localhost:8080/cart/${userId}/checkout`, 
+      {},
+      config 
+    );
 
-    return updatedUser.orders[updatedUser.orders.length - 1]; // Retorna la última orden creada
+    const order = orderResponse.data;
+    console.log(orderResponse.data);
+
+    //useStore.getState().updateCart([]); 
+    localStorage.setItem("cart", JSON.stringify([])); 
+
+    
+    return order;
+
   } catch (error) {
-    console.error("Error en checkoutCart:", error);
-    throw error;
+    if (error.response) {
+      console.error("Error de respuesta del servidor:", error.response.data);
+      throw new Error(`Error en el servidor: ${error.response.data.message || error.message}`);
+    } else if (error.request) {
+      console.error("Error en la solicitud:", error.request);
+      throw new Error("No se recibió respuesta del servidor.");
+    } else {
+      console.error("Error al configurar la solicitud:", error.message);
+      throw new Error(`Error: ${error.message}`);
+    }
   }
 };
+
 
 export const clearCart = async () => {
     // Vacía el carrito en la tienda global (Zustand)

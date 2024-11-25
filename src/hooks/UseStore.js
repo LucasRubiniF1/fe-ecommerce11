@@ -379,8 +379,20 @@ removeFromCart: async (productId, userId) => {
   
   checkStock: async (productId, quantity) => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token no encontrado. Por favor, inicia sesión.");
+      }
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+  
+
       // Obtener el producto por su ID
-      const productResponse = await axios.get(`http://localhost:5000/products/${productId}`);
+      const productResponse = await axios.get(`http://localhost:8080/products/${productId}`, config);
       const product = productResponse.data;
   
       // Verificar si la cantidad solicitada excede el stock disponible
