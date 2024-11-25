@@ -13,20 +13,9 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('Usuario no autenticado');
-        }
-  
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-  
+        
         // Llama al backend para obtener los productos
-        const response = await axios.get('http://localhost:8080/products', config);
+        const response = await axios.get('http://localhost:8080/products');
         const data = response.data;
         console.log('Productos recibidos:', data);
   
@@ -36,14 +25,7 @@ const Home = () => {
         setProductsNot(data.filter((product) => product.category === 'Notebook'));
         setProductsDest(data.filter((product) => product.featured === true));
         setVistoReciente(data.filter((product) => product.visto === true)); // Si no tienes "visto", elimina esto
-      } catch (err) {
-        console.error('Error al traer los productos:', err);
-        if (err.message === 'Usuario no autenticado') {
-          setError('Por favor, inicie sesión para ver los productos.');
-        } else {
-          setError('No se pudieron cargar los productos. Intenta nuevamente más tarde.');
-        }
-      }
+      
     };
   
     fetchProducts();
