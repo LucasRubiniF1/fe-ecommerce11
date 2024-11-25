@@ -138,7 +138,8 @@ addToCart: async (product, userId) => {
 
       // Mostrar mensajes específicos según el código de error
       if (error.response.status === 403) {
-        alert("No tienes permiso para realizar esta acción.");
+        //alert("No tienes permiso para realizar esta acción.");
+        window.location.href = "/login"; // Redirigir al login en caso de autenticación fallida
       } else if (error.response.status === 500) {
         alert(
           "No hay stock suficiente del producto"
@@ -339,58 +340,40 @@ removeFromCart: async (productId, userId) => {
 
   updateQuantity: async (productId, quantity, userId) => {
     try {
-      const userCart = await axios.get(`http://localhost:5000/cart?user_id=${userId}`);
-      const cartId = userCart.data[0]?.id;
-    
-      if (!cartId) {
-        console.error("Carrito no encontrado para el usuario.");
-        return;
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token no encontrado. Por favor, inicia sesión.");
       }
   
-      console.log(`Buscando cartItem con product_id: ${productId} y cart_id: ${cartId}`);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
   
-      // Obtener el elemento específico del carrito
-      const cartItemResponse = await axios.get(`http://localhost:5000/cartItem?cart_id=${cartId}&product_id=${productId}`);
-      const cartItem = cartItemResponse.data[0];
+      const response = await axios.put(
+        `http://localhost:8080/cart/updateQuantity?userId=${userId}&productId=${productId}&quantity=${quantity}`,
+        {}, 
+        config
+      );
   
-      if (!cartItem) {
-        console.error("Producto no encontrado en el carrito.");
-        return;
-      }
+      if (response.status === 200) {
+        console.log("Cantidad actualizada con éxito en el backend.");
   
-      // Actualizar la cantidad en el cartItem
-      await axios.put(`http://localhost:5000/cartItem/${cartItem.id}`, {
-        ...cartItem,  // Mantener los datos existentes como cart_id y product_id
-        quantity      // Solo actualizamos la cantidad
-      });
-  
-      // Actualizar la cantidad en el JSON del usuario en `user.cart.items`
-      const userResponse = await axios.get(`http://localhost:5000/users/${userId}`);
-      let user = userResponse.data;
-  
-      // Verificar y actualizar el producto en el JSON de `user.cart.items`
-      const userCartItem = user.cart?.items?.find(item => item.product_id === productId);
-      if (userCartItem) {
-        userCartItem.quantity = quantity; // Actualizar la cantidad
+        // Actualizar el estado local y el `localStorage` después de una respuesta exitosa
+        set((state) => {
+          const updatedCart = state.cart.map((item) =>
+            item.id === productId ? { ...item, quantity } : item
+          );
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+          return { cart: updatedCart };
+        });
+        
       } else {
-        console.warn("Producto no encontrado en el JSON de usuario.");
+        console.error("Hubo un problema al actualizar la cantidad en el backend:", response.data);
       }
-  
-      // Enviar la actualización del JSON de usuario al servidor
-      await axios.put(`http://localhost:5000/users/${userId}`, user);
-  
-      // Actualizar el estado local y el `localStorage`
-      set((state) => {
-        const updatedCart = state.cart.map((item) =>
-          item.id === productId ? { ...item, quantity } : item
-        );
-  
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-        return { cart: updatedCart };
-      });
-  
     } catch (error) {
-      console.error("Error al actualizar la cantidad:", error);
+      console.error("Error al realizar la solicitud de actualización:", error);
     }
   },
   
