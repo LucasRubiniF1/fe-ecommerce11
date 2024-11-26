@@ -106,10 +106,13 @@ const ProductEdit = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Validación para evitar valores negativos en precio y stock
     if (name === 'price' || name === 'stock') {
-      const numericValue = value.replace(/[^0-9]/g, '');
-      if (numericValue < 0) return; // No permite números negativos
+      if (value < 0) {
+        setError(`${name === 'price' ? 'El precio' : 'El stock'} no puede ser negativo.`);
+        return; // Detener el cambio si el valor es negativo
+      } else {
+        setError(null); // Limpiar error si el valor es válido
+      }
     }
 
     setEditedProduct((prev) => ({
@@ -117,6 +120,8 @@ const ProductEdit = () => {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
+
+
 
   if (loading) {
     return (
