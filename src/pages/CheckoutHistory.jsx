@@ -17,7 +17,9 @@ const CheckoutHistory = () => {
   const fetchOrders = async (userId) => {
     try {
       // Cambia la URL al nuevo endpoint del backend
-      const response = await axios.get(`http://localhost:8080/orders/user/${userId}`);
+      const response = await axios.get(
+        `http://localhost:8080/orders/user/${userId}`
+      );
       const ordersData = response.data;
 
       // Setea las órdenes directamente
@@ -30,7 +32,12 @@ const CheckoutHistory = () => {
   };
 
   if (!localStorage.getItem("userId")) {
-    return <div>Please log in to view your checkout history.</div>;
+    return (
+      <div className="checkout-history-container">
+        <h1>Historial de Compras</h1>
+        <p>Por favor, inicia sesión para ver tu historial de compras.</p>
+      </div>
+    );
   }
 
   return (
@@ -39,32 +46,57 @@ const CheckoutHistory = () => {
       {orders.length === 0 ? (
         <p>No tienes compras completadas.</p>
       ) : (
-        <ul>
+        <div className="orders-list">
           {orders.map((order) => (
-            <li key={order.orderId} className="order-card">
-              <h2>Fecha de Transacción: {order.orderDate}</h2>
-              <p>Total: ${order.totalAmount.toFixed(2)}</p>
-              <p>Estado: {order.status}</p>
-              <h3>Detalles del Pedido:</h3>
-              {order.orderDetails.length === 0 ? (
-                <p>No hay detalles de este pedido.</p>
-              ) : (
-                <ul>
-                  {order.orderDetails.map((detail) => (
-                    <li key={detail.id}>
-                      <p>Producto ID: {detail.productId}</p>
-                      <p>Precio Unitario: ${detail.unitPrice.toFixed(2)}</p>
-                      <p>Cantidad: {detail.quantity}</p>
-                      <p>Total: ${detail.totalPrice.toFixed(2)}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <h3>Transacción:</h3>
-              <p>ID de Transacción: {order.transactionId}</p>
-            </li>
+            <div key={order.orderId} className="order-card">
+              <div className="order-header">
+                <h2>Transacción #{order.orderId}</h2>
+                <p>{order.orderDate}</p>
+              </div>
+              <div className="order-summary">
+                <p>
+                  <strong>Total:</strong> ${order.totalAmount.toFixed(2)}
+                </p>
+                <p>
+                  <strong>Estado:</strong> {order.status}
+                </p>
+              </div>
+              <div className="order-details">
+                <h3>Detalles del Pedido:</h3>
+                {order.orderDetails.length === 0 ? (
+                  <p>No hay detalles de este pedido.</p>
+                ) : (
+                  <ul>
+                    {order.orderDetails.map((detail) => (
+                      <li key={detail.id} className="order-detail-item">
+                        <p>
+                          <strong>Producto ID:</strong> {detail.productId}
+                        </p>
+                        <p>
+                          <strong>Precio Unitario:</strong> $
+                          {detail.unitPrice.toFixed(2)}
+                        </p>
+                        <p>
+                          <strong>Cantidad:</strong> {detail.quantity}
+                        </p>
+                        <p>
+                          <strong>Total:</strong> $
+                          {detail.totalPrice.toFixed(2)}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {/* <div className="transaction-info">
+                <h3>Transacción:</h3>
+                <p>
+                  <strong>ID de Transacción:</strong> {order.transactionId}
+                </p>
+              </div> */}
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
