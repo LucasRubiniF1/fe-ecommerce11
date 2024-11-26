@@ -10,7 +10,7 @@ const ProductForm = ({ product, onSubmit }) => {
     stock: '',
     category: '',
     isFeatured: false,
-    image: '',
+    images: '',
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
@@ -24,7 +24,7 @@ const ProductForm = ({ product, onSubmit }) => {
         stock: product.stock || '',
         category: product.category || '',
         isFeatured: product.isFeatured || false,
-        image: product.image || '',
+        images: product.images || '',
       });
     }
   }, [product]);
@@ -141,8 +141,8 @@ const ProductForm = ({ product, onSubmit }) => {
               <Form.Label>URL de la Imagen</Form.Label>
               <Form.Control
                 type="text"
-                name="image"
-                value={formData.image}
+                name="images"
+                value={formData.images}
                 onChange={handleChange}
                 placeholder="Ingrese la URL de la imagen"
                 required

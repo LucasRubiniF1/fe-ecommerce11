@@ -21,10 +21,10 @@ const ProductCreate = () => {
   // Manejar la creación del producto
   const handleSubmit = async (formData) => {
     // Validación de campos requeridos
-    if (!formData.name || !formData.description || !formData.price || !formData.stock || !formData.category || !formData.images) {
+    /*if (!formData.name || !formData.description || !formData.price || !formData.stock || !formData.category || !formData.images) {
       setError('Todos los campos son obligatorios.');
       return;
-    }
+    }*/
   
     setError(null);
     setSuccess(false);

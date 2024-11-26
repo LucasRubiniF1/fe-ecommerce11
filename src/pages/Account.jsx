@@ -74,11 +74,15 @@ const Account = () => {
           className="profile-image"
         />
         <h2>{user.username}</h2>
-        <ul>
-          <li onClick={handleOrders}>Órdenes</li>
-          <li onClick={handleWishlist}>Lista de Favoritos</li>
-          <li onClick={handleLogout}>Salir de mi cuenta</li>
-        </ul>
+
+        {/* Mostrar opciones adicionales solo si no es ADMIN */}
+        {user.role !== "ADMIN" && (
+          <ul>
+            <li onClick={handleOrders}>Órdenes</li>
+            <li onClick={handleWishlist}>Lista de Favoritos</li>
+            <li onClick={handleLogout}>Salir de mi cuenta</li>
+          </ul>
+        )}
       </div>
 
       <div className="account-content">
@@ -95,14 +99,6 @@ const Account = () => {
             <p>Email: {user.email}</p>
             <p>Fecha de Nacimiento: {user.birth}</p>
           </div>
-          <div className="account-card">
-            <h3>
-              Información de envío <span>Edit</span>
-            </h3>
-            <p>Dirección de envío: {user.shippingAddress || "No registrada"}</p>
-            <p>Localidad: {user.city || "No registrada"}</p>
-            <p>Código postal: {user.postalCode || "No registrado"}</p>
-          </div>
         </div>
       </div>
     </div>
@@ -110,6 +106,3 @@ const Account = () => {
 };
 
 export default Account;
-
-
-
