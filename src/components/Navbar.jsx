@@ -86,7 +86,7 @@ const Navbar = ({ onSearch }) => {
                 </div>
               )}
             </li>
-            <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/account')}>
+            <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/account-adm')}>
               Account
             </li>
           </ul>
@@ -94,7 +94,7 @@ const Navbar = ({ onSearch }) => {
           <FaUser
               size={24}
               className="hover:text-gray-400 cursor-pointer"
-              onClick={() => navigate('/account')}
+              onClick={() => navigate('/account-adm')}
             />
             <FaSignOutAlt
               size={24}

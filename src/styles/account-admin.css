@@ -1,0 +1,92 @@
+ .account-container.admin-view {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .account-header {
+    margin-bottom: 20px;
+  }
+  
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .account-header h1 {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .personal-info {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .personal-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .personal-info p {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #666;
+  }
+  
+   button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  /*  width: 200px;  Ajusta el ancho de los botones */
+  } 
+  
+  .logout-button {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .logout-button:hover {
+    background-color: #c9302c;
+  }
+  
+  .register-admin-button{
+    margin-top: 20px;
+    background-color: #45a049;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .register-admin-button:hover {
+    background-color: #45a049;
+  }
+  
+  .loading-container,
+  .error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    color: #888;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  

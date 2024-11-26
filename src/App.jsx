@@ -22,6 +22,7 @@ import { AuthProvider } from "./context/AuthContext";
 import CheckoutHistory from "./pages/CheckoutHistory";
 import RegisterAdmin from "./pages/RegisterAdmin";
 import NotFound from "./pages/NotFound";
+import AccountAdmin from "./pages/AccountAdmin";
 
 
 const App = () => {
@@ -61,6 +62,7 @@ const AppContent = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
           <Route path="/register-admin" element={<RegisterAdmin />} />
+          <Route path="/account-adm" element={<AccountAdmin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

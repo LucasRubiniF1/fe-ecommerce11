@@ -44,12 +44,12 @@ const NavbarAdm = () => {
           )}
         </li>
         
-        <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/account')}>
+        <li className="hover:text-gray-400 cursor-pointer" onClick={() => navigate("/account-adm")}>
           Account
         </li>
       </ul>
       <div className="flex items-center">
-        <FaUser size={24} className="hover:text-gray-400 cursor-pointer" onClick={() => navigate('/account')} />
+        <FaUser size={24} className="hover:text-gray-400 cursor-pointer" onClick={() =>  navigate("/account-adm")} />
       </div>
     </nav>
   );
