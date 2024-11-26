@@ -7,6 +7,7 @@ const HomeAdm = () => {
   const [productsCel, setProductsCel] = useState([]);
   const [productsTel, setProductsTel] = useState([]);
   const [productsNot, setProductsNot] = useState([]);
+  const [productsElec, setProductsElec] = useState([]); // Nuevo estado para Electrónica
   const [productsDest, setProductsDest] = useState([]);
   const [error, setError] = useState(null);
 
@@ -32,7 +33,7 @@ const HomeAdm = () => {
         setProductsCel(data.filter((product) => product.category === 'Celular'));
         setProductsTel(data.filter((product) => product.category === 'Televisor'));
         setProductsNot(data.filter((product) => product.category === 'Notebook'));
-        setProductsNot(data.filter((product) => product.category === 'Electrónica'));
+        setProductsElec(data.filter((product) => product.category === 'Electrónica')); // Filtrar Electrónica
         setProductsDest(data.filter((product) => product.is_featured === true));
       } catch (err) {
         console.error('Error al traer los productos:', err);
@@ -81,6 +82,12 @@ const HomeAdm = () => {
         <Carousel products={productsNot} titulo="Notebooks" />
       ) : (
         <p className="text-gray-500 text-center mt-4">No hay productos en la categoría de Notebooks.</p>
+      )}
+
+      {productsElec.length > 0 ? (
+        <Carousel products={productsElec} titulo="Electrónica" />
+      ) : (
+        <p className="text-gray-500 text-center mt-4">No hay productos en la categoría de Electrónica.</p>
       )}
     </>
   );
