@@ -20,6 +20,7 @@ import LoginPage from "./pages/LoginPage";
 import ContactPage from "./pages/ContactPage";
 import { AuthProvider } from "./context/AuthContext";
 import CheckoutHistory from "./pages/CheckoutHistory";
+import RegisterAdmin from "./pages/RegisterAdmin";
 
 
 const App = () => {
@@ -58,6 +59,7 @@ const AppContent = () => {
           <Route path="/products/:category" element={<ProductPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
+          <Route path="/register-admin" element={<RegisterAdmin />} />
         </Routes>
       </main>
 

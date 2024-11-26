@@ -10,6 +10,7 @@ const Account = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Para redirigir a otras páginas
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,6 +35,10 @@ const Account = () => {
   const handleLogout = () => {
     logout();
     window.location.reload(); // Refresca la página al cerrar sesión
+  };
+
+  const handleRegisterAdmin = () => {
+    navigate("/register-admin"); // Redirige a la página de registro de admin
   };
 
   if (loading) {
@@ -62,7 +67,8 @@ const Account = () => {
         <div className="personal-info">
           <h2>Información Personal</h2>
           <p>
-            <strong>Nombre:</strong> {user.firstname} 
+          <p>
+            <strong>Nombre:</strong> {user.firstname}
           </p>
           <p>
             <strong>Apellido:</strong> {user.lastname}
@@ -73,10 +79,17 @@ const Account = () => {
           <p>
             <strong>Fecha de Nacimiento:</strong> {user.birth}
           </p>
+          </p>
         </div>
+        <p>
+        <button className="register-admin-button" onClick={handleRegisterAdmin}>
+          Registrar Administrador
+        </button>
+        </p>
         <button className="logout-button" onClick={handleLogout}>
           Cerrar Sesión
         </button>
+        
       </div>
     </div>
   );

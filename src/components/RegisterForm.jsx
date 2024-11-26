@@ -4,7 +4,7 @@ const RegisterForm = ({ formData, handleChange, handleSubmit, error }) => {
   return (
     <form onSubmit={handleSubmit} className="bg-white p-10 rounded-lg shadow-lg max-w-md w-full space-y-4">
       <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">
-        Registrar Usuario
+        Registrar
       </h2>
 
       {/* Campo para el nombre */}

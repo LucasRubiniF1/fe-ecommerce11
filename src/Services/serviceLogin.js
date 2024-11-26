@@ -98,6 +98,7 @@ export const registerUser = async (formData, setError) => {
     throw new Error("Error al registrar el usuario");
   }
 };
+  
 
 // Obtener todos los usuarios
 export const getUsersAxios = async () => {

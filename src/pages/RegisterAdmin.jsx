@@ -4,7 +4,7 @@ import axios from 'axios';
 import RegisterForm from '../components/registerForm';
 import { validateUser, registerUser, getUsersAxios } from "../Services/serviceLogin.js";
 
-const RegisterPage = () => {
+const RegisterAdmin = () => {
   const [formData, setFormData] = useState({
     id:null,
     username:'',
@@ -13,14 +13,12 @@ const RegisterPage = () => {
     birthDate:'',
     firstname:'',
     lastname:'',
-    role:'USER',
+    role:'ADMIN',
   });
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
   const navigate = useNavigate();
-
- 
 
   const handleChange = (e) => {
     setFormData({
@@ -83,4 +81,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegisterAdmin;
