@@ -65,6 +65,7 @@ button {
 }
 
 .register-admin-button{
+  margin-top: 20px;
   background-color: #45a049;
   color: #fff;
   border: none;

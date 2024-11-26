@@ -67,7 +67,6 @@ const Account = () => {
         <div className="personal-info">
           <h2>Información Personal</h2>
           <p>
-          <p>
             <strong>Nombre:</strong> {user.firstname}
           </p>
           <p>
@@ -78,7 +77,6 @@ const Account = () => {
           </p>
           <p>
             <strong>Fecha de Nacimiento:</strong> {user.birth}
-          </p>
           </p>
         </div>
         <p>
