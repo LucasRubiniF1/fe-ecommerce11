@@ -18,18 +18,46 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
-      
+      // Intenta iniciar sesión
       await login(email, password);
-      console.log("Token después del login:", localStorage.getItem("token"));
-      console.log("ID del usuario después del login:", localStorage.getItem("userId"));
-      navigate("/");
+  
+      // Verifica si el token y el ID del usuario se almacenaron correctamente
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+  
+      if (token && userId) {
+        console.log("Token después del login:", token);
+        console.log("ID del usuario después del login:", userId);
+  
+        // Navega a la página principal solo si el inicio de sesión fue exitoso
+        navigate("/");
+      } else {
+        console.error("Faltan datos del token o del usuario después del login");
+        setError("Error al obtener los datos del usuario. Intenta nuevamente.");
+      }
     } catch (err) {
-      // El error se maneja a través del contexto, no necesitamos setearlo aquí
-      console.error("Error durante el inicio de sesión:", err);
+      // Manejo de errores
+      if (err.response) {
+        if (err.response.status === 403 || err.response.status === 401) {
+          // Mostrar un mensaje de credenciales incorrectas
+          setError("Credenciales incorrectas. Por favor, verifica tu email y contraseña.");
+        } else {
+          setError(`Error inesperado: ${err.response.statusText}`);
+        }
+      } else if (err.request) {
+        console.error("No se recibió respuesta del servidor:", err.request);
+        setError("No se pudo conectar con el servidor. Por favor, verifica tu red.");
+      } else {
+        console.error("Error al configurar la solicitud:", err.message);
+        setError("Ocurrió un error desconocido. Por favor, intenta nuevamente.");
+      }
     }
   };
+  
+
+  
 
   const handleRegister = () => {
     navigate("/register");
@@ -78,12 +106,14 @@ const LoginPage = () => {
           >
             Registrar
           </button>
-
-          {error && <p style={{ color: "red" }}>{error}</p>} {/* Mostrar error desde el contexto */}
+  
+          {/* Mostrar el error aquí */}
+          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
         </form>
       </div>
     </div>
   );
+  
 };
 
 export default LoginPage;
