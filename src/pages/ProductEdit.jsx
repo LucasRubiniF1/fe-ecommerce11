@@ -70,6 +70,12 @@ const ProductEdit = () => {
       await axios.put(`http://localhost:8080/products/${editedProduct.id}`, productData, config);
       setSuccess("Producto actualizado exitosamente.");
       setEditableProductId(null);
+
+      // Refrescar la lista de productos
+      const updatedProducts = products.map((product) =>
+        product.id === editedProduct.id ? { ...product, ...editedProduct } : product
+      );
+      setProducts(updatedProducts);
     } catch (error) {
       console.error("Error guardando el producto:", error.response?.data || error.message);
       setError("Error al guardar los cambios.");
@@ -249,18 +255,48 @@ const ProductEdit = () => {
               </td>
               <td>
                 {editableProductId === product.id ? (
-                  <Button variant="success" onClick={handleSaveClick}>
+                  <Button
+                    variant="success"
+                    onClick={handleSaveClick}
+                    style={{
+                      width: '100px',
+                      height: '40px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <FaSave className="me-2" /> Save
                   </Button>
                 ) : (
-                  <>
-                    <Button variant="warning" onClick={() => handleEditClick(product)}>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <Button
+                      variant="warning"
+                      onClick={() => handleEditClick(product)}
+                      style={{
+                        width: '100px',
+                        height: '40px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
                       <FaEdit className="me-2" /> Edit
                     </Button>
-                    <Button variant="danger" onClick={() => handleDeleteClick(product.id)}>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDeleteClick(product.id)}
+                      style={{
+                        width: '100px',
+                        height: '40px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
                       <FaTrash className="me-2" /> Delete
-                    </Button>
-                  </>
+                  </Button>
+                  </div>
                 )}
               </td>
             </tr>
@@ -272,3 +308,4 @@ const ProductEdit = () => {
 };
 
 export default ProductEdit;
+
