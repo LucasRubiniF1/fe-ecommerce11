@@ -4,7 +4,7 @@ import PaymentForm from './PaymentForm';
 import OrderSummary from './OrderSummary';
 import OrderConfirmation from './OrderConfirmation';
 import { checkoutCart, clearCart } from '../Services/serviceCheckout.js';
-import { useAuth } from "../hooks/UseAuth.js"; 
+import { useAuth } from "../hooks/UseAuth.js";
 
 export default function CheckoutModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
@@ -12,8 +12,7 @@ export default function CheckoutModal({ isOpen, onClose }) {
   const [paymentData, setPaymentData] = useState(null);
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
-  const { user, cart } = useAuth();
-  
+  const { user } = useAuth();
 
   const handleShippingSubmit = (data) => {
     setShippingData(data);
@@ -27,11 +26,10 @@ export default function CheckoutModal({ isOpen, onClose }) {
 
   const handleConfirmOrder = async () => {
     try {
-      // Llama a la función de checkout
       const newOrder = await checkoutCart(user.id);
       setOrder(newOrder);
-      setStep(4);  // Avanza al paso de confirmación
-      clearCart();
+      setStep(4);
+      clearCart(); // Limpia el carrito después del checkout
     } catch (err) {
       console.error("Error durante el checkout:", err);
       setError("Hubo un problema con el checkout. Inténtalo de nuevo.");
@@ -44,40 +42,46 @@ export default function CheckoutModal({ isOpen, onClose }) {
     setPaymentData(null);
     setOrder(null);
     setError(null);
-    onClose();
+    onClose(); // Llama a la función `onClose` pasada como prop para cerrar el modal
   };
 
   return (
     isOpen && (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+          {/* Paso 1: Formulario de Envío */}
           {step === 1 && (
-            <ShippingForm onSubmit={handleShippingSubmit} />
-          )}
-          {step === 2 && (
-            <PaymentForm 
-              onSubmit={handlePaymentSubmit} 
-              onBack={() => setStep(1)} 
+            <ShippingForm
+              onSubmit={handleShippingSubmit}
+              onClose={handleClose} // Aquí pasamos la función correcta para cerrar el modal
             />
           )}
+          {/* Paso 2: Formulario de Pago */}
+          {step === 2 && (
+            <PaymentForm
+              onSubmit={handlePaymentSubmit}
+              onBack={() => setStep(1)}
+            />
+          )}
+          {/* Paso 3: Resumen de Orden */}
           {step === 3 && (
-            <OrderSummary 
-              shippingData={shippingData} 
-              paymentData={paymentData} 
-              onConfirm={handleConfirmOrder} 
+            <OrderSummary
+              shippingData={shippingData}
+              paymentData={paymentData}
+              onConfirm={handleConfirmOrder}
               onBack={() => setStep(2)}
             />
           )}
+          {/* Paso 4: Confirmación de la Orden */}
           {step === 4 && (
-            <OrderConfirmation 
-              order={order} 
-              onClose={handleClose} 
-              error={error} 
+            <OrderConfirmation
+              order={order}
+              onClose={handleClose}
+              error={error}
             />
           )}
-          {error && (
-            <div className="text-red-500 mt-4">{error}</div>
-          )}
+          {/* Mensaje de error */}
+          {error && <div className="text-red-500 mt-4">{error}</div>}
         </div>
       </div>
     )
