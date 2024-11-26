@@ -1,0 +1,47 @@
+/* Contenedor principal */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Imagen */
+.not-found-image {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Título */
+.not-found-container h1 {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Mensaje */
+.not-found-container p {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Botón */
+.go-home-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.go-home-button:hover {
+  background-color: #0056b3;
+}
