@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/UseStore.js";
-import { useAuth } from "../hooks/UseAuth.js"; 
+import { useAuth } from "../hooks/UseAuth.js";
 
 const Carousel = ({ products, titulo }) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -52,6 +52,7 @@ const Carousel = ({ products, titulo }) => {
       addToWishlist(product.id, user.id);
     }
   };
+
 
   const handleRemoveFromWishlist = (product) => {
     removeFromWishlist(product.id, user.id);
@@ -110,17 +111,17 @@ const Carousel = ({ products, titulo }) => {
                   <button
                     onClick={() => {
                       if (isInWishlist) {
-                        handleRemoveFromWishlist(product);
+                        handleRemoveFromWishlist(product); // Si ya está en la wishlist, lo quita
                       } else {
-                        handleAddToWishlist(product);
+                        handleAddToWishlist(product); // Si no está, lo agrega
                       }
                     }}
-                    className={`p-3 rounded-xl border ${
-                      isInWishlist ? 'text-black border-black' : 'text-gray-600 border-gray-200'
-                    } hover:text-red-500 hover:border-red-500 transition-colors duration-300`}
+                    className={`p-3 rounded-xl border ${isInWishlist ? 'text-black border-black' : 'text-gray-600 border-gray-200'
+                      } hover:text-red-500 hover:border-red-500 transition-colors duration-300`}
                   >
                     <FaHeart size={20} className={isInWishlist ? 'text-rose-600' : 'text-gray-600'} />
                   </button>
+
                 </div>
               </div>
             );

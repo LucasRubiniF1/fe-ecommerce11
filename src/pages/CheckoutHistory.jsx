@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../hooks/UseAuth";
 import axios from "axios";
 import "../styles/checkout-history.css";
 
 const CheckoutHistory = () => {
-  const { user } = useAuth();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      fetchOrders(user.id);
+    // Obtén el ID del usuario desde el local storage
+    const userId = localStorage.getItem("userId");
+
+    if (userId) {
+      fetchOrders(userId);
     }
-  }, [user]);
+  }, []);
 
   const fetchOrders = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/users/${userId}`);
-      const userData = response.data;
+      // Cambia la URL al nuevo endpoint del backend
+      const response = await axios.get(
+        `http://localhost:8080/orders/user/${userId}`
+      );
+      const ordersData = response.data;
 
-      // Setear directamente las órdenes del usuario
-      if (userData.orders) {
-        setOrders(userData.orders);
+      // Setea las órdenes directamente
+      if (ordersData) {
+        setOrders(ordersData);
       }
     } catch (error) {
       console.error("Error al obtener los pedidos:", error);
     }
   };
 
-  if (!user) {
-    return <div>Please log in to view your checkout history.</div>;
+  if (!localStorage.getItem("userId")) {
+    return (
+      <div className="checkout-history-container">
+        <h1>Historial de Compras</h1>
+        <p>Por favor, inicia sesión para ver tu historial de compras.</p>
+      </div>
+    );
   }
 
   return (
@@ -37,36 +46,57 @@ const CheckoutHistory = () => {
       {orders.length === 0 ? (
         <p>No tienes compras completadas.</p>
       ) : (
-        <ul>
+        <div className="orders-list">
           {orders.map((order) => (
-            <li key={order.order_id} className="order-card">
-              <h2>Fecha de Transacción: {order.order_date}</h2>
-              <p>Total: ${order.total_amount.toFixed(2)}</p>
-              <h3>Detalles del Pedido:</h3>
-              <ul>
-                {order.order_details.map((detail) => (
-                  <li key={`${order.order_id}-${detail.order_detail_id}`}>
-                    <p>Producto ID: {detail.product_id}</p>
-                    <p>Precio Unitario: ${detail.unit_price.toFixed(2)}</p>
-                    <p>Cantidad: {detail.quantity}</p>
-                    <p>Total: ${detail.total_price.toFixed(2)}</p>
-                  </li>
-                ))}
-              </ul>
-              <h3>Transacciones:</h3>
-              <ul>
-                {order.transactions.map((transaction) => (
-                  <li key={`${order.order_id}-${transaction.transaction_id}`}>
-                    <p>Fecha de Transacción: {transaction.transaction_date}</p>
-                    <p>Método de Pago: {transaction.payment_method}</p>
-                    <p>Monto: ${transaction.amount.toFixed(2)}</p>
-                    <p>Estado: {transaction.status}</p>
-                  </li>
-                ))}
-              </ul>
-            </li>
+            <div key={order.orderId} className="order-card">
+              <div className="order-header">
+                <h2>Transacción #{order.orderId}</h2>
+                <p>{order.orderDate}</p>
+              </div>
+              <div className="order-summary">
+                <p>
+                  <strong>Total:</strong> ${order.totalAmount.toFixed(2)}
+                </p>
+                <p>
+                  <strong>Estado:</strong> {order.status}
+                </p>
+              </div>
+              <div className="order-details">
+                <h3>Detalles del Pedido:</h3>
+                {order.orderDetails.length === 0 ? (
+                  <p>No hay detalles de este pedido.</p>
+                ) : (
+                  <ul>
+                    {order.orderDetails.map((detail) => (
+                      <li key={detail.id} className="order-detail-item">
+                        <p>
+                          <strong>Producto ID:</strong> {detail.productId}
+                        </p>
+                        <p>
+                          <strong>Precio Unitario:</strong> $
+                          {detail.unitPrice.toFixed(2)}
+                        </p>
+                        <p>
+                          <strong>Cantidad:</strong> {detail.quantity}
+                        </p>
+                        <p>
+                          <strong>Total:</strong> $
+                          {detail.totalPrice.toFixed(2)}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {/* <div className="transaction-info">
+                <h3>Transacción:</h3>
+                <p>
+                  <strong>ID de Transacción:</strong> {order.transactionId}
+                </p>
+              </div> */}
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
