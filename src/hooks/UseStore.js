@@ -387,8 +387,20 @@ const useStore = create((set, get) => ({
     
     checkStock: async (productId, quantity) => {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token no encontrado. Por favor, inicia sesión.");
+        }
+    
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+    
+  
         // Obtener el producto por su ID
-        const productResponse = await axios.get(`http://localhost:8080/products/${productId}`);
+        const productResponse = await axios.get(`http://localhost:8080/products/${productId}`, config);
         const product = productResponse.data;
     
         // Verificar si la cantidad solicitada excede el stock disponible
@@ -401,7 +413,8 @@ const useStore = create((set, get) => ({
         console.error("Error al verificar el stock:", error);
         return false; // Si ocurre un error, devolvemos false por seguridad
       }
-    },  
+    },
+    
   
   
 }));
