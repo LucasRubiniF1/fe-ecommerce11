@@ -3,14 +3,13 @@ import { useAuth } from "../hooks/UseAuth";
 import { useNavigate } from "react-router-dom";
 import "../styles/account.css";
 import EditButton from "../components/EditButton";
-import { getUserById } from "../Services/serviceLogin"; // Función modular para obtener datos del usuario
+import { getUserById } from "../Services/serviceLogin";
 
 const Account = () => {
-  const { user: authUser, logout } = useAuth(); // Obtener datos del usuario autenticado y la función logout
-  const [user, setUser] = useState(null); // Estado para los datos del usuario
+  const { user: authUser, logout } = useAuth();
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,8 +18,8 @@ const Account = () => {
           throw new Error("Usuario no está autenticado");
         }
 
-        const userData = await getUserById(authUser.id); // Usar la función para obtener datos del usuario
-        setUser(userData); // Guardar los datos en el estado
+        const userData = await getUserById(authUser.id);
+        setUser(userData);
       } catch (err) {
         console.error("Error al obtener los datos del usuario:", err);
         setError(err.message);
@@ -32,74 +31,52 @@ const Account = () => {
     fetchUserData();
   }, [authUser]);
 
-  const handleOrders = () => {
-    navigate("/checkout-history"); // Redirigir al historial de órdenes
-  };
-
-  const handleWishlist = () => {
-    navigate("/wishlist"); // Redirigir a la lista de favoritos
-  };
-
   const handleLogout = () => {
-    logout(); // Cerrar sesión
-    navigate("/"); // Redirigir a la página principal
+    logout();
+    window.location.reload(); // Refresca la página al cerrar sesión
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="p-6 bg-white rounded-md shadow-sm">
-          <p className="text-center text-gray-600">Cargando...</p>
-        </div>
+      <div className="loading-container">
+        <p>Cargando...</p>
       </div>
     );
   }
 
   if (error || !user) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="p-6 bg-white rounded-md shadow-sm">
-          <p className="text-center text-gray-600">{error || "No estás logueado"}</p>
-        </div>
+      <div className="error-container">
+        <p>{error || "No estás logueado"}</p>
       </div>
     );
   }
 
   return (
-    <div className="account-container">
-      <div className="account-sidebar">
-        <img
-          src="./img/usuario1.avif"
-          alt="Profile"
-          className="profile-image"
-        />
-        <h2>{user.username}</h2>
-
-        {/* Mostrar opciones adicionales solo si no es ADMIN */}
-        {user.role !== "ADMIN" && (
-          <ul>
-            <li onClick={handleOrders}>Órdenes</li>
-            <li onClick={handleWishlist}>Lista de Favoritos</li>
-            <li onClick={handleLogout}>Salir de mi cuenta</li>
-          </ul>
-        )}
+    <div className="account-container admin-view">
+      <div className="account-header">
+        <img src="./img/usuario1.avif" alt="Profile" className="profile-image" />
+        <h1>Bienvenido, {user.firstname}</h1>
       </div>
-
       <div className="account-content">
-        <h1>Mi cuenta</h1>
-        <div className="addresses">
-          <div className="address-card">
-            <h3>
-              Información personal <EditButton to="/edit-account" />
-            </h3>
-            <p>
-              Nombre y apellido: {user.firstname} {user.lastname}
-            </p>
-            <p>Nombre de usuario: {user.username}</p>
-            <p>Email: {user.email}</p>
-            <p>Fecha de Nacimiento: {user.birth}</p>
-          </div>
+        <div className="personal-info">
+          <h2>Información Personal</h2>
+          <p>
+            <strong>Nombre:</strong> {user.firstname} 
+          </p>
+          <p>
+            <strong>Apellido:</strong> {user.lastname}
+          </p>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p>
+            <strong>Fecha de Nacimiento:</strong> {user.birth}
+          </p>
         </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Cerrar Sesión
+        </button>
       </div>
     </div>
   );

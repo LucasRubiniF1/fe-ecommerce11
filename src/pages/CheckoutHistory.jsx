@@ -44,7 +44,9 @@ const CheckoutHistory = () => {
     <div className="checkout-history-container">
       <h1>Historial de Compras</h1>
       {orders.length === 0 ? (
-        <p>No tienes compras completadas.</p>
+        <div className="no-orders">
+          <p>No tienes compras completadas.</p>
+        </div>
       ) : (
         <div className="orders-list">
           {orders.map((order) => (
