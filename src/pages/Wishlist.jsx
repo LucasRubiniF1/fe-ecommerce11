@@ -81,7 +81,7 @@ const Wishlist = () => {
         </p>
         <button
           onClick={handleRedirectToHome}
-          className="px-6 py-3 bg-blue-600 text-blue rounded-lg hover:bg-blue-700 transition-all"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
         >
           Ver productos
         </button>
@@ -110,11 +110,7 @@ const Wishlist = () => {
               onClick={() => navigate(`/product/${product.id}`, { state: product })}
             >
               <img
-                src={
-                  product.images
-                    ? atob(product.images)
-                    : "https://via.placeholder.com/150"
-                }
+                src={product.images || "https://via.placeholder.com/150"}
                 alt={product.name}
                 className="w-full h-48 object-contain mix-blend-multiply"
               />

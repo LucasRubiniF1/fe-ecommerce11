@@ -11,17 +11,6 @@ const Cart = () => {
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const { user } = useAuth();
 
-  // Función para decodificar imágenes en formato Base64
-  const decodeImageUrl = (base64String) => {
-    try {
-      return atob(base64String);
-    } catch (error) {
-      console.error("Error decoding Base64 string:", error);
-      // Imagen por defecto si la decodificación falla
-      return 'https://via.placeholder.com/150';
-    }
-  };
-
   useEffect(() => {
     if (user?.id) {
       useStore.getState().initializeCart(user.id);
@@ -94,7 +83,7 @@ const Cart = () => {
                     <div className="p-6 flex gap-6">
                       <div className="w-32 h-32 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0">
                         <img
-                          src={decodeImageUrl(item.images)}
+                          src={item.images || 'https://via.placeholder.com/150'}
                           alt={item.name}
                           className="w-full h-full object-contain"
                         />

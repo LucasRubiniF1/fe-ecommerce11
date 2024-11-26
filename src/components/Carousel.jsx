@@ -11,16 +11,6 @@ const Carousel = ({ products, titulo }) => {
   const { user } = useAuth();
   const { addToCart, wishlist, addToWishlist, removeFromWishlist } = useStore();
 
-  const decodeImageUrl = (base64String) => {
-    try {
-      return atob(base64String);
-    } catch (error) {
-      console.error("Error decoding Base64 string:", error);
-      // Imagen por defecto si hay un error en la decodificación
-      return 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp';
-    }
-  };
-
   const nextPage = () => {
     if (startIndex + itemsPerPage < products.length) {
       setStartIndex(startIndex + itemsPerPage);
@@ -53,7 +43,6 @@ const Carousel = ({ products, titulo }) => {
     }
   };
 
-
   const handleRemoveFromWishlist = (product) => {
     removeFromWishlist(product.id, user.id);
   };
@@ -85,7 +74,7 @@ const Carousel = ({ products, titulo }) => {
                   onClick={() => handleClick(product)}
                 >
                   <img
-                    src={decodeImageUrl(product.images) || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
+                    src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
                     alt={product.name}
                     className="w-full h-48 object-contain mix-blend-multiply"
                   />

@@ -19,16 +19,6 @@ const ProductEdit = () => {
   const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Decodificación de la URL de la imagen
-  const decodeImageUrl = (base64String) => {
-    try {
-      return atob(base64String);
-    } catch (error) {
-      console.error('Error decoding Base64 string:', error);
-      return 'https://via.placeholder.com/50';
-    }
-  };
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -233,19 +223,17 @@ const ProductEdit = () => {
               </td>
               <td>
                 {editableProductId === product.id ? (
-                  // Campo editable que muestra la URL decodificada
                   <Form.Control
                     type="text"
                     name="images"
-                    value={decodeImageUrl(editedProduct.images) || ''}
+                    value={editedProduct.images || ''}
                     onChange={handleInputChange}
                     placeholder="Image URL"
                     required
                   />
                 ) : product.images ? (
-                  // Mostrar la imagen cuando no está en modo edición
                   <img
-                    src={decodeImageUrl(product.images)}
+                    src={product.images}
                     alt={product.name}
                     style={{
                       width: '60px',
@@ -261,42 +249,15 @@ const ProductEdit = () => {
               </td>
               <td>
                 {editableProductId === product.id ? (
-                  <Button
-                    variant="success"
-                    onClick={handleSaveClick}
-                    style={{
-                      width: '100px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+                  <Button variant="success" onClick={handleSaveClick}>
                     <FaSave className="me-2" /> Save
                   </Button>
                 ) : (
                   <>
-                    <Button
-                      variant="warning"
-                      onClick={() => handleEditClick(product)}
-                      style={{
-                        width: '100px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
+                    <Button variant="warning" onClick={() => handleEditClick(product)}>
                       <FaEdit className="me-2" /> Edit
                     </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteClick(product.id)}
-                      style={{
-                        width: '100px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
+                    <Button variant="danger" onClick={() => handleDeleteClick(product.id)}>
                       <FaTrash className="me-2" /> Delete
                     </Button>
                   </>

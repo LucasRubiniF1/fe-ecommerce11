@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Alert, Container, Spinner } from 'react-bootstrap';
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import useStore from "../hooks/UseStore.js";
-import { useAuth } from "../hooks/UseAuth.js"; 
+import { useAuth } from "../hooks/UseAuth.js";
 
 const ProductDetail = () => {
   const location = useLocation();
@@ -12,17 +12,6 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const { addToCart, addToWishlist } = useStore();
   const { user } = useAuth();
-
-  // Función para decodificar imágenes en Base64
-  const decodeImageUrl = (base64String) => {
-    try {
-      return atob(base64String);
-    } catch (error) {
-      console.error("Error decoding Base64 string:", error);
-      // Imagen por defecto si hay un error en la decodificación
-      return 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp';
-    }
-  };
 
   // Redirigir si no se proporcionan datos de producto
   useEffect(() => {
@@ -69,7 +58,7 @@ const ProductDetail = () => {
       <div className="flex-1">
         <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg">
           <img
-            src={decodeImageUrl(product.images) || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
+            src={product.images || 'https://http2.mlstatic.com/D_NQ_NP_2X_977897-MLU79321619721_092024-F.webp'}
             alt={product.name}
             className="w-full h-96 object-contain bg-white transition-transform transform hover:scale-105 duration-300"
           />
