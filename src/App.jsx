@@ -21,6 +21,7 @@ import ContactPage from "./pages/ContactPage";
 import { AuthProvider } from "./context/AuthContext";
 import CheckoutHistory from "./pages/CheckoutHistory";
 import RegisterAdmin from "./pages/RegisterAdmin";
+import NotFound from "./pages/NotFound";
 
 
 const App = () => {
@@ -60,6 +61,7 @@ const AppContent = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/homeAdmin" element={<HomeAdm />} />
           <Route path="/register-admin" element={<RegisterAdmin />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
 
